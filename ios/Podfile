@@ -8,6 +8,12 @@ target 'frontEndFall2020' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
+
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
+  pod 'RNScreens', :path => '../node_modules/react-native-screens'
+
   target 'frontEndFall2020Tests' do
     inherit! :complete
     # Pods for testing
