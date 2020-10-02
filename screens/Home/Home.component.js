@@ -10,8 +10,8 @@ const Home = ({navigation}) => {
         <View style={styles.view}>
             <Text style={styles.h1}> Club Connect </Text>
             <Text style={{marginLeft: 10}}> Made by Computer Science Society </Text>
-                <TouchableOpacity style={styles.button}>
-                    <Button
+            <TouchableOpacity style={styles.button}>
+                <Button
                     onPress={() => navigation.push('SignIn')}
                     title="Sign In"
                     accessibilityLabel="Sign in"
