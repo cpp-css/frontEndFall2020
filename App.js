@@ -49,15 +49,7 @@ const email = () => {
 
       
 
-      <View style={{flexDirection: "row",
-                    justifyContent: "space-around"}}>
-         <TouchableHighlight
-          style={styles.signInButtonStyle}
-          onPress={doSignUp}>
-            <Text style={styles.signInButtonText}>Continue</Text>
-          </TouchableHighlight>
-        
-      </View>
+    
     </View>
 
   )
