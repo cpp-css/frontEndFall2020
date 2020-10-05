@@ -10,23 +10,19 @@ const Home = ({navigation}) => {
     <View style={styles.view}>
       <Text style={styles.h1}> Club Connect </Text>
       <Text style={{marginLeft: 10}}> Made by Computer Science Society </Text>
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text
-          style={styles.btnTxt}
-          onPress={() => navigation.push('Login')}
-          title="Login"
-          accessibilityLabel="Login">
-          Login
-        </Text>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => navigation.push('Login')}
+        title="Login"
+        accessibilityLabel="Login">
+        <Text style={styles.btnTxt}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.signUpBtn}>
-        <Text
-          style={styles.btnTxt}
-          onPress={() => navigation.push('SignUp')}
-          title="Sign Up"
-          accessibilityLabel="Sign Up">
-          Sign Up
-        </Text>
+      <TouchableOpacity
+        style={styles.signUpBtn}
+        onPress={() => navigation.push('SignUp')}
+        title="Sign Up"
+        accessibilityLabel="Sign Up">
+        <Text style={styles.btnTxt}>Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
