@@ -9,7 +9,7 @@ const Home = ({navigation}) => {
   return (
     <View style={styles.view}>
       <Text style={styles.h1}> Club Connect </Text>
-      <Text style={{marginLeft: 10}}> Made by Computer Science Society </Text>
+      <Text style={styles.spacingLogin}>Made by Computer Science Society </Text>
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={() => navigation.push('Login')}
@@ -17,6 +17,7 @@ const Home = ({navigation}) => {
         accessibilityLabel="Login">
         <Text style={styles.btnTxt}>Login</Text>
       </TouchableOpacity>
+      <Text style={styles.spacingBtns}></Text>
       <TouchableOpacity
         style={styles.signUpBtn}
         onPress={() => navigation.push('SignUp')}
