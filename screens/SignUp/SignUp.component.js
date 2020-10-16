@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Alert, Button} from 'react-native';
+import { View, Text, TextInput, Alert, Button, TouchableOpacity} from 'react-native';
+
+import withPreventDoubleClick from '../../components/Btn/Btn.js';
+
+// Add this when we implement custom buttons from assets
+// const Btn = withPreventDoubleClick(TouchableOpacity); 
 
 // Components
 import styles from './SignUp.styles';
@@ -14,6 +19,7 @@ const SignUp = ({navigation}) => {
             Alert.alert("Please input your student email.");
         } else {
             console.log("valid.");
+            navigation.push('Events');
         }
     };
     /*
