@@ -3,13 +3,13 @@ import { View, Text, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // styles
-import styles from './Events.styles';
+import styles from './Main.styles';
 
 // Debounce Button Error Fix
 import withPreventDoubleClick from '../../components/Btn/Btn.js';
 const Btn = withPreventDoubleClick(TouchableOpacity);
 
-const Events = ({ navigation }) => {
+const Main = ({ navigation }) => {
     return (
         <View style={styles.view}>
             <Text style={styles.h1}> Club Connect </Text>
@@ -33,4 +33,4 @@ const Events = ({ navigation }) => {
     );
 };
 
-export default Events;
+export default Main;

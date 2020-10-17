@@ -19,7 +19,7 @@ const SignUp = ({navigation}) => {
             Alert.alert("Please input your student email.");
         } else {
             console.log("valid.");
-            navigation.push('Events');
+            navigation.push('Main');
         }
     };
     /*
