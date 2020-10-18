@@ -17,17 +17,17 @@ class Contact extends React.Component {
         return (
         <ApplicationProvider {...eva} theme={eva.light}>
             <Layout style={styles.layout}>
-            <React.Fragment>
-                <Input style={styles.input} multiline={true} placeholder="To:" />
-                <Input
-                style={styles.input}
-                multiline={true}
-                textStyle={{minHeight: 464}}
-                />
-                <Button style={styles.btn} status="basic">
-                Submit
-                </Button>
-            </React.Fragment>
+                <React.Fragment>
+                    <Input style={styles.input} multiline={true} placeholder="To:" />
+                    <Input
+                    style={styles.input}
+                    multiline={true}
+                    textStyle={{minHeight: 464}}
+                    />
+                    <Button style={styles.btn} status="basic">
+                    Submit
+                    </Button>
+                </React.Fragment>
             </Layout>
         </ApplicationProvider>
         );
