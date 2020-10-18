@@ -9,16 +9,16 @@ class News extends React.Component {
         return (
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Layout style={styles.layout}>
-                <React.Fragment>
-                    <View style={styles.container}>
-                    <Button style={styles.btn} status="basic">
-                        All events
-                    </Button>
-                    <Button style={styles.btn} status="basic">
-                        Following
-                    </Button>
-                    </View>
-                </React.Fragment>
+                    <React.Fragment>
+                        <View style={styles.container}>
+                        <Button style={styles.btn} status="basic">
+                            All events
+                        </Button>
+                        <Button style={styles.btn} status="basic">
+                            Following
+                        </Button>
+                        </View>
+                    </React.Fragment>
                 </Layout>
             </ApplicationProvider>
         );

@@ -3,8 +3,6 @@ import {
     ApplicationProvider,
     Card,
     Text,
-    Icon,
-    MenuItem,
     Layout,
 } from '@ui-kitten/components';
 import {StyleSheet, View} from 'react-native';

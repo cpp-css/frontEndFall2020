@@ -15,12 +15,12 @@ render() {
             <Layout style={styles.layout} level="1">
                 <React.Fragment>
                     <View style={styles.row}>
-                    <Input
-                        multiline={true}
-                        textStyle={{minHeight: 464}}
-                        style={styles.input}
-                        placeholder="List of Organizations in Alphabetical Order"
-                    />
+                        <Input
+                            multiline={true}
+                            textStyle={{minHeight: 464}}
+                            style={styles.input}
+                            placeholder="List of Organizations in Alphabetical Order"
+                        />
                     </View>
                 </React.Fragment>
             </Layout>
