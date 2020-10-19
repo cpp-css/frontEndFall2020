@@ -1,13 +1,14 @@
 import React from 'react';
-import {ApplicationProvider, Button} from '@ui-kitten/components';
-import {StyleSheet, View, Text} from 'react-native';
-import * as eva from '@eva-design/eva';
-import {Avatar, Layout} from '@ui-kitten/components';
+import { View, Text } from 'react-native';
 
-const Profile = () => {
+// Components
+import Button from '../../components/MainButton/MainButton.component';
+
+const Profile = ({navigation}) => {
     return (
         <View>
             <Text>Profile</Text>
+            <Button label="Logout" onPress={() => navigation.push('Home')}/>
         </View>
     );
 };
@@ -57,20 +58,5 @@ class Profile extends React.Component {
     }
 }
 */
-
-const styles = StyleSheet.create({
-    layout: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#00FA9A',
-    },
-    avatar: {
-        width: 200,
-    },
-    row: {
-        marginTop: 20,
-    },
-});
 
 export default Profile;

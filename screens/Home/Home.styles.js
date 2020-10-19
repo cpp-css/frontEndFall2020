@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 		margin: 10,
 	},
 	spacingLogin: {
-		marginBottom: 100,
+		marginBottom: "20%",
 	},
 	loginBtn: {
 		alignItems: 'center',

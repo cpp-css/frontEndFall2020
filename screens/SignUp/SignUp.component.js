@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import { Image, View, Text, TextInput, Alert, Button, TouchableOpacity} from 'react-native';
 
-import withPreventDoubleClick from '../../components/Btn/Btn.js';
-
 const axios = require('axios');
-// Add this when we implement custom buttons from assets
-const Btn = withPreventDoubleClick(TouchableOpacity); 
 
 // Components
 import styles from './SignUp.styles';
@@ -67,18 +63,7 @@ const SignUp = ({navigation}) => {
                 }}
                 value={email}
             />
-            <Btn
-                onPress={validateInput}>
-                <Button 
-                onPress={validateInput}
-                title={'Sign Up'}></Button>
-                {/* Image not showing up*/}
-                {/* <Image 
-                resizeMode={'cover'}
-                source={require('../../assets/images/Sign Up.png')} 
-                styles={styles.signInButtonText}
-                resizeMode={'cover'}/> */}
-            </Btn>
+            <MainButton label="Register" onPress={validateInput}/>
         </View>
     );
 };
