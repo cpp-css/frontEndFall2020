@@ -1,9 +1,18 @@
 import React from 'react';
-import {ApplicationProvider, Text, Button} from '@ui-kitten/components';
-import {StyleSheet, View} from 'react-native';
+import {ApplicationProvider, Button} from '@ui-kitten/components';
+import {StyleSheet, View, Text} from 'react-native';
 import * as eva from '@eva-design/eva';
 import {Avatar, Layout} from '@ui-kitten/components';
 
+const Profile = () => {
+    return (
+        <View>
+            <Text>Profile</Text>
+        </View>
+    );
+};
+
+/*
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -11,6 +20,7 @@ class Profile extends React.Component {
 
     render() {
         return (
+            <View></View>
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Layout style={styles.layout} level="1">
                     <React.Fragment>
@@ -46,6 +56,7 @@ class Profile extends React.Component {
         );
     }
 }
+*/
 
 const styles = StyleSheet.create({
     layout: {

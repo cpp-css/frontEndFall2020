@@ -1,12 +1,22 @@
 import React from 'react';
-import {ApplicationProvider, Layout, Text, Button} from '@ui-kitten/components';
-import {StyleSheet, View} from 'react-native';
+import {ApplicationProvider, Layout, Button} from '@ui-kitten/components';
+import {StyleSheet, View, Text} from 'react-native';
 
 import * as eva from '@eva-design/eva';
 
+const News = () => {
+    return (
+        <View>
+            <Text>News</Text>
+        </View>
+    );
+};
+
+/*
 class News extends React.Component {
     render() {
         return (
+            <View></View>
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Layout style={styles.layout}>
                     <React.Fragment>
@@ -24,7 +34,7 @@ class News extends React.Component {
         );
     }
 }
-
+*/
 const styles = StyleSheet.create({
     layout: {
         flex: 1,

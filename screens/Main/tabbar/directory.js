@@ -1,9 +1,18 @@
 import React from 'react';
 import {ApplicationProvider} from '@ui-kitten/components';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import * as eva from '@eva-design/eva';
 import {Input, Layout} from '@ui-kitten/components';
 
+const Directory = () => {
+    return (
+        <View>
+            <Text>Directory</Text>
+        </View>
+    );
+};
+
+/*
 class Directory extends React.Component {
     constructor(props) {
     super(props);
@@ -11,6 +20,7 @@ class Directory extends React.Component {
 
 render() {
     return (
+        <View></View>
         <ApplicationProvider {...eva} theme={eva.light}>
             <Layout style={styles.layout} level="1">
                 <React.Fragment>
@@ -28,7 +38,7 @@ render() {
         );
     }
 }
-
+*/
 const styles = StyleSheet.create({
     layout: {
         flex: 1,

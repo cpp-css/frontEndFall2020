@@ -8,49 +8,73 @@ import {
 import {StyleSheet, View} from 'react-native';
 import * as eva from '@eva-design/eva';
 
+import { Searchbar } from 'react-native-paper';
+
+
+const Profile = () => {
+
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const onChangeSearch = query => setSearchQuery(query);
+
+    return (
+        <Searchbar
+            style={styles.searchBox}
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+        />
+    );
+};
+
+/*
 class Profile extends React.Component {
     constructor(props) {
-    super(props);
-}
+        super(props);
+    }
 
-render() {
-    return (
-        <ApplicationProvider {...eva} theme={eva.light}>
-            <Layout style={styles.layout} level="1">
-                <React.Fragment>
-                    <View style={styles.row}>
-                        <Text style={styles.text} category="h4">
-                            Base on my interested
-                        </Text>
-                    </View>
-                    <View style={styles.container}>
-                        <Card style={styles.card} status="success">
-                            <Text>success</Text>
-                        </Card>
-                        <Card style={styles.card} status="info">
-                            <Text>info</Text>
-                        </Card>
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.text} category="h4">
-                            Base on my interested
-                        </Text>
-                    </View>
-                    <View style={styles.container}>
-                        <Card style={styles.card} status="primary">
-                            <Text>primary</Text>
-                        </Card>
-                        <Card style={styles.card} status="warning">
-                            <Text>warning</Text>
-                        </Card>
-                    </View>
-                </React.Fragment>
-            </Layout>
-        </ApplicationProvider>
+    render() {
+        return (
+            <Searchbar
+                    placeholder="Search"
+                    onChangeText={onChangeSearch}
+                    value={searchQuery}
+                />
+            <ApplicationProvider {...eva} theme={eva.light}>
+                <Layout style={styles.layout} level="1">
+                    <React.Fragment>
+                        <View style={styles.row}>
+                            <Text style={styles.text} category="h4">
+                                Base on my interested
+                            </Text>
+                        </View>
+                        <View style={styles.container}>
+                            <Card style={styles.card} status="success">
+                                <Text>success</Text>
+                            </Card>
+                            <Card style={styles.card} status="info">
+                                <Text>info</Text>
+                            </Card>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.text} category="h4">
+                                Base on my interested
+                            </Text>
+                        </View>
+                        <View style={styles.container}>
+                            <Card style={styles.card} status="primary">
+                                <Text>primary</Text>
+                            </Card>
+                            <Card style={styles.card} status="warning">
+                                <Text>warning</Text>
+                            </Card>
+                        </View>
+                    </React.Fragment>
+                </Layout>
+            </ApplicationProvider>
         );
     }
 }
-
+*/
 const styles = StyleSheet.create({
     layout: {
         flex: 1,
@@ -74,6 +98,11 @@ const styles = StyleSheet.create({
         width: '40%',
         marginRight: 5,
         height: 100,
+    },
+    searchBox: {
+        margin: 20,
+        borderWidth: 1,
+        borderRadius: 16,
     },
 });
 
