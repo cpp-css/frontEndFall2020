@@ -34,25 +34,25 @@ const SignUp = ({navigation}) => {
     const validateInput = () => {
         const format = /^([\w\.\-]+)@cpp.edu/;
         if (!format.test(email)) {
-            Alert.alert('Please input your student email.');
+            Alert.alert("Please input your student email.");
         } else {
-            console.log('valid.');
+            console.log("valid.");
         }
     };
     /*
-        const email = () => {
-            const doSignUp = () => {
-                if (email === "") {
-                    Alert.alert("Email Required");
-                    setError("Email required *");
-                    setValid(false);
-                    return;
-                } else {
-                    Alert.alert("Email is correct");
-                }
+    const email = () => {
+        const doSignUp = () => {
+            if (email === "") {
+                Alert.alert("Email Required");
+                setError("Email required *");
+                setValid(false);
+                return;
+            } else {
+                Alert.alert("Email is correct");
             }
         }
-        */
+    }
+    */
 
     return (
         <View>
@@ -68,5 +68,6 @@ const SignUp = ({navigation}) => {
         </View>
     );
 };
+
 
 export default SignUp;
