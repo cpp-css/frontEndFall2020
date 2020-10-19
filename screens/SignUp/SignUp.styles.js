@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 1,
-        marginTop: 5,
+       borderWidth: 1,
+       marginTop: 5,
     },
     textField: {
         marginTop: 100,
