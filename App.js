@@ -3,11 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Screens
-import Home from './screens/Home/Home.component';
-import Login from './screens/Login/Login.component';
-import SignUp from './screens/SignUp/SignUp.component';
-import Main from './screens/Main/Main.component';
-import Contact from './screens/Main/contact';
+import Home from './screens/home/Home.component';
+import Login from './screens/login/Login.component';
+import SignUp from './screens/signup/SignUp.component';
+import Main from './screens/main/Main.component';
+import Contact from './screens/main/contact';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +22,12 @@ const App = () => {
         />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen
+            name="contact"
+            component={Contact}
+            options={{ title: 'Contact' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
