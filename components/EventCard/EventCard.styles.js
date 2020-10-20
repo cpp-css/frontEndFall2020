@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: width - 80,
         margin: 10,
-        height: "80%",
+        height: "88%",
         alignItems: 'center',
         borderRadius: 10,
         padding: "5%",
@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.24,
         shadowRadius: 5,
         elevation: 3
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 25,
     },
     image: {
         width: "100%",

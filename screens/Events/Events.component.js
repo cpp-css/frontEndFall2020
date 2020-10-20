@@ -10,6 +10,44 @@ import styles from './Events.styles';
 
 const { width } = Dimensions.get('window');
 
+const cardItems = [
+    {
+        title: "Career Center Workshop",
+        org: "Computer Science Society",
+        date: "Tuesday, May 10, 2020",
+        link: "https://github.com",
+        image: require("../../assets/images/CareerCenterWorkshop.jpg")
+    },
+    {
+        title: "Capture The Flag",
+        org: "Software Engineering Association",
+        date: "Saturday, November 17, 2019",
+        link: "https://github.com",
+        image: require("../../assets/images/CTF.png")
+    },
+    {
+        title: "Guest Speaker: Lance Kimberlin from Bilizzard",
+        org: "Computer Science Society",
+        date: "Tuesday, May 10, 2020",
+        link: "https://github.com",
+        image: require("../../assets/images/Blizzard.png")
+    },
+    {
+        title: "dank mames",
+        org: "Computer Science Society",
+        date: "Tuesday, May 10, 2020",
+        link: "https://github.com",
+        image: require("../../assets/images/CareerCenterWorkshop.jpg")
+    },
+    {
+        title: "dank mames",
+        org: "Computer Science Society",
+        date: "Tuesday, May 10, 2020",
+        link: "https://github.com",
+        image: require("../../assets/images/CareerCenterWorkshop.jpg")
+    },
+]
+
 const Events = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
@@ -23,7 +61,6 @@ const Events = () => {
                 value={searchQuery}
             />
             <ScrollView
-               ref={(scrollView) => { this.scrollView = scrollView; }}
                showsHorizontalScrollIndicator={false}
                horizontal={true}
                decelerationRate={0}
@@ -35,10 +72,17 @@ const Events = () => {
                    bottom: 0,
                    right: 30
                }}>
-                <EventCard title="dank memes" org="Computer Science Society" date="10/10/10" link="https://google.com" source={require("../../assets/images/CareerCenterWorkshop.jpg")}/>
-                <EventCard title="dank memes" org="Computer Science Society" date="10/10/10" link="https://google.com" source={require("../../assets/images/CareerCenterWorkshop.jpg")}/>
-                <EventCard title="dank memes" org="Computer Science Society" date="10/10/10" link="https://google.com" source={require("../../assets/images/CareerCenterWorkshop.jpg")}/>
-                <EventCard title="dank memes" org="Computer Science Society" date="10/10/10" link="https://google.com" source={require("../../assets/images/CareerCenterWorkshop.jpg")}/>
+               {cardItems.map((card, id) =>
+                    <EventCard
+                       key={id}
+                       title={card.title}
+                       org={card.org}
+                       date={card.date}
+                       link={card.link}
+                       source={card.image}
+                       onPress={() => console.log("yeeee")}
+                    />
+               )} 
             </ScrollView>
 
         </View>
