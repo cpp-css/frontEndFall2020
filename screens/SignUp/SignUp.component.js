@@ -9,8 +9,8 @@ import styles from './SignUp.styles';
 
 const SignUp = ({navigation}) => {
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    const password = '';
     const register = async () => {
         const url = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -34,33 +34,43 @@ const SignUp = ({navigation}) => {
     const validateInput = () => {
         const format = /^([\w\.\-]+)@cpp.edu/;
         if (!format.test(email)) {
-            Alert.alert('Please input your student email.');
+            Alert.alert("Please input your student email.");
         } else {
-            console.log('valid.');
+            console.log("valid.");
         }
     };
     /*
-        const email = () => {
-            const doSignUp = () => {
-                if (email === "") {
-                    Alert.alert("Email Required");
-                    setError("Email required *");
-                    setValid(false);
-                    return;
-                } else {
-                    Alert.alert("Email is correct");
-                }
+    const email = () => {
+        const doSignUp = () => {
+            if (email === "") {
+                Alert.alert("Email Required");
+                setError("Email required *");
+                setValid(false);
+                return;
+            } else {
+                Alert.alert("Email is correct");
             }
         }
-        */
+    }
+    */
 
     return (
-        <View>
+        <View style={styles.container}>
+			<Text style={styles.text}> Email Address </Text>
             <TextInput
-                styles={styles.textField}
-                placeholder="Email Address"
+                style={styles.textField}
+                placeholder="jdoe@cpp.edu"
                 onChangeText={text => {
                     setEmail(text);
+                }}
+                value={email}
+            />
+			<Text style={styles.text}> Password </Text>
+            <TextInput
+                style={styles.textField}
+                placeholder="Password"
+                onChangeText={text => {
+                    setPassword(text);
                 }}
                 value={email}
             />
@@ -68,5 +78,6 @@ const SignUp = ({navigation}) => {
         </View>
     );
 };
+
 
 export default SignUp;
