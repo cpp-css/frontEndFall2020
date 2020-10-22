@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  ApplicationProvider,
-  Input,
-  Button,
-  Layout,
+    ApplicationProvider,
+    Input,
+    Button,
+    Layout,
 } from '@ui-kitten/components';
 import {StyleSheet, View} from 'react-native';
 import * as eva from '@eva-design/eva';

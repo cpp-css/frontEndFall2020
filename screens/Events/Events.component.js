@@ -61,28 +61,28 @@ const Events = () => {
                 value={searchQuery}
             />
             <ScrollView
-               showsHorizontalScrollIndicator={false}
-               horizontal={true}
-               decelerationRate={0}
-               snapToInterval={width - 60}
-               snapToAlignment={"center"}
-               contentInset={{
-                   top: 0,
-                   left: 30,
-                   bottom: 0,
-                   right: 30
-               }}>
-               {cardItems.map((card, id) =>
-                    <EventCard
-                       key={id}
-                       title={card.title}
-                       org={card.org}
-                       date={card.date}
-                       link={card.link}
-                       source={card.image}
-                       onPress={() => console.log("yeeee")}
-                    />
-               )} 
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                decelerationRate={0}
+                snapToInterval={width - 60}
+                snapToAlignment={"center"}
+                contentInset={{
+                    top: 0,
+                    left: 30,
+                    bottom: 0,
+                    right: 30
+                }}>
+                {cardItems.map((card, id) =>
+                        <EventCard
+                        key={id}
+                        title={card.title}
+                        org={card.org}
+                        date={card.date}
+                        link={card.link}
+                        source={card.image}
+                        onPress={() => console.log("yeeee")}
+                        />
+                )} 
             </ScrollView>
 
         </View>
