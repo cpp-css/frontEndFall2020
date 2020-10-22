@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
 const { width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
@@ -11,7 +12,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: width - 80,
         margin: 10,
-        height: "88%",
+        height: height - 210,
         alignItems: 'center',
         borderRadius: 10,
         padding: "5%",

@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useState, Component, useEffect } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text} from "react-native";
 
 import EventCard from "../../components/EventCard/EventCard.component";
 
 import styles from "./Feed.styles";
+
 const axios = require("axios");
 
 const Feed = () => {
@@ -34,7 +35,7 @@ const Feed = () => {
           },
           {
             id: 2,
-            name: "Event",
+            title: "Event",
             org: "CSS",
             date: "10/18/20",
             link: "http",
@@ -42,17 +43,9 @@ const Feed = () => {
           },
           {
             id: 3,
-            name: "Event",
+            title: "Event",
             org: "CSS",
-            date: "10/18/20",
-            link: "http",
-            image: require("../../assets/images/CareerCenterWorkshop.jpg"),
-          },
-          {
-            id: 4,
-            name: "Event",
-            org: "CSS",
-            date: "10/18/20",
+            date: "10/20/20",
             link: "http",
             image: require("../../assets/images/CareerCenterWorkshop.jpg"),
           },
@@ -72,12 +65,11 @@ const Feed = () => {
       date={event.date}
       link={event.link}
       source={event.image}
-      onPress={() => console.log("yeeee")}
     />
   ));
   return (
     <View style={styles.layout}>
-      <ScrollView>{eventList}</ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>{eventList}</ScrollView>
     </View>
   );
 };
