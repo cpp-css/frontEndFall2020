@@ -34,7 +34,7 @@ const cardItems = [
     },
     {
         title: "dank mames",
-        org: "Computer Science Society",
+        org: "IEEE",
         date: "Tuesday, May 10, 2020",
         link: "https://github.com",
         image: require("../../assets/images/CareerCenterWorkshop.jpg")
@@ -52,6 +52,11 @@ const Events = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
 
+    let filteredCards = cardItems.filter(
+        (event) => {
+            return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+        }
+    );
     return (
         <View style={{alignItems: 'center'}}>
             <Searchbar
@@ -61,28 +66,28 @@ const Events = () => {
                 value={searchQuery}
             />
             <ScrollView
-                showsHorizontalScrollIndicator={false}
-                horizontal={true}
-                decelerationRate={0}
-                snapToInterval={width - 60}
-                snapToAlignment={"center"}
-                contentInset={{
-                    top: 0,
-                    left: 30,
-                    bottom: 0,
-                    right: 30
-                }}>
-                {cardItems.map((card, id) =>
-                        <EventCard
-                        key={id}
-                        title={card.title}
-                        org={card.org}
-                        date={card.date}
-                        link={card.link}
-                        source={card.image}
-                        onPress={() => console.log("yeeee")}
-                        />
-                )} 
+               showsHorizontalScrollIndicator={false}
+               horizontal={true}
+               decelerationRate={0}
+               snapToInterval={width - 60}
+               snapToAlignment={"center"}
+               contentInset={{
+                   top: 0,
+                   left: 30,
+                   bottom: 0,
+                   right: 30
+               }}>
+               {filteredCards.map((card, id) =>
+                    <EventCard
+                       key={id}
+                       title={card.title}
+                       org={card.org}
+                       date={card.date}
+                       link={card.link}
+                       source={card.image}
+                       onPress={() => console.log("yeeee")}
+                    />
+               )} 
             </ScrollView>
 
         </View>
