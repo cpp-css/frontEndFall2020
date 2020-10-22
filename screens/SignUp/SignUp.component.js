@@ -15,28 +15,28 @@ const SignUp = ({navigation}) => {
         const url = 'https://jsonplaceholder.typicode.com/posts';
 
         const settings = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         };
 
         const body = JSON.stringify({email, password});
 
         try {
-        let response = await axios.post(url, settings, body);
-        console.log(response);
+            let response = await axios.post(url, settings, body);
+            console.log(response);
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
     };
 
     const validateInput = () => {
         const format = /^([\w\.\-]+)@cpp.edu/;
         if (!format.test(email)) {
-        Alert.alert('Please input your student email.');
+            Alert.alert('Please input your student email.');
         } else {
-        console.log('valid.');
+            console.log('valid.');
         }
     };
     /*
