@@ -12,29 +12,29 @@ import Contact from './screens/Navigation/contact';
 const Stack = createStackNavigator();
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen 
-          name="Main"
-          component={Main}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-            name="contact"
-            component={Contact}
-            options={{ title: 'Contact' }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{headerShown: false}}
+            />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen 
+            name="Main"
+            component={Main}
+            options={{headerShown: false}}
+            />
+            <Stack.Screen
+                name="contact"
+                component={Contact}
+                options={{ title: 'Contact' }}
+            />
+        </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
 
 export default App;
