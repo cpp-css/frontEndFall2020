@@ -34,7 +34,7 @@ const cardItems = [
     },
     {
         title: "dank mames",
-        org: "Computer Science Society",
+        org: "IEEE",
         date: "Tuesday, May 10, 2020",
         link: "https://github.com",
         image: require("../../assets/images/CareerCenterWorkshop.jpg")
@@ -52,6 +52,11 @@ const Events = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
 
+    let filteredCards = cardItems.filter(
+        (event) => {
+            return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+        }
+    );
     return (
         <View style={{alignItems: 'center'}}>
             <Searchbar
@@ -72,7 +77,7 @@ const Events = () => {
                    bottom: 0,
                    right: 30
                }}>
-               {cardItems.map((card, id) =>
+               {filteredCards.map((card, id) =>
                     <EventCard
                        key={id}
                        title={card.title}
