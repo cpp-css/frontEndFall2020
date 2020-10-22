@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Image, View, Text, TextInput, Alert, Button, TouchableOpacity} from 'react-native';
 
+import MainButton from '../../components/MainButton/MainButton.component';
 const axios = require('axios');
 
 // Components
