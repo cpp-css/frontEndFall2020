@@ -1,15 +1,16 @@
-import * as React from 'react';
-import {View, Text} from 'react-native';
+import React, { useState } from 'react';
+import {View, TextInput, Text} from 'react-native';
 
 // Components
 import styles from './Login.styles';
 import MainButton from '../../components/MainButton/MainButton.component';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 const axios = require('axios');
 
-const email = '';
-const password = '';
-
 const Login = ({navigation}) => {
+
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
 	const login = async () => {
 		const url = 'https://jsonplaceholder.typicode.com/posts';
@@ -35,8 +36,28 @@ const Login = ({navigation}) => {
 	};
 
 	return (
-		<View>
+		<View style={styles.view}>
+			<Text style={styles.text}> Email Address </Text>
+			<TextInput 
+				style={styles.textInput} 
+				placeholder="jdoe@cpp.edu"
+				onChangeText={ text => {
+					setEmail(text);
+				}}
+			/>
+			<Text style={styles.text}> Password </Text>
+			<TextInput 
+				style={styles.textInput} 
+				placeholder="Password"
+				onChangeText={ text => {
+					// Gotta encrypt this later.
+					setPassword(text);
+				}}
+			/>
 			<MainButton label="Login" onPress={login}/>
+			<TouchableOpacity style={styles.forgotLabelContainer}>
+				<Text style={styles.forgotLabel}> Forgot password? </Text>
+			</TouchableOpacity>
 		</View>
 	);
 };

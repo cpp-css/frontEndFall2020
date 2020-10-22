@@ -2,38 +2,28 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-       borderWidth: 1,
-       marginTop: 5,
+        justifyContent: 'center',
+        flex: 1,
+        margin: 10,
+        padding: "10%"
     },
     textField: {
-        marginTop: 100,
-        marginHorizontal: 20,
-        borderWidth: 2,
+        backgroundColor: 'white',
+        margin: "2%",
         borderRadius: 10,
-        paddingHorizontal: 20,
-        fontWeight: '900',
-        backgroundColor:  '#94d6a6',
-        fontSize: 20,
+        padding: 10,
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 1,
+            height: 1
+        },
+        shadowOpacity: 0.24,
+        shadowRadius: 8,
+        elevation: 2
     },
-    signInButtonText: {
-        // fontSize: 20,
-        // color: 'red',
-        // backgroundColor: 'red',
-        // flex: 1,
-        // width: null,
-        // height: null,
-        // resizeMode: 'contain'
-        // backgroundColor: 'red',
-        // margin: 10,
-        // padding: 10,
-        // width: 100,
-        // height: 100,
-        // aspectRatio: 5,
-        // resizeMode: 'contain',
-        resizeMode: 'cover', 
-        width: '100%', 
-        height: '100%',
-    },
+    text: {
+        marginLeft: 10
+    }
 });
 
 export default styles;
