@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
-import { Text, Image, TouchableWithoutFeedback, View, Button, Alert, Modal } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { Text, Image, TouchableWithoutFeedback, View, Button, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import { Context } from '../../components/Context.js';
 import styles from './EventCard.styles';
 //import Modal from 'react-native-modal';
 
 const EventCard = (props) => {
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [context, setContext] = useContext(Context);
+    
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
 
     return(
         <View>
@@ -34,7 +39,10 @@ const EventCard = (props) => {
                     <TouchableOpacity style={styles.btnPopUp}>
                         <Text style={styles.btnText} 
                         onPress={
-                            () => Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!")
+                            () => {
+                                Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!")
+                                setContext([...context,props.title]);
+                            }
                         }>RSVP</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnPopUp}>

@@ -1,6 +1,5 @@
-import React from 'react';
+import React from "react";
 import { View, Text, ScrollView, Dimensions } from 'react-native';
-
 // Components
 import { Searchbar } from 'react-native-paper';
 import EventCard from '../../components/EventCard/EventCard.component';
@@ -85,7 +84,6 @@ const Events = () => {
                        date={card.date}
                        link={card.link}
                        source={card.image}
-                       onPress={() => console.log("yeeee")}
                     />
                )} 
             </ScrollView>
