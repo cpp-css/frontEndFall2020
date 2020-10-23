@@ -72,7 +72,7 @@ const SignUp = ({navigation}) => {
                 onChangeText={text => {
                     setPassword(text);
                 }}
-                value={email}
+                value={password}
             />
             <MainButton label="Register" onPress={validateInput}/>
         </View>

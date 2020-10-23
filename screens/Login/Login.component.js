@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, TextInput, Text} from 'react-native';
+import { View, TextInput, Text, Alert} from 'react-native';
 
 // Components
 import styles from './Login.styles';
@@ -35,6 +35,16 @@ const Login = ({navigation}) => {
 		}
 	};
 
+    const validateInput = () => {
+        const format = /^([\w\.\-]+)@cpp.edu/;
+        if (!format.test(email)) {
+            Alert.alert("Please input your student email.");
+        } else {
+            console.log("valid.");
+            login();
+        }
+    };
+
 	return (
 		<View style={styles.view}>
 			<Text style={styles.text}> Email Address </Text>
@@ -54,7 +64,7 @@ const Login = ({navigation}) => {
 					setPassword(text);
 				}}
 			/>
-			<MainButton label="Login" onPress={login}/>
+            <MainButton label="Login" onPress={validateInput}/>
 			<TouchableOpacity style={styles.forgotLabelContainer}>
 				<Text style={styles.forgotLabel}> Forgot password? </Text>
 			</TouchableOpacity>
