@@ -69,6 +69,7 @@ const SignUp = ({navigation}) => {
             <TextInput
                 style={styles.textField}
                 placeholder="Password"
+                secureTextEntry={true}
                 onChangeText={text => {
                     setPassword(text);
                 }}

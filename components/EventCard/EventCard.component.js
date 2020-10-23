@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, Image, TouchableWithoutFeedback, View, Button, Alert } from 'react-native';
+import { Text, Image, TouchableWithoutFeedback, View, Button, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Context } from '../../components/Context.js';
 import styles from './EventCard.styles';
@@ -19,7 +19,7 @@ const EventCard = (props) => {
             <TouchableOpacity 
                 style={styles.container} 
                 onPress={() => {
-                    setModalVisible(!modalVisible)
+                    setModalVisible(!isModalVisible)
                 }}>
                 <Text> {props.org} </Text>
                 <Text style={styles.title}> {props.title} </Text>
@@ -29,7 +29,7 @@ const EventCard = (props) => {
             </TouchableOpacity>
             <Modal animationType="slide"
                 transparent={true}
-                visible={modalVisible}>
+                visible={isModalVisible}>
                 <View style={styles.containerPopUp}>
                     <Text> {props.org} </Text>
                     <Text style={styles.titlePopUp}> {props.title} </Text>
@@ -49,7 +49,7 @@ const EventCard = (props) => {
                         <Text 
                             style={styles.btnText} 
                             onPress={() => {
-                            setModalVisible(!modalVisible)}}>
+                            setModalVisible(!isModalVisible)}}>
                                 Exit
                         </Text>
                     </TouchableOpacity>

@@ -58,6 +58,7 @@ const Login = ({navigation}) => {
 			<Text style={styles.text}> Password </Text>
 			<TextInput 
 				style={styles.textInput} 
+				secureTextEntry={true}
 				placeholder="Password"
 				onChangeText={ text => {
 					// Gotta encrypt this later.
