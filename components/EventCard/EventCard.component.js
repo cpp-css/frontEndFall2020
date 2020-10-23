@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
-import { Text, Image, TouchableWithoutFeedback, View, Button, Alert } from 'react-native';
+import { Text, Image, TouchableWithoutFeedback, View, Button, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './EventCard.styles';
-import Modal from 'react-native-modal';
+//import Modal from 'react-native-modal';
 
 const EventCard = (props) => {
 
-    const [isModalVisible, setModalVisible] = useState(false);
-
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-    };
+    const [modalVisible, setModalVisible] = useState(false);
 
     return(
         <View>
-            <TouchableOpacity style={styles.container} onPress={toggleModal}>
+            <TouchableOpacity 
+                style={styles.container} 
+                onPress={() => {
+                    setModalVisible(!modalVisible)
+                }}>
                 <Text> {props.org} </Text>
                 <Text style={styles.title}> {props.title} </Text>
                 <Image style={styles.image} resizeMode="contain" source={props.source}/>
                 <Text style={styles.date}> {props.date} </Text>
                 <Text> {props.link} </Text>
             </TouchableOpacity>
-            <Modal isVisible={isModalVisible}>
+            <Modal animationType="slide"
+                transparent={true}
+                visible={modalVisible}>
                 <View style={styles.containerPopUp}>
                     <Text> {props.org} </Text>
                     <Text style={styles.titlePopUp}> {props.title} </Text>
@@ -36,7 +38,12 @@ const EventCard = (props) => {
                         }>RSVP</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnPopUp}>
-                        <Text style={styles.btnText} onPress={toggleModal}>Exit</Text>
+                        <Text 
+                            style={styles.btnText} 
+                            onPress={() => {
+                            setModalVisible(!modalVisible)}}>
+                                Exit
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </Modal>
