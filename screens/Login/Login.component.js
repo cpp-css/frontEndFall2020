@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Alert} from 'react-native';
+import { View, Text, Alert} from 'react-native';
 
 // Components
 import styles from './Login.styles';
 import MainButton from '../../components/MainButton/MainButton.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import TextLabel from '../../components/TextLabel/TextLabel.component';
+
 const axios = require('axios');
 
 const Login = ({navigation}) => {
@@ -47,21 +49,20 @@ const Login = ({navigation}) => {
 
 	return (
 		<View style={styles.view}>
-			<Text style={styles.text}> Email Address </Text>
-			<TextInput 
+			<TextLabel 
+				label="Email Address"
 				style={styles.textInput} 
 				placeholder="jdoe@cpp.edu"
 				onChangeText={ text => {
 					setEmail(text);
 				}}
 			/>
-			<Text style={styles.text}> Password </Text>
-			<TextInput 
+			<TextLabel
+				label="Password"
 				style={styles.textInput} 
 				secureTextEntry={true}
 				placeholder="Password"
 				onChangeText={ text => {
-					// Gotta encrypt this later.
 					setPassword(text);
 				}}
 			/>
