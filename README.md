@@ -1,7 +1,7 @@
 # Frontend Fall 2020
 
 ### Requirements
-- Andorid Studio (AVD Manager)
+- Android Studio (AVD Manager)
 - Node.js
 - React-Native
 - React-Native-Cli
