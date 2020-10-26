@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 // Screens
 import Home from './screens/Home/Home.component';
 import Login from './screens/Login/Login.component';
 import SignUp from './screens/SignUp/SignUp.component';
 import Main from './screens/Navigation/Navigation.component';
-import Contact from './screens/Navigation/contact';
+import Contact from './screens/Contact/Contact.component';
 import { Context } from "./components/Context.js";
+import UserSettings from "./screens/UserSettings/UserSettings.component";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,10 @@ const App = () => {
                     name="contact"
                     component={Contact}
                     options={{ title: 'Contact' }}
+                />
+                <Stack.Screen
+                    name="User Settings"
+                    component={UserSettings}
                 />
             </Stack.Navigator>
             </NavigationContainer>

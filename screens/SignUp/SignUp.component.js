@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import { Image, View, Text, TextInput, Alert, Button, TouchableOpacity} from 'react-native';
 
-import MainButton from '../../components/MainButton/MainButton.component';
 const axios = require('axios');
 
-// Components
 import styles from './SignUp.styles';
+
+// Components
+import MainButton from '../../components/MainButton/MainButton.component';
+import TextLabel from '../../components/TextLabel/TextLabel.component';
 
 const SignUp = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -56,18 +58,16 @@ const SignUp = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-			<Text style={styles.text}> Email Address </Text>
-            <TextInput
-                style={styles.textField}
+            <TextLabel
+                label="Email Address"
                 placeholder="jdoe@cpp.edu"
                 onChangeText={text => {
                     setEmail(text);
                 }}
                 value={email}
             />
-			<Text style={styles.text}> Password </Text>
-            <TextInput
-                style={styles.textField}
+            <TextLabel
+                label="Password"
                 placeholder="Password"
                 secureTextEntry={true}
                 onChangeText={text => {

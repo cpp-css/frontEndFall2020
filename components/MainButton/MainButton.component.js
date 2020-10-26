@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import styles from './MainButton.styles';
@@ -11,8 +11,8 @@ const MainButton = (props) => {
         if (!debounce) {
             setDebounce(true);
             props.onPress();
-            setTimeout(() => setDebounce(false), 500);
         }
+        setTimeout(() => setDebounce(false), 500);
     }
 
     return(
