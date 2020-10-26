@@ -9,10 +9,10 @@ import styles from './UserSettings.styles';
 const UserSettings = () => {
     return(
         <View style={styles.spacing}>
-           <TextLabel label="Account Name:" placeholde="John Doe"/>
-           <TextLabel label="Current Password:" placeholde="Password"/>
-           <TextLabel label="New Password:" placeholde="Password"/>
-           <TextLabel label="Confirm Password:" placeholde="New Password"/>
+           <TextLabel label="Account Name:" placeholder="John Doe"/>
+           <TextLabel label="Current Password:" placeholder="Password"/>
+           <TextLabel label="New Password:" placeholder="Password"/>
+           <TextLabel label="Confirm Password:" placeholder="New Password"/>
            <MainButton label="Submit" onPress={() => console.log("clicked")}/>
         </View>
     )

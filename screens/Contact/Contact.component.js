@@ -11,13 +11,18 @@ import styles from './Contact.styles';
 const Contact = ({navigation}) => {
     return (
     <View>
-        <TextLabel style={styles.input} multiline={true} placeholder="To:" />
+        <TextLabel 
+            style={styles.input} 
+            multiline={true} 
+            placeholder="To:" />
         <TextLabel
         style={styles.input}
         multiline={true}
         textStyle={{minHeight: 464}}
         />
-        <Button label="Submit" onPress={() => console.log("yes")}/>
+        <Button 
+            label="Submit" 
+            onPress={() => console.log("yes")}/>
     </View>
     );
 }

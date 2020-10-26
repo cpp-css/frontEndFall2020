@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     textField: {
-        backgroundColor: 'white',
+        backgroundColor: '#FAFAFA',
         margin: "2%",
         borderRadius: 10,
         padding: 10,

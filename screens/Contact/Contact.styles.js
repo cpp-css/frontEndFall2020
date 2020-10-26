@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginLeft: 10,
         marginRight: 10,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FAFAFA',
     },
     row: {
         marginTop: 0,
