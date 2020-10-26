@@ -1,19 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { Text, Image, TouchableWithoutFeedback, View, Button, Alert, Modal } from 'react-native';
+import { Text, Image, View, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Context } from '../../components/Context.js';
 import styles from './EventCard.styles';
-//import Modal from 'react-native-modal';
 
 const EventCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [context, setContext] = useContext(Context);
     
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-    };
-
     return(
         <View>
             <TouchableOpacity 
