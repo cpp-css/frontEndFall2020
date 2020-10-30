@@ -31,7 +31,7 @@ const EventCard = (props) => {
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
                     <Text style={styles.datePopUp}> {props.date} </Text>
                     <Text> {props.link} </Text>
-                    <TouchableOpacity style={styles.btnPopUp}>
+                    <TouchableOpacity style={styles.btnPopUpRSVP}>
                         <Text style={styles.btnText} 
                         onPress={
                             () => {
@@ -40,7 +40,7 @@ const EventCard = (props) => {
                             }
                         }>RSVP</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnPopUp}>
+                    <TouchableOpacity style={styles.btnPopUpExit}>
                         <Text 
                             style={styles.btnText} 
                             onPress={() => {

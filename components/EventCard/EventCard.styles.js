@@ -65,24 +65,40 @@ const styles = StyleSheet.create({
     },
     imagePopUp: {
         width: "100%",
-        height: "70%",
+        height: "60%",
         //margin: "5%",
         borderRadius: 10,
     },
     datePopUp: {
+        fontSize: 20
     },
-    btnPopUp: {
+     
+
+    btnPopUpRSVP: {
         backgroundColor: '#92d050',
-        padding: 5,
-        margin: 5,
-        width: 100,
+        paddingVertical: 5,
+        marginTop: 10,
+        width: 200,
         borderRadius: 10,
     },
+
+    btnPopUpExit: {
+        backgroundColor: '#CD5C5C',
+        paddingVertical: 5,
+        marginTop: 10,
+        width: 200,
+        borderRadius: 10,
+    },
+
     btnText: {
+        fontSize: 20,
         textAlign: 'center',
         textTransform: 'uppercase',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        letterSpacing: 2
     }
+
+ 
 });
 
 export default styles;
