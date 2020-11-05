@@ -11,10 +11,16 @@ import MainButton from '../../components/MainButton/MainButton.component';
 const Home = ({navigation}) => {
     return (
         <View style={styles.view}>
-        <Text style={styles.h1}> Club Connect </Text>
-        <Text style={styles.spacingLogin}>Made by Computer Science Society </Text>
-        <MainButton label="Login" onPress={() => navigation.push('Login')}/>
-        <MainButton label="Register" onPress={() => navigation.push('SignUp')}/>
+            <Text style={styles.h1}> Club Connect </Text>
+            <Text style={styles.spacingLogin}> Made by Computer Science Society </Text>
+            <MainButton
+                label="Login"
+                onPress={() => navigation.push('Login')}
+            />
+            <MainButton 
+                label="Register"
+                onPress={() => navigation.push('SignUp')}
+            />
         </View>
     );
 };

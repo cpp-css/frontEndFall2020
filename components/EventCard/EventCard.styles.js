@@ -72,24 +72,6 @@ const styles = StyleSheet.create({
     datePopUp: {
         fontSize: 20
     },
-     
-
-    btnPopUpRSVP: {
-        backgroundColor: '#92d050',
-        paddingVertical: 5,
-        marginTop: 10,
-        width: 200,
-        borderRadius: 10,
-    },
-
-    btnPopUpExit: {
-        backgroundColor: '#CD5C5C',
-        paddingVertical: 5,
-        marginTop: 10,
-        width: 200,
-        borderRadius: 10,
-    },
-
     btnText: {
         fontSize: 20,
         textAlign: 'center',

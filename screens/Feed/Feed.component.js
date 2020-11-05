@@ -1,23 +1,23 @@
-import React, { useContext } from "react";
-import { useState, Component, useEffect } from "react";
-import { ScrollView, View, Text} from "react-native";
-import { Context } from "../../components/Context";
+import React, { useContext, useState, useEffect } from "react";
+import { ScrollView, View, Text } from "react-native";
+//import { Context } from "../../Context";
 
 import SubscribedCard from "../../components/SubscribedCard/SubscribedCard.component";
 
 import styles from "./Feed.styles";
 
+import { UserContext } from '../../context/UserContext';
+
 const axios = require("axios");
 
 const Feed = () => {
   const [events, setEvents] = useState([]);
-  const [context, setContext] = useContext(Context);
+  const { userEvents } = useContext(UserContext);
 
   useEffect(() => {
     const getEvents = async () => {
       const url = "https://jsonplaceholder.typicode.com/posts"; // temporary
       
-
       const settings = {
         headers: {
           "Content-Type": "application/json",
@@ -60,8 +60,8 @@ const Feed = () => {
     getEvents();
   }, []);
 
-  const eventList = events.map((event) => 
-    (context.indexOf(event.title) !== -1) ?
+  const eventList = events.map((event) => (
+    userEvents.indexOf(event.title) !== -1) ?
       (<SubscribedCard
       key={event.id}
       title={event.title}
@@ -74,7 +74,9 @@ const Feed = () => {
   );
   return (
     <View style={styles.layout}>
-      <ScrollView showsVerticalScrollIndicator={false}>{eventList}</ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {eventList}
+      </ScrollView>
     </View>
   );
 };
