@@ -6,7 +6,12 @@ import MainButton from '../../components/MainButton/MainButton.component';
 
 import styles from './UserSettings.styles';
 
+import { UserContext } from '../../context/UserContext';
+
 const UserSettings = () => {
+
+    const { name, major, classLevel } = useContext(UserContext);
+
     return(
         <View style={styles.spacing}>
            <TextLabel label="Account Name:" placeholder="John Doe"/>
