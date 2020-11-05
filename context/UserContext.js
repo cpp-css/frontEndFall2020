@@ -17,10 +17,8 @@ const actions = {
 }
 
 function reducer(state, action) {
-    console.log("CHECKK")
     switch(action.type) {
         case actions.SET_EVENTS:
-            console.log("PASSSSSS");
             return { ...state, userEvents: action.value };
         case actions.SET_CLUBS:
             return { ...state, userClubs: action.value };
