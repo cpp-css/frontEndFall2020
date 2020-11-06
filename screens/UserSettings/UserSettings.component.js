@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View } from 'react-native';
 
 import TextLabel from '../../components/TextLabel/TextLabel.component';
