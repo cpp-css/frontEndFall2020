@@ -11,7 +11,7 @@ import Button from '../MainButton/MainButton.component';
 const SubscribedCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const { userEvents, setUserEvents } = useContext(UserContext);
+    const { userEvents, removeUserEvents } = useContext(UserContext);
 
     return (
         <View>
@@ -37,10 +37,10 @@ const SubscribedCard = (props) => {
                     <Text> {props.link} </Text>
                     <Button
                         onPress={() => {
-                            Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!");
-                            //setUserEvents([...userEvents, props.title]);
+                            removeUserEvents([...userEvents, props.title]);
                             setModalVisible(!isModalVisible);
-                            console.log([...userEvents, props.title]);
+                            Alert.alert("You have unsubscribed from " + props.title + " on " + props.date + ".");
+                            console.log([...userEvents]);
                         }}
                         style={{ backgroundColor: '#92d050' }}
                         label="Unsubscribe"
