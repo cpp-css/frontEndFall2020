@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View } from 'react-native';
 
 import TextLabel from '../../components/TextLabel/TextLabel.component';
@@ -6,7 +6,12 @@ import MainButton from '../../components/MainButton/MainButton.component';
 
 import styles from './UserSettings.styles';
 
+import { UserContext } from '../../context/UserContext';
+
 const UserSettings = () => {
+
+    const { name, major, classLevel } = useContext(UserContext);
+
     return(
         <View style={styles.spacing}>
            <TextLabel label="Account Name:" placeholder="John Doe"/>

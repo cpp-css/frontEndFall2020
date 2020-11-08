@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Text, Image, View, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Context } from '../../components/Context.js';
+//import { Context } from '../../Context';
 import styles from './ClubCard.styles';
 
 const ClubCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [context, setContext] = useContext(Context);
+    //const [context, setContext] = useContext(Context);
 
     return (
         <View>
@@ -34,7 +34,7 @@ const ClubCard = (props) => {
                                 () => {
                                     Alert.alert("You successfully have subscribed to " 
                                     + props.org + "!")
-                                    setContext([...context, props.title]);
+                                    //setContext([...context, props.title]);
                                 }
                             }>Suscribe</Text>
                     </TouchableOpacity>

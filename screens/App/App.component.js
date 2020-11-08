@@ -3,21 +3,25 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Screens
-import Home from './screens/Home/Home.component';
-import Login from './screens/Login/Login.component';
-import SignUp from './screens/SignUp/SignUp.component';
-import Main from './screens/Navigation/Navigation.component';
-import Contact from './screens/Contact/Contact.component';
-import { Context } from "./components/Context.js";
-import UserSettings from "./screens/UserSettings/UserSettings.component";
+import Home from '../Home/Home.component';
+import Login from '../Login/Login.component';
+import SignUp from '../SignUp/SignUp.component';
+import Main from '../Navigation/Navigation.component';
+import Contact from '../Contact/Contact.component';
+//import { Context } from "../../Context";
+import UserSettings from "../UserSettings/UserSettings.component";
+
+import { UserProvider } from '../../context/UserContext';
 
 const Stack = createStackNavigator();
 
+// <Context.Provider value={[context, setContext]}>
+
 const App = () => {
-    const [context, setContext] = useState([]);
+    //const [context, setContext] = useState([]);
     
     return (
-        <Context.Provider value={[context, setContext]}>
+        <UserProvider>
             <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen
@@ -43,7 +47,7 @@ const App = () => {
                 />
             </Stack.Navigator>
             </NavigationContainer>
-        </Context.Provider>
+        </UserProvider>
     );
 };
 

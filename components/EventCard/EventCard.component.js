@@ -1,13 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { Text, Image, View, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Context } from '../../components/Context.js';
+//import { Context } from '../../Context';
 import styles from './EventCard.styles';
+
+import { UserContext } from '../../context/UserContext';
+
+import Button from '../MainButton/MainButton.component';
 
 const EventCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [context, setContext] = useContext(Context);
+    const { userEvents, setUserEvents } = useContext(UserContext);
     
     return(
         <View>
@@ -31,23 +35,23 @@ const EventCard = (props) => {
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
                     <Text style={styles.datePopUp}> {props.date} </Text>
                     <Text> {props.link} </Text>
-                    <TouchableOpacity style={styles.btnPopUpRSVP}>
-                        <Text style={styles.btnText} 
-                        onPress={
-                            () => {
-                                Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!")
-                                setContext([...context,props.title]);
-                            }
-                        }>RSVP</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnPopUpExit}>
-                        <Text 
-                            style={styles.btnText} 
-                            onPress={() => {
-                            setModalVisible(!isModalVisible)}}>
-                                Exit
-                        </Text>
-                    </TouchableOpacity>
+                    <Button
+                        onPress={() => {
+                            Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!");
+                            setUserEvents([...userEvents, props.title]);
+                            setModalVisible(!isModalVisible);
+                            console.log([...userEvents, props.title]);
+                        }}
+                        style={{backgroundColor: '#92d050'}}
+                        label="RSVP"
+                    />
+                    <Button
+                        onPress={() => {
+                            setModalVisible(!isModalVisible);
+                        }}
+                        style={{backgroundColor: '#CD5C5C'}}
+                        label="Exit"
+                    />
                 </View>
             </Modal>
         </View>
