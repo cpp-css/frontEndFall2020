@@ -15,7 +15,7 @@ const Login = ({navigation}) => {
 	const [password, setPassword] = useState('');
 
 	const login = async () => {
-		const url = 'https://jsonplaceholder.typicode.com/posts';
+		const url = 'http://10.0.2.2:9090/login';
 
 		const settings = {
 			headers: {
@@ -23,16 +23,22 @@ const Login = ({navigation}) => {
 			},
 		};
 
-		const body = JSON.stringify({email, password});
+		const body = {
+			email: email, 
+			password: password
+		}
 
 		try {
-			let response = await axios.get(url, settings, body);
-			if (response) {
-				navigation.push('Main');
-			}
+			let response = await axios.post(url, body);
+			
 			// use response to authenticate
-			//console.log(response);
+			console.log(response.data);
+			if(!response.data.success)
+				Alert.alert(response.data.message);
+			else
+				navigation.push('Main');
 		} catch (error) {
+			Alert.alert(error);
 			console.error(error);
 		}
 	};
@@ -66,7 +72,7 @@ const Login = ({navigation}) => {
 					setPassword(text);
 				}}
 			/>
-            <MainButton label="Login" onPress={validateInput}/>
+            <MainButton label="Login" onPress={login}/>
 			<TouchableOpacity style={styles.forgotLabelContainer}>
 				<Text style={styles.forgotLabel}> Forgot password? </Text>
 			</TouchableOpacity>
