@@ -37,48 +37,6 @@ const styles = StyleSheet.create({
     },
     date: {
     },
-
-    containerPopUp: {
-        marginTop: 10,
-        //flex: 1,
-        //flexDirection: 'row',
-        //justifyContent: 'space-between',
-        backgroundColor: 'white',
-        // width: width - 40,
-        margin: 10,
-        // height: height - 105,
-        alignItems: 'center',
-        borderRadius: 10,
-        padding: "5%",
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 1,
-            height: 1
-        },
-        shadowOpacity: 0.24,
-        shadowRadius: 5,
-        elevation: 3
-    },
-    titlePopUp: {
-        fontWeight: 'bold',
-        fontSize: 25,
-    },
-    imagePopUp: {
-        width: "100%",
-        height: "60%",
-        //margin: "5%",
-        borderRadius: 10,
-    },
-    datePopUp: {
-        fontSize: 20
-    },
-    btnText: {
-        fontSize: 20,
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        fontWeight: 'bold',
-        letterSpacing: 2
-    }
 });
 
 export default styles;
