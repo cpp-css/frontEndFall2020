@@ -64,13 +64,22 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     imagePopUp: {
-        width: "100%",
-        height: "60%",
+        width: "80%",
+        height: "40%",
         //margin: "5%",
         borderRadius: 10,
     },
+    descPopUp: {
+        fontSize: 15,
+        textAlign: 'left',
+        width: '100%',
+        paddingVertical: '2%'
+
+    },
     datePopUp: {
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: 'bold'
+        
     },
     btnText: {
         fontSize: 20,

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, Image, View, Alert, Modal } from 'react-native';
+import { Text, Image, View, Alert, Modal, TouchableWithoutFeedback } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 //import { Context } from '../../Context';
 import styles from './EventCard.styles';
@@ -24,17 +24,23 @@ const EventCard = (props) => {
                 <Text style={styles.title}> {props.title} </Text>
                 <Image style={styles.image} resizeMode="contain" source={props.source}/>
                 <Text style={styles.date}> {props.date} </Text>
+
                 <Text> {props.link} </Text>
             </TouchableOpacity>
+            
             <Modal animationType="slide"
                 transparent={true}
-                visible={isModalVisible}>
+                visible={isModalVisible}
+                onBackdropPress = { () => this.setState({isVisible:false})}
+                >
+                
                 <View style={styles.containerPopUp}>
+                    
                     <Text> {props.org} </Text>
                     <Text style={styles.titlePopUp}> {props.title} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
+                    <Text style={styles.descPopUp}> {props.desc} </Text>
                     <Text style={styles.datePopUp}> {props.date} </Text>
-                    <Text> {props.link} </Text>
                     <Button
                         onPress={() => {
                             Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!");
@@ -54,6 +60,7 @@ const EventCard = (props) => {
                     />
                 </View>
             </Modal>
+           
         </View>
     )
 }

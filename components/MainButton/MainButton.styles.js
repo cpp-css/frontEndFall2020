@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
 		width: '100%',
 		paddingTop: '5%',
 		paddingBottom: '5%',
-		borderRadius: 10,
+		borderRadius: 20,
+		marginBottom: '-10%'
 	},
 	label: {
 		textTransform: 'uppercase',
