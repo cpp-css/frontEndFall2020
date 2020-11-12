@@ -11,7 +11,7 @@ const { width } = Dimensions.get('window');
 
 const cardItems = [
     {
-        title: "Career Center Work",
+        title: "Career Center Workshop",
         org: "Computer Science Society",
         desc: "This workshop is open to all students/all majors and alumni. Students will get information on how to market their essential skills to employers at the upcoming virtual career fairs. Students/alumni can click on the Zoom link to attend the presentation.",
         date: "Tuesday, May 10, 2020",

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, Image, View, Alert, Modal, TouchableWithoutFeedback } from 'react-native';
+import { Text, Image, View, Alert, Modal} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 //import { Context } from '../../Context';
 import styles from './EventCard.styles';
