@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Alert} from 'react-native';
 
 // Components
@@ -7,13 +7,14 @@ import MainButton from '../../components/MainButton/MainButton.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextLabel from '../../components/TextLabel/TextLabel.component';
 
+import { UserContext } from '../../context/UserContext';
 const axios = require('axios');
 
 const Login = ({navigation}) => {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-
+	const { token, setToken} = useContext(UserContext);
 	const login = async () => {
 		const url = 'http://10.0.2.2:9090/login';
 
@@ -24,15 +25,15 @@ const Login = ({navigation}) => {
 		};
 
 		const body = {
-			email: email, 
-			password: password
+			email: "josh@cpp.edu", //hardcoded for development
+			password: "passwordtest"
 		}
 
 		try {
 			let response = await axios.post(url, body);
+			console.log(response.data.session.token);
+			setToken(response.data.session.token)// use response to authenticate
 			
-			// use response to authenticate
-			console.log(response.data);
 			if(!response.data.success)
 				Alert.alert(response.data.message);
 			else
