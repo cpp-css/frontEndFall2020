@@ -19,8 +19,11 @@ const ClubCard = (props) => {
                 onPress={() => {
                     setModalVisible(!isModalVisible)
                 }}>
-                <Text style={styles.org}> {props.org} </Text>
-                <Text> Related to: {props.relatedTo} </Text>
+                <Image style={styles.image} source={props.source} />
+                <Text style={styles.textContainer}>
+                    <Text style={styles.org}> {props.org}{"\n"} </Text>
+                    <Text> Related to: {props.relatedTo} </Text>
+                </Text>
             </TouchableOpacity>
             <Modal animationType="slide"
                 transparent={true}

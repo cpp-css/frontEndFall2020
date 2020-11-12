@@ -4,15 +4,14 @@ const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
         //flex: 1,
-        //flexDirection: 'row',
+        flexDirection: 'row',
         //justifyContent: 'space-between',
         backgroundColor: 'white',
         width: width - 20,
         margin: 10,
         //height: height - 210,
-        //alignItems: 'center',
+        alignItems: 'center',
         borderRadius: 10,
         padding: "5%",
         shadowColor: 'black',
@@ -24,9 +23,21 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 3
     },
+    textContainer: {
+        flexDirection: 'column',
+        textAlign: "center",
+        flex: 1,
+        margin: 5,
+        flexWrap: 'wrap',
+    },
     org: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: 20,
+    },
+    image: {
+        width: 75,
+        height: 75,
+        borderRadius: 5,
     },
 
     containerPopUp: {
