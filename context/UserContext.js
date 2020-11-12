@@ -15,7 +15,9 @@ const initialState = {
 const actions = {
     SET_EVENTS: 'SET_EVENTS',
     SET_CLUBS: 'SET_CLUBS',
-    SET_TOKEN: 'SET_TOKEN'
+    SET_TOKEN: 'SET_TOKEN',
+    REMOVE_EVENTS: 'REMOVE_EVENTS',
+    REMOVE_CLUBS: 'REMOVE_CLUBS'
 }
 
 function reducer(state, action) {
@@ -26,6 +28,14 @@ function reducer(state, action) {
             return { ...state, userClubs: action.value };
         case actions.SET_TOKEN:
             return { ...state, token: action.value };
+        case actions.REMOVE_EVENTS:
+            let eventList = JSON.stringify(action.value).split('\"');
+            let eventName = eventList[eventList.length - 2];
+            return { userEvents: state.userEvents.filter(currEvent => currEvent != eventName) };
+        case actions.REMOVE_CLUBS:
+            let clubList = JSON.stringify(action.value).split('\"');
+            let clubName = clubList[clubList.length - 2];
+            return { userClubs: state.userClubs.filter(currClubs => currClubs != clubName) };
         default:
             return state;
     }
@@ -51,6 +61,12 @@ function UserProvider({children}) {
         },
         setToken: value => {
             dispatch({ type: actions.SET_TOKEN, value});
+        },
+        removeUserEvents: value => {
+            dispatch({ type: actions.REMOVE_EVENTS, value });
+        },
+        removeUserClubs: value => {
+            dispatch({ type: actions.REMOVE_CLUBS, value });
         }
     }
 

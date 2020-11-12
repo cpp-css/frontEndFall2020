@@ -1,19 +1,34 @@
 import React, { useState, useContext } from 'react';
-import { Text, Image, View, Alert, Modal } from 'react-native';
+import { Text, Image, View, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './SubscribedCard.styles';
 
 import { UserContext } from '../../context/UserContext';
 
-import Button from '../MainButton/MainButton.component';
+let lastPress = 0;
 
 const axios = require('axios');
 
 const SubscribedCard = (props) => {
 
+    const { userEvents, removeUserEvents } = useContext(UserContext);
+
+    const onDoublePress = () => {
+        const time = new Date().getTime();
+        const delta = time - lastPress;
+
+        const DOUBLE_PRESS_DELAY = 400;
+        if (delta < DOUBLE_PRESS_DELAY) {
+            removeUserEvents([...userEvents, props.title]);
+            Alert.alert("You have unsubscribed from " + props.title + " on " + props.date + ".");
+            console.log([...userEvents]);
+        }
+        lastPress = time;
+    };
+
     const [isModalVisible, setModalVisible] = useState(false);
-    const { userEvents, setUserEvents } = useContext(UserContext);
+    
     const { token } = useContext(UserContext);
     const subscribeToEvent = async (eventID) => {
 		const url = 'http://10.0.2.2:9090/event/register/'+eventID;
@@ -47,8 +62,8 @@ const SubscribedCard = (props) => {
 		};
 
 		const body = {
-		}
-
+        }
+        
 		try {
             console.log(eventID)
             let response = await axios.delete(url, settings);
@@ -62,7 +77,7 @@ const SubscribedCard = (props) => {
             <TouchableOpacity 
                 style={styles.container} 
                 onPress={() => {
-                    setModalVisible(!isModalVisible)
+                    onDoublePress()
                 }}>
                 <Text> {props.name} </Text>
                 <Text style={styles.title}> {props.info} </Text>
@@ -71,42 +86,6 @@ const SubscribedCard = (props) => {
                 <Text> {props.theme} </Text>
                 <Text> {props.perks} </Text>
             </TouchableOpacity>
-            <Modal animationType="slide"
-                transparent={true}
-                visible={isModalVisible}>
-                <View style={styles.containerPopUp}>
-                    {/* <Text> {props.name} </Text>
-                    <Text style={styles.titlePopUp}> {props.info} </Text> */}
-                    <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
-                    <Text style={styles.datePopUp}> {props.date} </Text>
-                    <Text> {props.theme} </Text>
-                    <Text> {props.perks} </Text>
-                    <Button
-                        onPress={() => {
-                            Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!");
-                            subscribeToEvent(props.event_id);
-                            setModalVisible(!isModalVisible);
-                        }}
-                        style={{backgroundColor: '#92d050'}}
-                        label="RSVP"
-                    />
-                    <Button
-                        onPress={() => {
-                            setModalVisible(!isModalVisible);
-                        }}
-                        style={{backgroundColor: '#CD5C5C'}}
-                        label="Exit"
-                    />
-                    <Button
-                        onPress={() => {
-                            unsubToEvent(props.event_id)
-                            setModalVisible(!isModalVisible);
-                        }}
-                        style={{backgroundColor: '#CD5C5C'}}
-                        label="Unsub"
-                    />
-                </View>
-            </Modal>
         </View>
     )
 }
