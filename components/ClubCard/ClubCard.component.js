@@ -1,13 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Text, Image, View, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-//import { Context } from '../../Context';
 import styles from './ClubCard.styles';
+
+//import { UserContext } from '../../context/UserContext';
+
+import Button from '../MainButton/MainButton.component';
 
 const ClubCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
-    //const [context, setContext] = useContext(Context);
+    //const { userEvents, setUserEvents } = useContext(UserContext);
 
     return (
         <View>
@@ -28,25 +31,24 @@ const ClubCard = (props) => {
                     <Text style={styles.linkPopUp}> {props.link} </Text>
                     <Text style={styles.infoPopUp}> {props.info} </Text>
                     <Text style={styles.relatedToPopUp}> Related to: {props.relatedTo} </Text>
-                    <TouchableOpacity style={styles.btnPopUp}>
-                        <Text style={styles.btnText}
-                            onPress={
-                                () => {
-                                    Alert.alert("You successfully have subscribed to " 
-                                    + props.org + "!")
-                                    //setContext([...context, props.title]);
-                                }
-                            }>Suscribe</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnPopUp}>
-                        <Text
-                            style={styles.btnText}
-                            onPress={() => {
-                                setModalVisible(!isModalVisible)
-                            }}>
-                            Exit
-                        </Text>
-                    </TouchableOpacity>
+                    <Button
+                        onPress={() => {
+                            Alert.alert("You successfully have subscribed to "
+                                + props.org + "!");
+                            //setUserEvents([...userEvents, props.title]);
+                            setModalVisible(!isModalVisible);
+                            //console.log([...userEvents, props.title]);
+                        }}
+                        style={{ backgroundColor: '#92d050' }}
+                        label="Subscribe"
+                    />
+                    <Button
+                        onPress={() => {
+                            setModalVisible(!isModalVisible);
+                        }}
+                        style={{ backgroundColor: '#CD5C5C' }}
+                        label="Exit"
+                    />
                 </View>
             </Modal>
         </View>

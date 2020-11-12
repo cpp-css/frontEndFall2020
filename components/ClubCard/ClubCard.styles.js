@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
 const { width } = Dimensions.get('window');
-const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
@@ -70,19 +69,6 @@ const styles = StyleSheet.create({
     },
     relatedToPopUp: {
         fontWeight: 'bold',
-    },
-
-    btnPopUp: {
-        backgroundColor: '#92d050',
-        padding: 5,
-        margin: 5,
-        width: 100,
-        borderRadius: 10,
-    },
-    btnText: {
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        fontWeight: 'bold'
     }
 });
 
