@@ -20,11 +20,12 @@ const SubscribedCard = (props) => {
                 onPress={() => {
                     setModalVisible(!isModalVisible)
                 }}>
-                <Text> {props.org} </Text>
-                <Text style={styles.title}> {props.title} </Text>
-                <Image style={styles.image} resizeMode="contain" source={props.source} />
-                <Text style={styles.date}> {props.date} </Text>
-                <Text> {props.link} </Text>
+                <Image style={styles.image} source={props.source} />
+                <Text style={styles.textContainer}>
+                    <Text style={styles.title}>{props.title}{"\n"}{"\n"}</Text>
+                    <Text>Theme: {props.theme}{"\n"}</Text>
+                    <Text>Perks: {props.perks}</Text>
+                </Text>
             </TouchableOpacity>
             <Modal animationType="slide"
                 transparent={true}

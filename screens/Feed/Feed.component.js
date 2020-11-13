@@ -67,12 +67,14 @@ const Feed = () => {
   const eventList = allEvents.map((event, id) => (
     userEvents.indexOf(event.title) !== -1) ?
       (<SubscribedCard
-      key={id}
-      title={event.title}
-      org={event.org}
-      date={event.date}
-      link={event.link}
-      source={event.image}
+        key={id}
+        title={event.title}
+        theme={event.theme}
+        perks={event.perks}
+        org={event.org}
+        date={event.date}
+        link={event.link}
+        source={event.image}
     />) : console.log(event.id)
     
   );

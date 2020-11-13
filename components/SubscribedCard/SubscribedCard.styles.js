@@ -5,14 +5,13 @@ const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
         //flex: 1,
-        //flexDirection: 'row',
+        flexDirection: 'row',
         //justifyContent: 'space-between',
         backgroundColor: 'white',
         width: width - 20,
         margin: 10,
-        height: height - 210,
+        //height: height - 210,
         alignItems: 'center',
         borderRadius: 10,
         padding: "5%",
@@ -25,17 +24,20 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 3
     },
+    image: {
+        width: 100,
+        height: 100,
+        borderRadius: 5,
+    },
+    textContainer: {
+        flexDirection: 'column',
+        textAlign: "center",
+        flex: 1,
+        flexWrap: 'wrap',
+    },
     title: {
         fontWeight: 'bold',
-        fontSize: 25,
-    },
-    image: {
-        width: "100%",
-        height: "70%",
-        margin: "5%",
-        borderRadius: 10,
-    },
-    date: {
+        fontSize: 20,
     },
 
     containerPopUp: {
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         // width: width - 40,
         margin: 10,
-        // height: height - 105,
+        height: height - 105,
         alignItems: 'center',
         borderRadius: 10,
         padding: "5%",
