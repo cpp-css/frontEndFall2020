@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
+
 // Components
 import { Searchbar } from 'react-native-paper';
 import EventCard from '../../components/EventCard/EventCard.component';
+import Button from '../../components/MainButton/MainButton.component';
+
+// Context
+import { EventContext } from '../../context/EventContext';
 
 // Styles
 import styles from './Events.styles';
@@ -33,27 +38,15 @@ const cardItems = [
         link: "https://github.com",
         image: require("../../assets/images/Blizzard.png")
     },
-    {
-        title: "dank mames",
-        org: "IEEE",
-        date: "Tuesday, May 10, 2020",
-        link: "https://github.com",
-        image: require("../../assets/images/CareerCenterWorkshop.jpg")
-    },
-    {
-        title: "dank mames",
-        org: "Computer Science Society",
-        date: "Tuesday, May 10, 2020",
-        link: "https://github.com",
-        image: require("../../assets/images/CareerCenterWorkshop.jpg")
-    },
 ]
 
-const Events = () => {
+const Events = ({navigation}) => {
+
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
 
-    let filteredCards = cardItems.filter(
+    const { allEvents } = useContext(EventContext);
+    let filteredCards = allEvents.filter(
         (event) => {
             return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
         }
@@ -66,7 +59,13 @@ const Events = () => {
                 onChangeText={onChangeSearch}
                 value={searchQuery}
             />
-            
+            <Button
+                onPress={() => {
+                    navigation.push('CreateEvent');
+                }}
+                label="Create Event"
+                containerStyle={{padding: '-2%'}}
+            />
             <ScrollView
                showsHorizontalScrollIndicator={false}
                horizontal={true}

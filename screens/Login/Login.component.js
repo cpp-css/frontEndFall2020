@@ -66,7 +66,11 @@ const Login = ({navigation}) => {
 					setPassword(text);
 				}}
 			/>
-            <MainButton label="Login" onPress={validateInput}/>
+			<MainButton 
+				label="Login" 
+				onPress={validateInput}
+                containerStyle={styles.containerButton}
+			/>
 			<TouchableOpacity style={styles.forgotLabelContainer}>
 				<Text style={styles.forgotLabel}> Forgot password? </Text>
 			</TouchableOpacity>
