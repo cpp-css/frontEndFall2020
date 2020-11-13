@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     image: {
-        width: 100,
-        height: 100,
+        width: 75,
+        height: 75,
         borderRadius: 5,
     },
     textContainer: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         // width: width - 40,
         margin: 10,
-        height: height - 105,
+        // height: height - 105,
         alignItems: 'center',
         borderRadius: 10,
         padding: "5%",
@@ -66,13 +66,20 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     imagePopUp: {
-        width: "100%",
-        height: "60%",
+        width: "80%",
+        height: "40%",
         //margin: "5%",
         borderRadius: 10,
     },
+    descPopUp: {
+        fontSize: 15,
+        textAlign: 'left',
+        width: '100%',
+        paddingVertical: '2%'
+    },
     datePopUp: {
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: 'bold'
     },
     btnText: {
         fontSize: 20,

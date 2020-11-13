@@ -56,9 +56,8 @@ const Events = ({navigation}) => {
                     <EventCard
                        key={id}
                        title={card.title}
-                       // NOTE: Uncommenting the below comments will cause an error: Cannot find event variable
-                        // theme={event.theme}
-                        // perks={event.perks}
+                       theme={card.theme}
+                       perks={card.perks}
                        org={card.org}
                        desc={card.desc}
                        date={card.date}

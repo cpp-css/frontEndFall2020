@@ -22,7 +22,7 @@ const SubscribedCard = (props) => {
                 }}>
                 <Image style={styles.image} source={props.source} />
                 <Text style={styles.textContainer}>
-                    <Text style={styles.title}>{props.title}{"\n"}{"\n"}</Text>
+                    <Text style={styles.title}>{props.title}{"\n"}</Text>
                     <Text>Theme: {props.theme}{"\n"}</Text>
                     <Text>Perks: {props.perks}</Text>
                 </Text>
@@ -34,8 +34,8 @@ const SubscribedCard = (props) => {
                     <Text> {props.org} </Text>
                     <Text style={styles.titlePopUp}> {props.title} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
+                    <Text style={styles.descPopUp}> {props.desc} </Text>
                     <Text style={styles.datePopUp}> {props.date} </Text>
-                    <Text> {props.link} </Text>
                     <Button
                         onPress={() => {
                             removeUserEvents([...userEvents, props.title]);

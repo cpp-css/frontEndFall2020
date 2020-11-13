@@ -72,6 +72,7 @@ const Feed = () => {
         theme={event.theme}
         perks={event.perks}
         org={event.org}
+        desc={event.desc}
         date={event.date}
         link={event.link}
         source={event.image}

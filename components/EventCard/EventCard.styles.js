@@ -74,22 +74,12 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         width: '100%',
         paddingVertical: '2%'
-
     },
     datePopUp: {
         fontSize: 20,
         fontWeight: 'bold'
         
     },
-    btnText: {
-        fontSize: 20,
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        fontWeight: 'bold',
-        letterSpacing: 2
-    }
-
- 
 });
 
 export default styles;
