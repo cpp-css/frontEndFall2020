@@ -13,7 +13,7 @@ const axios = require('axios');
 const EventCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const { userEvents, setUserEvents } = useContext(UserContext);
+    const { userEvents, addUserEvent } = useContext(UserContext);
     const { token } = useContext(UserContext);
 
     const subscribeToEvent = async (eventID) => {
@@ -30,9 +30,18 @@ const EventCard = (props) => {
 		}
 
 		try {
-            console.log(eventID)
             let response = await axios.post(url, body, settings);
             console.log(response.data);
+            Alert.alert(response.data.message);
+            addUserEvent({
+                created_at : props.created_at,
+                event_id: props.event_id,
+                event_name: props.name,
+                info: props.info,
+                date: props.end_date,
+                perks: props.perks,
+                theme: props.theme,
+            })
 		} catch (error) {
 			console.error(error);
 		}
@@ -51,7 +60,6 @@ const EventCard = (props) => {
 		}
 
 		try {
-            console.log(eventID)
             let response = await axios.delete(url, settings);
             console.log(response.data);
 		} catch (error) {
@@ -89,7 +97,6 @@ const EventCard = (props) => {
                     <Text> {props.perks} </Text>
                     <Button
                         onPress={() => {
-                            Alert.alert("You successfully have registered for " + props.name + " on " + props.date + "!");
                             subscribeToEvent(props.event_id);
                             setModalVisible(!isModalVisible);
                         }}

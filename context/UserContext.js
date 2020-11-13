@@ -7,6 +7,7 @@ const initialState = {
     name: "Jane Doe",
     major: "Computer Science",
     classLevel: "Freshmen",
+    events: [],
     userEvents: [],
     userClubs: [],
     token: ""
@@ -14,28 +15,38 @@ const initialState = {
 
 const actions = {
     SET_EVENTS: 'SET_EVENTS',
+    ADD_EVENT: 'ADD_EVENT',
+    SET_USER_EVENTS: 'SET_USER_EVENTS',
+    ADD_USER_EVENT: 'ADD_USER_EVENT',
     SET_CLUBS: 'SET_CLUBS',
     SET_TOKEN: 'SET_TOKEN',
-    REMOVE_EVENTS: 'REMOVE_EVENTS',
+    REMOVE_USER_EVENT: 'REMOVE_USER_EVENT',
     REMOVE_CLUBS: 'REMOVE_CLUBS'
 }
 
 function reducer(state, action) {
     switch(action.type) {
         case actions.SET_EVENTS:
+            return { ...state, events: action.value };
+        case actions.ADD_EVENT:
+            return { ...state, events: [...state.events,action.value] };
+
+        case actions.SET_USER_EVENTS:
             return { ...state, userEvents: action.value };
-        case actions.SET_CLUBS:
-            return { ...state, userClubs: action.value };
+        case actions.ADD_USER_EVENT:
+            return { ...state, userEvents: [...state.userEvents,action.value] };
+        case actions.REMOVE_USER_EVENT:
+            return { ...state, userEvents: state.userEvents.filter(userEvent => userEvent.event_id !== action.value) };
+    
         case actions.SET_TOKEN:
             return { ...state, token: action.value };
-        case actions.REMOVE_EVENTS:
-            let eventList = JSON.stringify(action.value).split('\"');
-            let eventName = eventList[eventList.length - 2];
-            return { userEvents: state.userEvents.filter(currEvent => currEvent != eventName) };
+
+        case actions.SET_CLUBS:
+            return { ...state, userClubs: action.value };
         case actions.REMOVE_CLUBS:
             let clubList = JSON.stringify(action.value).split('\"');
             let clubName = clubList[clubList.length - 2];
-            return { userClubs: state.userClubs.filter(currClubs => currClubs != clubName) };
+            return { ...state, userClubs: state.userClubs.filter(currClubs => currClubs != clubName) };
         default:
             return state;
     }
@@ -50,20 +61,34 @@ function UserProvider({children}) {
         name: state.name,
         major: state.major,
         classLevel: state.classLevel,
+        events: state.events,
         userEvents: state.userEvents,
         userClubs: state.clubs,
         token: state.token,
-        setUserEvents: value => {
+
+        setEvents: value => {
             dispatch({ type: actions.SET_EVENTS, value});
         },
-        setUserClubs: value => {
-            dispatch({ type: actions.SET_CLUBS, value});
+        addEvent: value => {
+            dispatch({ type: actions.ADD_EVENT, value});
         },
+
+        setUserEvents: value => {
+            dispatch({ type: actions.SET_USER_EVENTS, value});
+        },
+        addUserEvent: value => {
+            dispatch({ type: actions.ADD_USER_EVENT, value});
+        },
+        removeUserEvent: value => {
+            dispatch({ type: actions.REMOVE_USER_EVENT, value });
+        },
+
         setToken: value => {
             dispatch({ type: actions.SET_TOKEN, value});
         },
-        removeUserEvents: value => {
-            dispatch({ type: actions.REMOVE_EVENTS, value });
+        
+        setUserClubs: value => {
+            dispatch({ type: actions.SET_CLUBS, value});
         },
         removeUserClubs: value => {
             dispatch({ type: actions.REMOVE_CLUBS, value });

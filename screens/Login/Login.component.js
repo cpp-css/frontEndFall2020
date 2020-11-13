@@ -25,14 +25,14 @@ const Login = ({navigation}) => {
 		};
 
 		const body = {
-			email: "josh@cpp.edu", //hardcoded for development
+			email: "khuong@cpp.edu", //hardcoded for development
 			password: "passwordtest"
 		}
 
 		try {
 			let response = await axios.post(url, body);
 			console.log(response.data.session.token);
-			setToken(response.data.session.token)// use response to authenticate
+			setToken(response.data.session.token)
 			
 			if(!response.data.success)
 				Alert.alert(response.data.message);
@@ -73,15 +73,11 @@ const Login = ({navigation}) => {
 					setPassword(text);
 				}}
 			/>
-<<<<<<< HEAD
-            <MainButton label="Login" onPress={login}/>
-=======
 			<MainButton 
 				label="Login" 
-				onPress={validateInput}
+				onPress={login}
                 containerStyle={styles.containerButton}
 			/>
->>>>>>> upstream/master
 			<TouchableOpacity style={styles.forgotLabelContainer}>
 				<Text style={styles.forgotLabel}> Forgot password? </Text>
 			</TouchableOpacity>

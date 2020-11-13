@@ -81,15 +81,11 @@ const SignUp = ({navigation}) => {
                 }}
                 value={password}
             />
-<<<<<<< HEAD
-            <MainButton label="Register" onPress={register}/>
-=======
             <MainButton
                 label="Register"
-                onPress={validateInput}
+                onPress={register}
                 containerStyle={styles.containerButton}
             />
->>>>>>> upstream/master
         </View>
     );
 };

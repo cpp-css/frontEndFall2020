@@ -10,26 +10,23 @@ let lastPress = 0;
 
 const axios = require('axios');
 
+
+
 const SubscribedCard = (props) => {
-
-    const { userEvents, removeUserEvents } = useContext(UserContext);
-
+    const { userEvents, removeUserEvent } = useContext(UserContext);
     const onDoublePress = () => {
         const time = new Date().getTime();
         const delta = time - lastPress;
 
         const DOUBLE_PRESS_DELAY = 400;
         if (delta < DOUBLE_PRESS_DELAY) {
-            removeUserEvents([...userEvents, props.title]);
-            Alert.alert("You have unsubscribed from " + props.title + " on " + props.date + ".");
-            console.log([...userEvents]);
+            unsubToEvent(props.event_id)
         }
         lastPress = time;
     };
 
-    const [isModalVisible, setModalVisible] = useState(false);
-    
     const { token } = useContext(UserContext);
+
     const subscribeToEvent = async (eventID) => {
 		const url = 'http://10.0.2.2:9090/event/register/'+eventID;
 
@@ -40,11 +37,7 @@ const SubscribedCard = (props) => {
 			},
 		};
 
-		const body = {
-		}
-
 		try {
-            console.log(eventID)
             let response = await axios.post(url, settings);
             console.log(response.data);
 		} catch (error) {
@@ -60,14 +53,13 @@ const SubscribedCard = (props) => {
                 'Authorization': 'Bearer ' + token
 			},
 		};
-
-		const body = {
-        }
         
 		try {
-            console.log(eventID)
             let response = await axios.delete(url, settings);
-            console.log(response.data);
+            
+            Alert.alert(response.data.message);
+            removeUserEvent(props.event_id);
+            console.log(userEvents);
 		} catch (error) {
 			console.error(error);
 		}
