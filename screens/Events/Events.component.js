@@ -1,8 +1,18 @@
+<<<<<<< HEAD
 import React, { useContext, useState, useEffect } from "react";
 import { View, Text, ScrollView, Dimensions,Alert } from 'react-native';
+=======
+import React, { useContext } from 'react';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
+
+>>>>>>> upstream/master
 // Components
 import { Searchbar } from 'react-native-paper';
 import EventCard from '../../components/EventCard/EventCard.component';
+import Button from '../../components/MainButton/MainButton.component';
+
+// Context
+import { EventContext } from '../../context/EventContext';
 
 // Styles
 import styles from './Events.styles';
@@ -10,6 +20,7 @@ import styles from './Events.styles';
 import { UserContext } from '../../context/UserContext';
 import Button from '../../components/MainButton/MainButton.component';
 
+<<<<<<< HEAD
 const axios = require("axios");
 const { width } = Dimensions.get('window');
 
@@ -94,6 +105,41 @@ const Events = () => {
       }, []);
 
     let filteredCards = events.filter(
+=======
+const cardItems = [
+    {
+        title: "Career Center Workshop",
+        org: "Computer Science Society",
+        desc: "This workshop is open to all students/all majors and alumni. Students will get information on how to market their essential skills to employers at the upcoming virtual career fairs. Students/alumni can click on the Zoom link to attend the presentation.",
+        date: "Tuesday, May 10, 2020",
+        link: "https://github.com",
+        image: require("../../assets/images/CareerCenterWorkshop.jpg")
+    },
+    {
+        title: "Capture The Flag",
+        org: "Software Engineering Association",
+        desc: "There will be an ongoing session throughout the day that will include a powerpoint presentation that teaches everyone the basics of CTFs as well as how they would be able to sign up and participate in the hosted competition.",
+        date: "Saturday, November 17, 2019",
+        link: "https://github.com",
+        image: require("../../assets/images/CTF.png")
+    },
+    {
+        title: "Guest Speaker: Lance Kimberlin from Bilizzard",
+        org: "Computer Science Society",
+        date: "Tuesday, May 10, 2020",
+        link: "https://github.com",
+        image: require("../../assets/images/Blizzard.png")
+    },
+]
+
+const Events = ({navigation}) => {
+
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const onChangeSearch = query => setSearchQuery(query);
+
+    const { allEvents } = useContext(EventContext);
+    let filteredCards = allEvents.filter(
+>>>>>>> upstream/master
         (event) => {
             return event.event_name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
         }
@@ -107,12 +153,21 @@ const Events = () => {
                 value={searchQuery}
             />
             <Button
+<<<<<<< HEAD
                         onPress={() => {
                             createEvent()
                         }}
                         style={{backgroundColor: '#CD5C5C'}}
                         label="Create"
                     />
+=======
+                onPress={() => {
+                    navigation.push('CreateEvent');
+                }}
+                label="Create Event"
+                containerStyle={{padding: '-2%'}}
+            />
+>>>>>>> upstream/master
             <ScrollView
                showsHorizontalScrollIndicator={false}
                horizontal={true}
@@ -128,6 +183,7 @@ const Events = () => {
                {filteredCards.map((card, id) =>
                     <EventCard
                        key={id}
+<<<<<<< HEAD
                        event_id={card.event_id}
                        name={card.event_name}
                        info={card.info}
@@ -135,6 +191,14 @@ const Events = () => {
                        perks={card.perks}
                        theme={card.theme}
                        source={require("../../assets/images/CareerCenterWorkshop.jpg")}
+=======
+                       title={card.title}
+                       org={card.org}
+                       desc={card.desc}
+                       date={card.date}
+                       link={card.link}
+                       source={card.image}
+>>>>>>> upstream/master
                     />
                )} 
             </ScrollView>

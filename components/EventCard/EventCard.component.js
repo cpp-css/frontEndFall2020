@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, Image, View, Alert, Modal } from 'react-native';
+import { Text, Image, View, Alert, Modal} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 //import { Context } from '../../Context';
 import styles from './EventCard.styles';
@@ -72,13 +72,18 @@ const EventCard = (props) => {
                 <Text> {props.theme} </Text>
                 <Text> {props.perks} </Text>
             </TouchableOpacity>
+            
             <Modal animationType="slide"
                 transparent={true}
-                visible={isModalVisible}>
+                visible={isModalVisible}
+                onBackdropPress = { () => this.setState({isVisible:false})}
+                >
+                
                 <View style={styles.containerPopUp}>
                     {/* <Text> {props.name} </Text>
                     <Text style={styles.titlePopUp}> {props.info} </Text> */}
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
+                    <Text style={styles.descPopUp}> {props.desc} </Text>
                     <Text style={styles.datePopUp}> {props.date} </Text>
                     <Text> {props.theme} </Text>
                     <Text> {props.perks} </Text>
@@ -100,6 +105,7 @@ const EventCard = (props) => {
                     />
                 </View>
             </Modal>
+           
         </View>
     )
 }

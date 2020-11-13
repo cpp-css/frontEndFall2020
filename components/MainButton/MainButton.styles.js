@@ -6,8 +6,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingLeft: '20%',
 		paddingRight: '20%',
-		paddingTop: '5%',
-		paddingBottom: '5%'
+		padding: '2%'
 	},
 	button: {
 		alignItems: 'center',
@@ -15,7 +14,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		paddingTop: '5%',
 		paddingBottom: '5%',
-		borderRadius: 10,
+		borderRadius: 20,
 	},
 	label: {
 		textTransform: 'uppercase',

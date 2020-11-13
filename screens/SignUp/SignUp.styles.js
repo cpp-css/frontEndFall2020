@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: "10%"
     },
+    containerButton: {
+		paddingTop: '5%',
+		paddingBottom: '5%'
+    }
 });
 
 export default styles;

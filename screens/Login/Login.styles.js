@@ -13,6 +13,10 @@ const styles = StyleSheet.create({
     forgotLabel: {
         color: 'gray',
         textAlign: 'center'
+    },
+    containerButton: {
+		paddingTop: '5%',
+		paddingBottom: '5%'
     }
 });
 
