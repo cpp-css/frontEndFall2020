@@ -22,7 +22,7 @@ const CreateEvent = () => {
         categories: [],
         startDate: new Date(),
         endDate: new Date(),
-        description: "",
+        desc: "",
         image: require('../../assets/images/space.jpg'),
     }
 
@@ -107,7 +107,7 @@ const CreateEvent = () => {
                 onChangeText={ text => {
                     setEventData(oldState => ({
                         ...oldState,
-                        description: text
+                        desc: text
                     }));
                 }}
                 multiline={true}
