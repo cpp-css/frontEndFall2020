@@ -88,8 +88,8 @@ const EventCard = (props) => {
                 >
                 
                 <View style={styles.containerPopUp}>
-                    {/* <Text> {props.name} </Text>
-                    <Text style={styles.titlePopUp}> {props.info} </Text> */}
+                    <Text> {props.name} </Text>
+                    <Text style={styles.titlePopUp}> {props.info} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
                     <Text style={styles.descPopUp}> {props.desc} </Text>
                     <Text style={styles.datePopUp}> {props.date} </Text>
