@@ -75,7 +75,11 @@ const SignUp = ({navigation}) => {
                 }}
                 value={password}
             />
-            <MainButton label="Register" onPress={validateInput}/>
+            <MainButton
+                label="Register"
+                onPress={validateInput}
+                containerStyle={styles.containerButton}
+            />
         </View>
     );
 };

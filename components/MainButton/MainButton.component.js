@@ -24,7 +24,7 @@ const MainButton = (props) => {
     });
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, props.containerStyle]}>
             <TouchableOpacity style={[styles.button, props.style]} onPress={debounceCheck}>
                 <Text style={styles.label}> {props.label} </Text>
             </TouchableOpacity>

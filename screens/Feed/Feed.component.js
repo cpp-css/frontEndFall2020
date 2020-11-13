@@ -7,11 +7,13 @@ import SubscribedCard from "../../components/SubscribedCard/SubscribedCard.compo
 import styles from "./Feed.styles";
 
 import { UserContext } from '../../context/UserContext';
+import { EventContext } from '../../context/EventContext';
 
 const axios = require("axios");
 
 const Feed = () => {
-  const [events, setEvents] = useState([]);
+  //const [events, setEvents] = useState([]);
+  const { allEvents } = useContext(EventContext);
   const { userEvents } = useContext(UserContext);
 
   useEffect(() => {
@@ -27,6 +29,7 @@ const Feed = () => {
       try {
         let response = await axios.get(url, settings);
         //console.log(response);
+        /*
         setEvents([
           {
             id: 1,
@@ -53,6 +56,7 @@ const Feed = () => {
             image: require("../../assets/images/Blizzard.png")
           },
         ]); // hardcoded for now
+        */
       } catch (error) {
         console.error(error);
       }
@@ -60,10 +64,10 @@ const Feed = () => {
     getEvents();
   }, []);
 
-  const eventList = events.map((event) => (
+  const eventList = allEvents.map((event, id) => (
     userEvents.indexOf(event.title) !== -1) ?
       (<SubscribedCard
-      key={event.id}
+      key={id}
       title={event.title}
       org={event.org}
       date={event.date}
