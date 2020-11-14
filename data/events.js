@@ -5,7 +5,7 @@ const dummyEvents = [
         perks: "+1 to attendance, free pizza",
         org: "Computer Science Society",
         desc: "This workshop is open to all students/all majors and alumni. Students will get information on how to market their essential skills to employers at the upcoming virtual career fairs. Students/alumni can click on the Zoom link to attend the presentation.",
-        date: "2020-5-10T01:01:01+00:00", //"Tuesday, May 10, 2020"
+        date: "2020-05-10T01:01:01+00:00", //"Tuesday, May 10, 2020"
         link: "https://github.com",
         image: require("../assets/images/CareerCenterWorkshop.jpg")
     },
@@ -25,7 +25,7 @@ const dummyEvents = [
         perks: "+1 to attendance, meet Lance, free tacos",
         org: "Computer Science Society",
         desc: "Sample description here",
-        date: "2020-5-10T01:01:01+00:00", //"Tuesday, May 10, 2020",
+        date: "2020-05-10T01:01:01+00:00", //"Tuesday, May 10, 2020",
         link: "https://github.com",
         image: require("../assets/images/Blizzard.png")
     },
