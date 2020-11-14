@@ -76,9 +76,13 @@ const Feed = () => {
 
         for ( let i = 0; i < 4; i++ ) {
             if ( i % 2 == 0 ) {
-                returnDate += " " + UTCDate[i];
+                if ( i == 2 && UTCDate[2][0] == "0" ) {
+                    returnDate += UTCDate[i][1] + ", ";
+                } else {
+                    returnDate += UTCDate[i] + ", ";
+                }
             } else {
-                returnDate += ", " + UTCDate[i];
+                returnDate += UTCDate[i] + " ";
             }
         }
 
