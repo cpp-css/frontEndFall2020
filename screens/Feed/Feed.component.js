@@ -64,7 +64,8 @@ const Feed = () => {
     getEvents();
   }, []);
 
-  const eventList = allEvents.map((event, id) => (
+    const eventList = allEvents.sort((a, b) => (a[Object.keys(a)[5]] > b[Object.keys(b)[5]]) ? 1 :
+        ((b[Object.keys(b)[5]] > a[Object.keys(a)[5]]) ? -1 : 0)).map((event, id) => (
     userEvents.indexOf(event.title) !== -1) ?
       (<SubscribedCard
         key={id}
