@@ -8,8 +8,11 @@ import { UserContext } from '../../context/UserContext';
 
 import Button from '../MainButton/MainButton.component';
 
+import { useNavigation } from '@react-navigation/native'
+
 const EventCard = (props) => {
 
+    const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
     
@@ -58,6 +61,16 @@ const EventCard = (props) => {
                         style={{backgroundColor: '#CD5C5C'}}
                         label="Exit"
                     />
+                    <Button
+                       onPress={() => 
+                            {
+                                setModalVisible(!isModalVisible);
+                                navigation.navigate('EditEvent')
+                        }}
+                        style={{backgroundColor: '#CEB888'}}
+                        label="Edit Event"
+                    />
+
                 </View>
             </Modal>
            
