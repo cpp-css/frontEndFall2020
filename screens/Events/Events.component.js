@@ -8,6 +8,7 @@ import Button from '../../components/MainButton/MainButton.component';
 
 // Context
 import { EventContext } from '../../context/EventContext';
+import { UserContext } from '../../context/UserContext';
 
 // Styles
 import styles from './Events.styles';
@@ -20,6 +21,7 @@ const Events = ({navigation}) => {
     const onChangeSearch = query => setSearchQuery(query);
 
     const { allEvents } = useContext(EventContext);
+    const { userEvents } = useContext(UserContext);
     let filteredCards = allEvents.filter(
         (event) => {
             return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
@@ -52,8 +54,9 @@ const Events = ({navigation}) => {
                    bottom: 0,
                    right: 30
                }}>
-               {filteredCards.map((card, id) =>
-                    <EventCard
+                {filteredCards.map((card, id) =>
+                    (userEvents.indexOf(card.title) === -1) ?
+                    (<EventCard
                        key={id}
                        title={card.title}
                        theme={card.theme}
@@ -63,7 +66,7 @@ const Events = ({navigation}) => {
                        startDate={card.startDate}
                        link={card.link}
                        source={card.image}
-                    />
+                        />) : console.log(card.id)
                )} 
             </ScrollView>
 
