@@ -93,8 +93,8 @@ const Feed = () => {
         }
     }
 
-    const eventList = allEvents.sort((a, b) => (a[Object.keys(a)[5]] > b[Object.keys(b)[5]]) ? 1 :
-        ((b[Object.keys(b)[5]] > a[Object.keys(a)[5]]) ? -1 : 0)).map((event, id) => 
+    const eventList = allEvents.sort((a, b) => (a.startDate > b.startDate) ? 1 :
+        ((b.startDate > a.startDate) ? -1 : 0)).map((event, id) => 
         (userEvents.indexOf(event.title) !== -1) ?
         (<View>
             {getDate(event.startDate)}

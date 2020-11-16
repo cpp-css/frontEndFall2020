@@ -54,7 +54,8 @@ const Events = ({navigation}) => {
                    bottom: 0,
                    right: 30
                }}>
-                {filteredCards.map((card, id) =>
+                {filteredCards.sort((a, b) => (a.startDate > b.startDate) ? 1 :
+                    ((b.startDate > a.startDate) ? -1 : 0)).map((card, id) =>
                     (userEvents.indexOf(card.title) === -1) ?
                     (<EventCard
                        key={id}
