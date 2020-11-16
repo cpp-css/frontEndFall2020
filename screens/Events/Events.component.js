@@ -60,7 +60,7 @@ const Events = ({navigation}) => {
                        perks={card.perks}
                        org={card.org}
                        desc={card.desc}
-                       date={card.date}
+                       startDate={card.startDate}
                        link={card.link}
                        source={card.image}
                     />

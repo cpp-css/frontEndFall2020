@@ -66,11 +66,10 @@ const Feed = () => {
         }, 
     []);
 
-    // Checks the date if it is new.
-    // If date is new, return element
+    // Checks the startDate if it is new.
+    // If startDate is new, return element
     // If not, return null 
     const getDate = (data) => {
-        let strDate = JSON.stringify(data).split("T")[0];
         let UTCDate = new Date(data).toString().split(" ");
         let returnDate = "";
 
@@ -86,10 +85,10 @@ const Feed = () => {
             }
         }
 
-        if (currDate === strDate) {
+        if (currDate === returnDate) {
             return null;
         } else {
-            currDate = strDate;
+            currDate = returnDate;
             return <Text style={styles.dateBetweenCards}>{returnDate}</Text>;
         }
     }
@@ -98,7 +97,7 @@ const Feed = () => {
         ((b[Object.keys(b)[5]] > a[Object.keys(a)[5]]) ? -1 : 0)).map((event, id) => 
         (userEvents.indexOf(event.title) !== -1) ?
         (<View>
-            {getDate(event.date)}
+            {getDate(event.startDate)}
             <SubscribedCard
             key={id}
             title={event.title}
@@ -106,7 +105,7 @@ const Feed = () => {
             perks={event.perks}
             org={event.org}
             desc={event.desc}
-            date={event.date}
+            startDate={event.startDate}
             link={event.link}
             source={event.image}
             />

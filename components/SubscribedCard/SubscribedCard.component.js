@@ -12,7 +12,7 @@ const SubscribedCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, removeUserEvents } = useContext(UserContext);
-    const UTCDate = new Date(props.date).toString();
+    const UTCDate = new Date(props.startDate).toString();
 
     return (
         <View>

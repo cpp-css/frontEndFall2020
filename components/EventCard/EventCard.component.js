@@ -12,7 +12,7 @@ const EventCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
-    const UTCDate = new Date(props.date).toString();
+    const UTCDate = new Date(props.startDate).toString();
     
     return(
         <View>
@@ -44,7 +44,7 @@ const EventCard = (props) => {
                     <Text style={styles.datePopUp}> {UTCDate} </Text>
                     <Button
                         onPress={() => {
-                            Alert.alert("You successfully have registered for " + props.title + " on " + props.date + "!");
+                            Alert.alert("You successfully have registered for " + props.title + " on " + props.startDate + "!");
                             setUserEvents([...userEvents, props.title]);
                             setModalVisible(!isModalVisible);
                             console.log([...userEvents, props.title]);
