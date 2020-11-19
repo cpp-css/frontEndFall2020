@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Alert} from 'react-native';
 
 // Components
@@ -7,15 +7,16 @@ import MainButton from '../../components/MainButton/MainButton.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextLabel from '../../components/TextLabel/TextLabel.component';
 
+import { UserContext } from '../../context/UserContext';
 const axios = require('axios');
 
 const Login = ({navigation}) => {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-
+	const { token, setToken} = useContext(UserContext);
 	const login = async () => {
-		const url = 'https://jsonplaceholder.typicode.com/posts';
+		const url = 'http://10.0.2.2:9090/login';
 
 		const settings = {
 			headers: {
@@ -23,16 +24,22 @@ const Login = ({navigation}) => {
 			},
 		};
 
-		const body = JSON.stringify({email, password});
+		const body = {
+			email: "khuong@cpp.edu", //hardcoded for development
+			password: "passwordtest"
+		}
 
 		try {
-			let response = await axios.get(url, settings, body);
-			if (response) {
+			let response = await axios.post(url, body);
+			console.log(response.data.session.token);
+			setToken(response.data.session.token)
+			
+			if(!response.data.success)
+				Alert.alert(response.data.message);
+			else
 				navigation.push('Main');
-			}
-			// use response to authenticate
-			//console.log(response);
 		} catch (error) {
+			Alert.alert(error);
 			console.error(error);
 		}
 	};
@@ -68,7 +75,7 @@ const Login = ({navigation}) => {
 			/>
 			<MainButton 
 				label="Login" 
-				onPress={validateInput}
+				onPress={login}
                 containerStyle={styles.containerButton}
 			/>
 			<TouchableOpacity style={styles.forgotLabelContainer}>
