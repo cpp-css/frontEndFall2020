@@ -14,7 +14,30 @@ const Login = ({navigation}) => {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { token, setToken} = useContext(UserContext);
+	const { token, setToken,role,setUserInfo} = useContext(UserContext);
+
+	const getUserInfo = async () => {
+		const url = 'http://10.0.2.2:9090/user/me';
+
+		const settings = {
+			headers: {
+			  "Content-Type": "application/json",
+			  Authorization: "Bearer " + token,
+			},
+		  };
+
+		try {
+			let response = await axios.get(url, settings);
+			if(!response.data.success)
+				Alert.alert(response.data.message);
+			else
+				setUserInfo(response.data.user)
+		} catch (error) {
+			Alert.alert(error);
+			console.error(error);
+		}
+	}
+	
 	const login = async () => {
 		const url = 'http://10.0.2.2:9090/login';
 
@@ -25,8 +48,8 @@ const Login = ({navigation}) => {
 		};
 
 		const body = {
-			email: "khuong@cpp.edu", //hardcoded for development
-			password: "passwordtest"
+			email: "phuong@cpp.edu", //hardcoded for development
+			password: "password"
 		}
 
 		try {
@@ -37,12 +60,15 @@ const Login = ({navigation}) => {
 			if(!response.data.success)
 				Alert.alert(response.data.message);
 			else
+				getUserInfo();
 				navigation.push('Main');
 		} catch (error) {
 			Alert.alert(error);
 			console.error(error);
 		}
 	};
+
+	
 
     const validateInput = () => {
         const format = /^([\w\.\-]+)@cpp.edu/;
@@ -75,7 +101,7 @@ const Login = ({navigation}) => {
 			/>
 			<MainButton 
 				label="Login" 
-				onPress={login}
+				onPress={() => login()}
                 containerStyle={styles.containerButton}
 			/>
 			<TouchableOpacity style={styles.forgotLabelContainer}>

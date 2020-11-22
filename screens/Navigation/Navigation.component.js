@@ -12,6 +12,7 @@ import Events from '../Events/Events.component';
 import Clubs from '../Clubs/Clubs.component';
 import Profile from '../Profile/Profile.component';
 import CreateEvent from '../CreateEvent/CreateEvent.component';
+import EditEvent from '../EditEvent/EditEvent.component';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -28,6 +29,11 @@ const EventStack = () => {
                 name="CreateEvent"
                 component={CreateEvent}
                 options={{ title: "Create Event"}}
+            />
+             <Stack.Screen
+                name="EditEvent"
+                component={EditEvent}
+                options={{ title: "Edit Event"}}
             />
         </Stack.Navigator>
     )

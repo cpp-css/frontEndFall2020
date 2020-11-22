@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ScrollView, Text, View, Alert } from 'react-native';
 
-import styles from './CreateEvent.styles';
+import styles from './EditEvent.styles';
 
 // Components
 import Button from '../../components/MainButton/MainButton.component';
@@ -14,28 +14,30 @@ import { UserContext } from "../../context/UserContext";
 
 const axios = require("axios");
 
-const CreateEvent = () => {
-    
+const EditEvent = () => {
+    const { currentEvent, setEvents, editEvent } = useContext(UserContext);
+
     const form = {
-        eventName: "",
-        creator_id: 0,
-        org_id: 0,
-        theme: "",
-        perks: "",
-        categories: [],
+        eventName: currentEvent.eventName,
+        creator_id: currentEvent.creator_id,
+        org_id: currentEvent.org_id,
+        theme: currentEvent.theme,
+        perks: currentEvent.perks,
+        categories: currentEvent.categories,
         startDate: new Date(),
         endDate: new Date(),
-        info: "",
+        info: currentEvent.info,
         image: require('../../assets/images/space.jpg'),
     }
-    
-    const { events, setEvents, addEvent } = useContext(UserContext);
-    const { token } = useContext(UserContext);
-    const [eventData, setEventData] = useState(form);
 
-    const createEvent = async () => {
+    const [eventData, setEventData] = useState(form);
+    
+    const { token } = useContext(UserContext);
+    
+
+    const edit_event = async () => {
         const url =
-          "http://10.0.2.2:9090/event/add/94ead6db-0e9b-4375-88b2-f5bbcdb36df3"; // organization id
+          "http://10.0.2.2:9090/event/" + currentEvent.event_id;
     
         const settings = {
           headers: {
@@ -58,8 +60,9 @@ const CreateEvent = () => {
           let response = await axios.post(url, body, settings);
           if (response.data.success == false) Alert.alert(response.data.message);
           else{
-            body.event_id=response.data.message.event_id
-            addEvent(body)
+            body.event_id=currentEvent.event_id
+            editEvent(body)
+            Alert.alert("Success");
           }
         } catch (error) {
           console.error(error);
@@ -145,13 +148,13 @@ const CreateEvent = () => {
                 multiline={true}
             />
 			<Button 
-				label="Submit" 
+				label="Save Changes" 
                 containerStyle={{marginTop: '10%', marginBottom: '15%'}}
-                onPress={() => createEvent()}
+                onPress={() => edit_event()}
 			/>
             {console.log(eventData)}
         </ScrollView>
     );
 }
 
-export default CreateEvent;
+export default EditEvent; 

@@ -7,15 +7,21 @@ const initialState = {
     name: "Jane Doe",
     major: "Computer Science",
     classLevel: "Freshmen",
+    role:"",
     events: [],
     userEvents: [],
     userClubs: [],
-    token: ""
+    token: "",
+    currentEvent: "",
 }
 
 const actions = {
+    SET_USER_INFO:'SET_USER_INFO',
+
     SET_EVENTS: 'SET_EVENTS',
     ADD_EVENT: 'ADD_EVENT',
+    EDIT_EVENT: 'EDIT_EVENT',
+    SET_CURRENT_EVENT: 'SET_CURRENT_EVENT',
     SET_USER_EVENTS: 'SET_USER_EVENTS',
     ADD_USER_EVENT: 'ADD_USER_EVENT',
     SET_CLUBS: 'SET_CLUBS',
@@ -26,10 +32,27 @@ const actions = {
 
 function reducer(state, action) {
     switch(action.type) {
+        case actions.SET_USER_INFO:
+            return { ...state, role: action.value.roles[0].role, name:action.value.name, };
         case actions.SET_EVENTS:
             return { ...state, events: action.value };
         case actions.ADD_EVENT:
             return { ...state, events: [...state.events,action.value] };
+        case actions.EDIT_EVENT:
+            return { ...state, events: state.events.map((event) => {
+                if (event.event_id !== action.value.event_id) {
+                    return event
+                  }
+              
+                  return {
+                    ...action.value
+                  }
+
+            })
+        };
+
+        case actions.SET_CURRENT_EVENT:
+            return { ...state, currentEvent: action.value };
 
         case actions.SET_USER_EVENTS:
             return { ...state, userEvents: action.value };
@@ -61,16 +84,28 @@ function UserProvider({children}) {
         name: state.name,
         major: state.major,
         classLevel: state.classLevel,
+        role:state.role,
         events: state.events,
         userEvents: state.userEvents,
         userClubs: state.clubs,
         token: state.token,
+        currentEvent: state.currentEvent,
 
+        setUserInfo: value => {
+            dispatch({ type: actions.SET_USER_INFO, value});
+        },
         setEvents: value => {
             dispatch({ type: actions.SET_EVENTS, value});
         },
         addEvent: value => {
             dispatch({ type: actions.ADD_EVENT, value});
+        },
+        editEvent: value => {
+            dispatch({ type: actions.EDIT_EVENT, value});
+        },
+
+        setCurrentEvent: value => {
+            dispatch({ type: actions.SET_CURRENT_EVENT, value});
         },
 
         setUserEvents: value => {

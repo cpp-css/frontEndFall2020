@@ -10,7 +10,7 @@ import { UserContext } from '../../context/UserContext';
 
 const Profile = ({navigation}) => {
 
-    const { name, major, classLevel } = useContext(UserContext);
+    const { name, major, classLevel, role } = useContext(UserContext);
 
     return (
         <View style={styles.container}>
@@ -20,6 +20,7 @@ const Profile = ({navigation}) => {
             <Text> name: {name}</Text>
             <Text> major: {major}</Text>
             <Text> classLevel: {classLevel}</Text>
+            <Text> role: {role}</Text>
             <Button label="Add More Interests" onPress={() => navigation.navigate("contact")}/>
             <Button label="Notification Settings" onPress={() => navigation.navigate("contact")}/>
             <Button label="User Settings" onPress={() => navigation.navigate("User Settings")}/>

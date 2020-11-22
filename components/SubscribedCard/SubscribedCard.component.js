@@ -10,8 +10,6 @@ let lastPress = 0;
 
 const axios = require('axios');
 
-
-
 const SubscribedCard = (props) => {
     const { userEvents, removeUserEvent } = useContext(UserContext);
     const onDoublePress = () => {
@@ -27,23 +25,6 @@ const SubscribedCard = (props) => {
 
     const { token } = useContext(UserContext);
 
-    const subscribeToEvent = async (eventID) => {
-		const url = 'http://10.0.2.2:9090/event/register/'+eventID;
-
-		const settings = {
-			headers: {
-				'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-			},
-		};
-
-		try {
-            let response = await axios.post(url, settings);
-            console.log(response.data);
-		} catch (error) {
-			console.error(error);
-		}
-    };
     const unsubToEvent = async (eventID) => {
 		const url = 'http://10.0.2.2:9090/event/unregister/'+eventID;
 
@@ -55,8 +36,7 @@ const SubscribedCard = (props) => {
 		};
         
 		try {
-            let response = await axios.delete(url, settings);
-            
+            let response = await axios.delete(url, settings);           
             Alert.alert(response.data.message);
             removeUserEvent(props.event_id);
             console.log(userEvents);
@@ -71,10 +51,11 @@ const SubscribedCard = (props) => {
                 onPress={() => {
                     onDoublePress()
                 }}>
-                <Text> {props.name} </Text>
+                <Text> {props.event_name} </Text>
                 <Text style={styles.title}> {props.info} </Text>
                 <Image style={styles.image} resizeMode="contain" source={props.source}/>
-                <Text style={styles.date}> {props.date} </Text>
+                <Text style={styles.date}> {props.start_date} </Text>
+                <Text style={styles.date}> {props.end_date} </Text>
                 <Text> {props.theme} </Text>
                 <Text> {props.perks} </Text>
             </TouchableOpacity>

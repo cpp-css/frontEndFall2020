@@ -42,9 +42,10 @@ const Feed = () => {
       <SubscribedCard
         key={id}
         event_id={card.event_id}
-        name={card.event_name}
+        event_name={card.event_name}
         info={card.info}
-        date={card.end_date}
+        end_date={card.end_date}
+        start_date={card.start_date}
         perks={card.perks}
         theme={card.theme}
         source={require("../../assets/images/CareerCenterWorkshop.jpg")}
