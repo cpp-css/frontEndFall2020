@@ -15,6 +15,7 @@ import UTFSequence from 'react-native/Libraries/UTFSequence';
 
 const axios = require("axios");
 
+
 const CreateEvent = () => {
     
     const form = {
@@ -56,6 +57,7 @@ const CreateEvent = () => {
     const createEvent = async () => {
         const url =
           "http://10.0.2.2:9090/event/add/94ead6db-0e9b-4375-88b2-f5bbcdb36df3"; // organization id
+
     
         const settings = {
           headers: {
@@ -98,7 +100,9 @@ const CreateEvent = () => {
                 onChangeText={ text => {
                     setEventData(oldState => ({
                         ...oldState,
+
                         eventName: text
+
                     }));
                 }}
             />
