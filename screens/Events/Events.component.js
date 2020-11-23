@@ -16,6 +16,7 @@ const { width } = Dimensions.get("window");
 
 const Events = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState("");
+
   const { events, setEvents, token, userEvents} = useContext(UserContext);
   const onChangeSearch = (query) => setSearchQuery(query);
   const getEvents = async () => {
@@ -46,6 +47,7 @@ const Events = ({navigation}) => {
     
     const body = {};
 
+
     try {
       let response = await axios.put(url, body, settings);
       console.log(response.data);
@@ -53,7 +55,9 @@ const Events = ({navigation}) => {
     } catch (error) {
       console.error(error);
     }
+
   };
+
   useEffect(() => {
     getEvents();
   }, []);
@@ -90,6 +94,7 @@ const Events = ({navigation}) => {
           left: 30,
           bottom: 0,
           right: 30,
+
         }}
       >
         {filteredCards.sort((a, b) => (a.startDate > b.startDate) ? 1 :
@@ -107,6 +112,7 @@ const Events = ({navigation}) => {
             source={require("../../assets/images/CareerCenterWorkshop.jpg")}
           />
         ): console.log(card.id))}
+
       </ScrollView>
     </View>
   );

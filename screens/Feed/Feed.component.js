@@ -13,10 +13,12 @@ import { Card } from "react-native-paper";
 const axios = require("axios");
 
 const Feed = () => {
+
   const { token } = useContext(UserContext);
   const { allEvents } = useContext(EventContext);
   const { userEvents, setUserEvents } = useContext(UserContext);
   let currDate = null;
+
 
   useEffect(() => {
     const getEvents = async () => {
@@ -39,6 +41,7 @@ const Feed = () => {
     };
     getEvents();
   }, []);
+
 
   // Checks the startDate if it is new.
     // If startDate is new, return element
@@ -83,6 +86,7 @@ const Feed = () => {
         theme={card.theme}
         source={require("../../assets/images/CareerCenterWorkshop.jpg")}
     /></View>): console.log(card.id)
+
   );
   return (
     <View style={styles.layout}>

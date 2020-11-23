@@ -11,12 +11,17 @@ import { useNavigation } from '@react-navigation/native'
 
 const axios = require('axios');
 
+const axios = require('axios');
+
 const EventCard = (props) => {
 
     const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
+
     const { userEvents, addUserEvent, setCurrentEvent } = useContext(UserContext);
     const { token } = useContext(UserContext);
+
+    //const UTCDate = new Date(props.startDate).toString();
 
     const subscribeToEvent = async (eventID) => {
 		const url = 'http://10.0.2.2:9090/event/register/'+eventID;
@@ -38,10 +43,12 @@ const EventCard = (props) => {
             addUserEvent({
                 created_at : props.created_at,
                 event_id: props.event_id,
+
                 event_name: props.event_name,
                 info: props.info,
                 start_date: props.start_date,
                 end_date: props.end_date,
+
                 perks: props.perks,
                 theme: props.theme,
             })
@@ -58,6 +65,7 @@ const EventCard = (props) => {
                 'Authorization': 'Bearer ' + token
 			},
 		};
+
         const body = {
 		}
 		try {
@@ -81,12 +89,14 @@ const EventCard = (props) => {
 		}
 		try {
             let response = await axios.put(url, body,settings);
+
             console.log(response.data);
 		} catch (error) {
 			console.error(error);
 		}
     };
     
+
     return(
         <View>
             <TouchableOpacity 
@@ -94,11 +104,13 @@ const EventCard = (props) => {
                 onPress={() => {
                     setModalVisible(!isModalVisible)
                 }}>
+
                 <Text> {props.event_name} </Text>
                 <Text style={styles.title}> {props.info} </Text>
                 <Image style={styles.image} resizeMode="contain" source={props.source}/>
                 <Text style={styles.date}> {props.start_date} </Text>
                 <Text style={styles.date}> {props.end_date} </Text>
+
                 <Text> {props.theme} </Text>
                 <Text> {props.perks} </Text>
             </TouchableOpacity>
@@ -106,10 +118,10 @@ const EventCard = (props) => {
             <Modal animationType="slide"
                 transparent={true}
                 visible={isModalVisible}
-                onBackdropPress = { () => this.setState({isVisible:false})}
-                >
+                onBackdropPress = { () => this.setState({isVisible:false})}>
                 
                 <View style={styles.containerPopUp}>
+
                     <Text> {props.event_name} </Text>
                     <Text style={styles.titlePopUp}> {props.info} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
@@ -121,6 +133,7 @@ const EventCard = (props) => {
                     <ScrollView>
                         <Button
                             onPress={() => {
+                                    //Alert.alert("You successfully have registered for " + props.title + " on " + props.startDate + "!");
                                 subscribeToEvent(props.event_id);
                                 setModalVisible(!isModalVisible);
                             }}
@@ -155,6 +168,7 @@ const EventCard = (props) => {
                             label="Approve"
                         />
                     </ScrollView>
+
                 </View>
             </Modal>
            

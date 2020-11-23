@@ -13,6 +13,7 @@ const initialState = {
     userClubs: [],
     token: "",
     currentEvent: "",
+
 }
 
 const actions = {
@@ -22,6 +23,7 @@ const actions = {
     ADD_EVENT: 'ADD_EVENT',
     EDIT_EVENT: 'EDIT_EVENT',
     SET_CURRENT_EVENT: 'SET_CURRENT_EVENT',
+
     SET_USER_EVENTS: 'SET_USER_EVENTS',
     ADD_USER_EVENT: 'ADD_USER_EVENT',
     SET_CLUBS: 'SET_CLUBS',
@@ -38,6 +40,7 @@ function reducer(state, action) {
             return { ...state, events: action.value };
         case actions.ADD_EVENT:
             return { ...state, events: [...state.events,action.value] };
+
         case actions.EDIT_EVENT:
             return { ...state, events: state.events.map((event) => {
                 if (event.event_id !== action.value.event_id) {
@@ -53,6 +56,7 @@ function reducer(state, action) {
 
         case actions.SET_CURRENT_EVENT:
             return { ...state, currentEvent: action.value };
+
 
         case actions.SET_USER_EVENTS:
             return { ...state, userEvents: action.value };
@@ -84,22 +88,27 @@ function UserProvider({children}) {
         name: state.name,
         major: state.major,
         classLevel: state.classLevel,
+
         role:state.role,
+
         events: state.events,
         userEvents: state.userEvents,
         userClubs: state.clubs,
         token: state.token,
+
         currentEvent: state.currentEvent,
 
         setUserInfo: value => {
             dispatch({ type: actions.SET_USER_INFO, value});
         },
+
         setEvents: value => {
             dispatch({ type: actions.SET_EVENTS, value});
         },
         addEvent: value => {
             dispatch({ type: actions.ADD_EVENT, value});
         },
+
         editEvent: value => {
             dispatch({ type: actions.EDIT_EVENT, value});
         },
@@ -107,6 +116,7 @@ function UserProvider({children}) {
         setCurrentEvent: value => {
             dispatch({ type: actions.SET_CURRENT_EVENT, value});
         },
+
 
         setUserEvents: value => {
             dispatch({ type: actions.SET_USER_EVENTS, value});

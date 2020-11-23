@@ -26,6 +26,7 @@ const SubscribedCard = (props) => {
 
     const { token } = useContext(UserContext);
 
+
     const unsubToEvent = async (eventID) => {
 		const url = 'http://10.0.2.2:9090/event/unregister/'+eventID;
 
@@ -38,6 +39,7 @@ const SubscribedCard = (props) => {
         
 		try {
             let response = await axios.delete(url, settings);           
+
             Alert.alert(response.data.message);
             removeUserEvent(props.event_id);
             console.log(userEvents);

@@ -14,6 +14,7 @@ import { UserContext } from "../../context/UserContext";
 
 const axios = require("axios");
 
+
 const CreateEvent = () => {
     
     const form = {
@@ -33,9 +34,11 @@ const CreateEvent = () => {
     const { token } = useContext(UserContext);
     const [eventData, setEventData] = useState(form);
 
+
     const createEvent = async () => {
         const url =
           "http://10.0.2.2:9090/event/add/94ead6db-0e9b-4375-88b2-f5bbcdb36df3"; // organization id
+
     
         const settings = {
           headers: {
@@ -46,8 +49,10 @@ const CreateEvent = () => {
     
         const body = {
           event_name: eventData.eventName,
+
           start_date: "2020-11-30T11:59:59+00:00", 
           end_date: "2020-11-30T11:59:59+00:00",
+
           theme: eventData.theme,
           perks: eventData.perks,
           categories: eventData.categories,
@@ -56,6 +61,7 @@ const CreateEvent = () => {
     
         try {
           let response = await axios.post(url, body, settings);
+
           if (response.data.success == false) Alert.alert(response.data.message);
           else{
             body.event_id=response.data.message.event_id
@@ -77,7 +83,9 @@ const CreateEvent = () => {
                 onChangeText={ text => {
                     setEventData(oldState => ({
                         ...oldState,
+
                         eventName: text
+
                     }));
                 }}
             />

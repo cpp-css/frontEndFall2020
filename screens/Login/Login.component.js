@@ -14,8 +14,9 @@ const Login = ({navigation}) => {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { setToken} = useContext(UserContext);
-	
+
+	const { token, setToken} = useContext(UserContext);
+
 	const login = async () => {
 		const url = 'http://10.0.2.2:9090/login';
 
@@ -26,12 +27,14 @@ const Login = ({navigation}) => {
 		};
 
 		const body = {
+
 			email: "phuong@cpp.edu", //hardcoded for development
 			password: "password"
 		}
 
 		try {
 			let response = await axios.post(url, body,settings);
+
 			console.log(response.data.session.token);
 			setToken(response.data.session.token)
 			
@@ -78,7 +81,9 @@ const Login = ({navigation}) => {
 			/>
 			<MainButton 
 				label="Login" 
+
 				onPress={() => login()}
+
                 containerStyle={styles.containerButton}
 			/>
 			<TouchableOpacity style={styles.forgotLabelContainer}>
