@@ -24,8 +24,8 @@ const EditEvent = () => {
         theme: currentEvent.theme,
         perks: currentEvent.perks,
         categories: currentEvent.categories,
-        startDate: new Date(),
-        endDate: new Date(),
+        start_date: new Date(),
+        end_date: new Date(),
         info: currentEvent.info,
         image: require('../../assets/images/space.jpg'),
     }
@@ -48,8 +48,8 @@ const EditEvent = () => {
     
         const body = {
           event_name: eventData.eventName,
-          start_date: "2020-11-30T11:59:59+00:00", //hardcoded needs work
-          end_date: "2020-11-30T11:59:59+00:00",
+          start_date: eventData.start_date.toISOString().slice(0, 19),
+          end_date: eventData.end_date.toISOString().slice(0, 19),
           theme: eventData.theme,
           perks: eventData.perks,
           categories: eventData.categories,
@@ -116,23 +116,23 @@ const EditEvent = () => {
             />
             <DateModal
                 label="Start Date"
-                currentDate={eventData.startDate}
-                displayDate={eventData.startDate}
+                currentDate={eventData.start_date}
+                displayDate={eventData.start_date}
                 onDateChange={date => {
                     setEventData(oldState => ({
                         ...oldState,
-                        startDate: date
+                        start_date: date
                     }));
                 }}
             />
             <DateModal
                 label="End Date"
-                currentDate={eventData.endDate}
-                displayDate={eventData.endDate}
+                currentDate={eventData.end_date}
+                displayDate={eventData.end_date}
                 onDateChange={date => {
                     setEventData(oldState => ({
                         ...oldState,
-                        endDate: date
+                        end_date: date
                     }));
                 }}
             />

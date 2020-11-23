@@ -10,14 +10,16 @@ const initialState = {
     role:"",
     events: [],
     userEvents: [],
+    orgs: [],
     userClubs: [],
     token: "",
     currentEvent: "",
+
 }
 
 const actions = {
     SET_USER_INFO:'SET_USER_INFO',
-
+    SET_ORGS: 'SET_ORGS',
     SET_EVENTS: 'SET_EVENTS',
     ADD_EVENT: 'ADD_EVENT',
     EDIT_EVENT: 'EDIT_EVENT',
@@ -53,6 +55,8 @@ function reducer(state, action) {
 
         case actions.SET_CURRENT_EVENT:
             return { ...state, currentEvent: action.value };
+        case actions.SET_ORGS:
+            return { ...state, orgs: action.value };
 
         case actions.SET_USER_EVENTS:
             return { ...state, userEvents: action.value };
@@ -85,8 +89,12 @@ function UserProvider({children}) {
         major: state.major,
         classLevel: state.classLevel,
         role:state.role,
+
         events: state.events,
         userEvents: state.userEvents,
+
+        orgs: state.orgs,
+
         userClubs: state.clubs,
         token: state.token,
         currentEvent: state.currentEvent,
@@ -106,6 +114,9 @@ function UserProvider({children}) {
 
         setCurrentEvent: value => {
             dispatch({ type: actions.SET_CURRENT_EVENT, value});
+        },
+        setOrgs: value => {
+            dispatch({ type: actions.SET_ORGS, value});
         },
 
         setUserEvents: value => {

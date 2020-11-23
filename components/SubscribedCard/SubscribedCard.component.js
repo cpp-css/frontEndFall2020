@@ -54,8 +54,9 @@ const SubscribedCard = (props) => {
                 }}>
                 <Image style={styles.image} source={props.source} />
                 <Text style={styles.textContainer}>
+                    <Text style={styles.title}>{props.event_name}{"\n"}</Text>
                     <Text style={styles.date}> {props.start_date} </Text>
-                    <Text style={styles.date}> {props.end_date} </Text>
+                    <Text style={styles.date}> {props.end_date}{"\n"} </Text>
                     <Text style={styles.title}>{props.info}{"\n"}</Text>
                     <Text>Theme: {props.theme}{"\n"}</Text>
                     <Text>Perks: {props.perks}</Text>
@@ -65,16 +66,15 @@ const SubscribedCard = (props) => {
                 transparent={true}
                 visible={isModalVisible}>
                 <View style={styles.containerPopUp}>
-                    <Text> {props.org} </Text>
-                    <Text style={styles.titlePopUp}> {props.title} </Text>
+                    <Text style={styles.titlePopUp}> {props.event_name} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
-                    <Text style={styles.descPopUp}> {props.desc} </Text>
-                    <Text style={styles.datePopUp}> {UTCDate} </Text>
+                    <Text style={styles.descPopUp}> {props.info} </Text>
+                    <Text style={styles.datePopUp}> {props.start_date} </Text>
                     <Button
                         onPress={() => {
-                            removeUserEvents([...userEvents, props.title]);
+                            removeUserEvents([...userEvents, props.event_name]);
                             setModalVisible(!isModalVisible);
-                            Alert.alert("You have unsubscribed from " + props.title + " on " + props.date + ".");
+                            Alert.alert("You have unsubscribed from " + props.event_name + " on " + props.date + ".");
                             console.log([...userEvents]);
                         }}
                         style={{ backgroundColor: '#92d050' }}

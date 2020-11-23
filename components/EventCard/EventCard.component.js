@@ -68,24 +68,7 @@ const EventCard = (props) => {
 			console.error(error);
 		}
     };
-    const approveEvent = async (eventID) => {
-		const url = 'http://10.0.2.2:9090/event/approve/'+ eventID;
-
-		const settings = {
-			headers: {
-				'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-			},
-		};
-        const body = {
-		}
-		try {
-            let response = await axios.put(url, body,settings);
-            console.log(response.data);
-		} catch (error) {
-			console.error(error);
-		}
-    };
+    
     
     return(
         <View>
@@ -128,13 +111,6 @@ const EventCard = (props) => {
                             label="RSVP"
                         />
                         <Button
-                            onPress={() => {
-                                setModalVisible(!isModalVisible);
-                            }}
-                            style={{backgroundColor: '#CD5C5C'}}
-                            label="Exit"
-                        />
-                        <Button
                         onPress={() => 
                                 {
                                     setModalVisible(!isModalVisible);
@@ -146,13 +122,11 @@ const EventCard = (props) => {
                             label="Edit"
                         />
                         <Button
-                        onPress={() => 
-                                {
-                                    approveEvent(props.event_id);
-                                    setModalVisible(!isModalVisible);
+                            onPress={() => {
+                                setModalVisible(!isModalVisible);
                             }}
-                            style={{backgroundColor: '#CEB888'}}
-                            label="Approve"
+                            style={{backgroundColor: '#CD5C5C'}}
+                            label="Exit"
                         />
                     </ScrollView>
                 </View>

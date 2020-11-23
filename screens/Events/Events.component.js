@@ -33,27 +33,7 @@ const Events = ({navigation}) => {
       console.error(error);
     }
   };
-  const approveEvent = async (eventID) => {
-    const url = "http://10.0.2.2:9090/event/approve/" + eventID;
-
-    const settings = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    
-    const body = {};
-
-    try {
-      let response = await axios.put(url, body, settings);
-      console.log(response.data);
-      if (response.data.success == false) Alert.alert(response.data.message);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  
   useEffect(() => {
     getEvents();
   }, []);
@@ -104,7 +84,7 @@ const Events = ({navigation}) => {
             end_date={card.end_date}
             perks={card.perks}
             theme={card.theme}
-            source={require("../../assets/images/CareerCenterWorkshop.jpg")}
+            source={require("../../assets/images/CareerCenterWorkshop.jpg")} // hardcoded
           />
         ): console.log(card.id))}
       </ScrollView>

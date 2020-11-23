@@ -20,7 +20,7 @@ const Feed = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const url = 'http://10.0.2.2:9090/user/events';
+      const url = 'http://10.0.2.2:9090/user/me/events';
 
       const settings = {
         headers: {
@@ -67,11 +67,9 @@ const Feed = () => {
       }
   }
 
-  const eventList = userEvents.sort((a, b) => (a.startDate > b.startDate) ? 1 :
-        ((b.startDate > a.startDate) ? -1 : 0)).map((card,id) => 
-        (userEvents.indexOf(card.title) !== -1) ?
-        (<View>
-          {getDate(card.startDate)}
+  const eventList = userEvents.sort((a, b) => (a.start_date > b.start_date) ? 1 :
+        ((b.start_date > a.start_date) ? -1 : 0)).map((card,id) => 
+        
       <SubscribedCard
         key={id}
         event_id={card.event_id}
@@ -82,7 +80,7 @@ const Feed = () => {
         perks={card.perks}
         theme={card.theme}
         source={require("../../assets/images/CareerCenterWorkshop.jpg")}
-    /></View>): console.log(card.id)
+    />
   );
   return (
     <View style={styles.layout}>

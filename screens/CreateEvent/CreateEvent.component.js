@@ -11,6 +11,7 @@ import DateModal from '../../components/DateModal/DateModal.component';
 // Context
 import { EventContext } from '../../context/EventContext'
 import { UserContext } from "../../context/UserContext";
+import UTFSequence from 'react-native/Libraries/UTFSequence';
 
 const axios = require("axios");
 
@@ -23,8 +24,8 @@ const CreateEvent = () => {
         theme: "",
         perks: "",
         categories: [],
-        startDate: new Date(),
-        endDate: new Date(),
+        start_date: new Date(),
+        end_date: new Date(),
         info: "",
         image: require('../../assets/images/space.jpg'),
     }
@@ -33,6 +34,25 @@ const CreateEvent = () => {
     const { token } = useContext(UserContext);
     const [eventData, setEventData] = useState(form);
 
+    const approveEvent = async (eventID) => {
+		const url = 'http://10.0.2.2:9090/event/approve/'+ eventID;
+
+		const settings = {
+			headers: {
+				'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+			},
+		};
+        const body = {
+		}
+		try {
+            let response = await axios.put(url, body,settings);
+            console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
+    };
+    
     const createEvent = async () => {
         const url =
           "http://10.0.2.2:9090/event/add/94ead6db-0e9b-4375-88b2-f5bbcdb36df3"; // organization id
@@ -46,8 +66,8 @@ const CreateEvent = () => {
     
         const body = {
           event_name: eventData.eventName,
-          start_date: "2020-11-30T11:59:59+00:00", 
-          end_date: "2020-11-30T11:59:59+00:00",
+          start_date: eventData.start_date.toISOString().slice(0, 19),
+          end_date: eventData.end_date.toISOString().slice(0, 19),
           theme: eventData.theme,
           perks: eventData.perks,
           categories: eventData.categories,
@@ -55,17 +75,18 @@ const CreateEvent = () => {
         };
     
         try {
-          let response = await axios.post(url, body, settings);
-          if (response.data.success == false) Alert.alert(response.data.message);
-          else{
-            body.event_id=response.data.message.event_id
-            addEvent(body)
-          }
+            let response = await axios.post(url, body, settings);
+            if (response.data.success == false) Alert.alert(response.data.message);
+            else{
+                body.event_id=response.data.message.event_id
+                addEvent(body)
+                approveEvent(response.data.message.event_id)
+            }
         } catch (error) {
           console.error(error);
         }
     };
-
+    
     return(
         <ScrollView style={styles.container}>
             <View style={styles.imageContainer}>
@@ -113,23 +134,23 @@ const CreateEvent = () => {
             />
             <DateModal
                 label="Start Date"
-                currentDate={eventData.startDate}
-                displayDate={eventData.startDate}
+                currentDate={eventData.start_date}
+                displayDate={eventData.start_date}
                 onDateChange={date => {
                     setEventData(oldState => ({
                         ...oldState,
-                        startDate: date
+                        start_date: date
                     }));
                 }}
             />
             <DateModal
                 label="End Date"
-                currentDate={eventData.endDate}
-                displayDate={eventData.endDate}
+                currentDate={eventData.end_date}
+                displayDate={eventData.end_date}
                 onDateChange={date => {
                     setEventData(oldState => ({
                         ...oldState,
-                        endDate: date
+                        end_date: date
                     }));
                 }}
             />
