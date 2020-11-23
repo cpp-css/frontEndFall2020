@@ -42,7 +42,7 @@ const SubscribedCard = (props) => {
                             removeUserEvents([...userEvents, props.title]);
                             setModalVisible(!isModalVisible);
                             Alert.alert("You have unsubscribed from " + props.title + " on " + props.date + ".");
-                            console.log([...userEvents]);
+                            //console.log([...userEvents]);
                         }}
                         style={{ backgroundColor: '#92d050' }}
                         label="Unsubscribe"

@@ -59,7 +59,7 @@ function UserProvider({children}) {
             dispatch({ type: actions.SET_ALL_EVENTS, value });
         },
         setUserClubs: value => {
-            dispatch({ type: actions.SET_CLUBS, value});
+            dispatch({ type: actions.SET_CLUBS, value });
         },
         removeUserEvents: value => {
             dispatch({ type: actions.REMOVE_EVENTS, value });
