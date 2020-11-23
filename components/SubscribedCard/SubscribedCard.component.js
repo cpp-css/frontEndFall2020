@@ -1,17 +1,18 @@
 import React, { useState, useContext } from 'react';
-import { Text, Image, View, Alert } from 'react-native';
+import { Text, Image, View, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './SubscribedCard.styles';
 
 import { UserContext } from '../../context/UserContext';
 
-let lastPress = 0;
+import Button from '../MainButton/MainButton.component';
 
 const axios = require('axios');
 
 const SubscribedCard = (props) => {
     const { userEvents, removeUserEvent } = useContext(UserContext);
+    const [isModalVisible, setModalVisible] = useState(false);
     const onDoublePress = () => {
         const time = new Date().getTime();
         const delta = time - lastPress;
@@ -49,16 +50,45 @@ const SubscribedCard = (props) => {
             <TouchableOpacity 
                 style={styles.container} 
                 onPress={() => {
-                    onDoublePress()
+                    setModalVisible(!isModalVisible)
                 }}>
-                <Text> {props.event_name} </Text>
-                <Text style={styles.title}> {props.info} </Text>
-                <Image style={styles.image} resizeMode="contain" source={props.source}/>
-                <Text style={styles.date}> {props.start_date} </Text>
-                <Text style={styles.date}> {props.end_date} </Text>
-                <Text> {props.theme} </Text>
-                <Text> {props.perks} </Text>
+                <Image style={styles.image} source={props.source} />
+                <Text style={styles.textContainer}>
+                    <Text style={styles.date}> {props.start_date} </Text>
+                    <Text style={styles.date}> {props.end_date} </Text>
+                    <Text style={styles.title}>{props.info}{"\n"}</Text>
+                    <Text>Theme: {props.theme}{"\n"}</Text>
+                    <Text>Perks: {props.perks}</Text>
+                </Text>
             </TouchableOpacity>
+            <Modal animationType="slide"
+                transparent={true}
+                visible={isModalVisible}>
+                <View style={styles.containerPopUp}>
+                    <Text> {props.org} </Text>
+                    <Text style={styles.titlePopUp}> {props.title} </Text>
+                    <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
+                    <Text style={styles.descPopUp}> {props.desc} </Text>
+                    <Text style={styles.datePopUp}> {UTCDate} </Text>
+                    <Button
+                        onPress={() => {
+                            removeUserEvents([...userEvents, props.title]);
+                            setModalVisible(!isModalVisible);
+                            Alert.alert("You have unsubscribed from " + props.title + " on " + props.date + ".");
+                            console.log([...userEvents]);
+                        }}
+                        style={{ backgroundColor: '#92d050' }}
+                        label="Unsubscribe"
+                    />
+                    <Button
+                        onPress={() => {
+                            setModalVisible(!isModalVisible);
+                        }}
+                        style={{ backgroundColor: '#CD5C5C' }}
+                        label="Exit"
+                    />
+                </View>
+            </Modal>
         </View>
     )
 }

@@ -16,11 +16,8 @@ const { width } = Dimensions.get("window");
 
 const Events = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { events, setEvents} = useContext(UserContext);
-  const { token } = useContext(UserContext);
+  const { events, setEvents, token, userEvents} = useContext(UserContext);
   const onChangeSearch = (query) => setSearchQuery(query);
-
-  
   const getEvents = async () => {
     const url = "http://10.0.2.2:9090/event/published_list";
     const settings = {
@@ -95,7 +92,9 @@ const Events = ({navigation}) => {
           right: 30,
         }}
       >
-        {filteredCards.map((card, id) => (
+        {filteredCards.sort((a, b) => (a.startDate > b.startDate) ? 1 :
+                    ((b.startDate > a.startDate) ? -1 : 0)).map((card, id) => (
+                      userEvents.indexOf(card.title) === -1) ?(
           <EventCard
             key={id}
             event_id={card.event_id}
@@ -107,7 +106,7 @@ const Events = ({navigation}) => {
             theme={card.theme}
             source={require("../../assets/images/CareerCenterWorkshop.jpg")}
           />
-        ))}
+        ): console.log(card.id))}
       </ScrollView>
     </View>
   );

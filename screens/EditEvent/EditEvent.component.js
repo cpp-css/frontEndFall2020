@@ -48,7 +48,7 @@ const EditEvent = () => {
     
         const body = {
           event_name: eventData.eventName,
-          start_date: "2020-11-30T11:59:59+00:00", 
+          start_date: "2020-11-30T11:59:59+00:00", //hardcoded needs work
           end_date: "2020-11-30T11:59:59+00:00",
           theme: eventData.theme,
           perks: eventData.perks,

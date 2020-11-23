@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
 
 import styles from './Profile.styles';
@@ -8,10 +8,36 @@ import Button from '../../components/MainButton/MainButton.component';
 
 import { UserContext } from '../../context/UserContext';
 
+const axios = require("axios");
+
 const Profile = ({navigation}) => {
 
-    const { name, major, classLevel, role } = useContext(UserContext);
+    const { token,name, major, classLevel, role,setUserInfo } = useContext(UserContext);
 
+    const getUserInfo = async () => {
+		const url = 'http://10.0.2.2:9090/user/me';
+
+		const settings = {
+			headers: {
+			  "Content-Type": "application/json",
+			  Authorization: "Bearer " + token,
+			},
+		};
+
+		const body = {
+		}
+
+		try {
+			let response = await axios.get(url, settings);
+			setUserInfo(response.data.user)
+		} catch (error) {
+			console.error(error);
+		}
+    }
+    
+    useEffect(() => {
+        getUserInfo();
+    }, []);
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>

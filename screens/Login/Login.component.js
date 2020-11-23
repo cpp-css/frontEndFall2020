@@ -14,29 +14,7 @@ const Login = ({navigation}) => {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { token, setToken,role,setUserInfo} = useContext(UserContext);
-
-	const getUserInfo = async () => {
-		const url = 'http://10.0.2.2:9090/user/me';
-
-		const settings = {
-			headers: {
-			  "Content-Type": "application/json",
-			  Authorization: "Bearer " + token,
-			},
-		  };
-
-		try {
-			let response = await axios.get(url, settings);
-			if(!response.data.success)
-				Alert.alert(response.data.message);
-			else
-				setUserInfo(response.data.user)
-		} catch (error) {
-			Alert.alert(error);
-			console.error(error);
-		}
-	}
+	const { setToken} = useContext(UserContext);
 	
 	const login = async () => {
 		const url = 'http://10.0.2.2:9090/login';
@@ -53,14 +31,13 @@ const Login = ({navigation}) => {
 		}
 
 		try {
-			let response = await axios.post(url, body);
+			let response = await axios.post(url, body,settings);
 			console.log(response.data.session.token);
 			setToken(response.data.session.token)
 			
 			if(!response.data.success)
 				Alert.alert(response.data.message);
 			else
-				getUserInfo();
 				navigation.push('Main');
 		} catch (error) {
 			Alert.alert(error);

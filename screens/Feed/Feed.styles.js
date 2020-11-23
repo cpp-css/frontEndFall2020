@@ -29,6 +29,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 16,
     },
+    dateBetweenCards: {
+        textAlign: 'center',
+        color: '#111111',
+        fontSize: 24,
+        margin: 2.5,
+    }
 });
 
 export default styles;
