@@ -27,14 +27,8 @@ const Login = ({navigation}) => {
 		};
 
 		const body = {
-<<<<<<< HEAD
 			email: "josh@cpp.edu", //hardcoded for development
 			password: "passwordtest"
-=======
-
-			email: "phuong@cpp.edu", //hardcoded for development
-			password: "password"
->>>>>>> origin/master
 		}
 
 		try {
