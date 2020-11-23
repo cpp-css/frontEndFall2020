@@ -14,6 +14,7 @@ const initialState = {
 const actions = {
     SET_EVENTS: 'SET_EVENTS',
     SET_CLUBS: 'SET_CLUBS',
+    SET_ALL_EVENTS: 'SET_ALL_EVENTS',
     REMOVE_EVENTS: 'REMOVE_EVENTS',
     REMOVE_CLUBS: 'REMOVE_CLUBS'
 }
@@ -22,6 +23,9 @@ function reducer(state, action) {
     switch(action.type) {
         case actions.SET_EVENTS:
             return { ...state, userEvents: action.value };
+        case actions.SET_ALL_EVENTS:
+            let joined = state.userEvents.concat(action.value);
+            return { userEvents: joined };
         case actions.SET_CLUBS:
             return { ...state, userClubs: action.value };
         case actions.REMOVE_EVENTS:
@@ -47,9 +51,12 @@ function UserProvider({children}) {
         major: state.major,
         classLevel: state.classLevel,
         userEvents: state.userEvents,
-        userClubs: state.clubs,
+        userClubs: state.userClubs,
         setUserEvents: value => {
             dispatch({ type: actions.SET_EVENTS, value});
+        },
+        setAllUserEvents: value => {
+            dispatch({ type: actions.SET_ALL_EVENTS, value });
         },
         setUserClubs: value => {
             dispatch({ type: actions.SET_CLUBS, value});

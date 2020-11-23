@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, Image, View, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './ClubCard.styles';
 
-//import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/UserContext';
+import { EventContext } from '../../context/EventContext';
 
 import Button from '../MainButton/MainButton.component';
 
 const ClubCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
-    //const { userEvents, setUserEvents } = useContext(UserContext);
+    const { allEvents } = useContext(EventContext);
+    const { userEvents, setAllUserEvents } = useContext(UserContext);
+    const { removeUserEvents } = useContext(UserContext);
+    let orgEvents;
+
+    const addAllClubEvents = (orgName) => {
+        orgEvents = allEvents.filter(currEvent => currEvent.org == orgName);
+        for ( let i = 0; i < orgEvents.length; i++ ) {
+            setAllUserEvents([...userEvents, orgEvents[i].title]);
+        }
+    }
+
+    function removeAllClubEvents(orgName) {
+        orgEvents = allEvents.filter(currEvent => currEvent.org == orgName);
+        console.log("MY EVENTS\n" + orgEvents);
+        for (let i = 0; i < orgEvents.length; i++) {
+            removeUserEvents([...userEvents, orgEvents[i].title]);
+        }
+    }
 
     return (
         <View>
@@ -38,9 +57,10 @@ const ClubCard = (props) => {
                         onPress={() => {
                             Alert.alert("You successfully have subscribed to "
                                 + props.org + "!");
-                            //setUserEvents([...userEvents, props.title]);
+                            //setUserClubs([...userClubs, props.org]); // Error: No name or something
+                            addAllClubEvents(props.org);
                             setModalVisible(!isModalVisible);
-                            //console.log([...userEvents, props.title]);
+                            //console.log(userEvents);
                         }}
                         style={{ backgroundColor: '#92d050' }}
                         label="Subscribe"
