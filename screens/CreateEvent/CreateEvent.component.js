@@ -30,7 +30,6 @@ const CreateEvent = () => {
     const { allEvents, setEvents } = useContext(EventContext);
 
     const onSubmitData = () => {
-        console.log("yeee")
         setEvents([...allEvents, eventData]);
     }
 
@@ -117,7 +116,6 @@ const CreateEvent = () => {
                 containerStyle={{marginTop: '10%', marginBottom: '15%'}}
                 onPress={onSubmitData}
 			/>
-            {console.log(eventData)}
         </ScrollView>
     );
 }

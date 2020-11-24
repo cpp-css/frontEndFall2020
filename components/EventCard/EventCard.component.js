@@ -12,7 +12,10 @@ const EventCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
-    const UTCDate = new Date(props.startDate).toString();
+
+    const convertDateFormat = (date) => {
+        return new Date(date).toString();
+    }
     
     return(
         <View>
@@ -24,7 +27,8 @@ const EventCard = (props) => {
                 <Text> {props.org} </Text>
                 <Text style={styles.title}> {props.title} </Text>
                 <Image style={styles.image} resizeMode="contain" source={props.source}/>
-                <Text style={styles.date}> {UTCDate} </Text>
+                <Text style={styles.date}> {convertDateFormat(props.startDate)} </Text>
+                <Text style={styles.date}> {convertDateFormat(props.endDate)} </Text>
 
                 <Text> {props.link} </Text>
             </TouchableOpacity>
@@ -41,13 +45,13 @@ const EventCard = (props) => {
                     <Text style={styles.titlePopUp}> {props.title} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
                     <Text style={styles.descPopUp}> {props.desc} </Text>
-                    <Text style={styles.datePopUp}> {UTCDate} </Text>
+                    <Text style={styles.datePopUp}> {convertDateFormat(props.startDate)} </Text>
+                    <Text style={styles.datePopUp}> {convertDateFormat(props.endDate)} </Text>
                     <Button
                         onPress={() => {
                             Alert.alert("You successfully have registered for " + props.title + " on " + props.startDate + "!");
                             setUserEvents([...userEvents, props.title]);
                             setModalVisible(!isModalVisible);
-                            console.log([...userEvents, props.title]);
                         }}
                         style={{backgroundColor: '#92d050'}}
                         label="RSVP"

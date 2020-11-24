@@ -13,7 +13,7 @@ const axios = require("axios");
 
 const Feed = () => {
     //const [events, setEvents] = useState([]);
-    const { allEvents } = useContext(EventContext);
+    const { publishedEvents } = useContext(EventContext);
     const { userEvents } = useContext(UserContext);
     let currDate = null;
 
@@ -93,7 +93,7 @@ const Feed = () => {
         }
     }
 
-    const eventList = allEvents.sort((a, b) => (a.startDate > b.startDate) ? 1 :
+    const eventList = publishedEvents.sort((a, b) => (a.startDate > b.startDate) ? 1 :
         ((b.startDate > a.startDate) ? -1 : 0)).map((event, id) => 
         (userEvents.indexOf(event.title) !== -1) ?
         (<View>
@@ -109,7 +109,7 @@ const Feed = () => {
             link={event.link}
             source={event.image}
             />
-        </View>) : console.log(event.id)
+        </View>) : null
     );
     return (
         <View style={styles.layout}>

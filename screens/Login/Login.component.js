@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Alert} from 'react-native';
 
 // Components
@@ -7,39 +7,65 @@ import MainButton from '../../components/MainButton/MainButton.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextLabel from '../../components/TextLabel/TextLabel.component';
 
+import { UserContext } from '../../context/UserContext';
+
 const axios = require('axios');
 
 const Login = ({navigation}) => {
 
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const { setToken, setUser } = useContext(UserContext);
 
-	const login = async () => {
-		const url = 'https://jsonplaceholder.typicode.com/posts';
+	const [loginForm, setLoginForm] = useState({
+		email: "",
+		password: ""
+	});
 
+	const getUserData = async (userToken) => {
+	
+		const url = "http://10.0.2.2:9090/user/me";
+		console.log("USERDATA: " + userToken);
 		const settings = {
 			headers: {
-				'Content-Type': 'application/json',
+			  "Content-Type": "application/json",
+			  "Authorization": "Bearer " + userToken,
 			},
 		};
 
-		const body = JSON.stringify({email, password});
-
 		try {
-			let response = await axios.get(url, settings, body);
-			if (response) {
-				navigation.push('Main');
+			let response = await axios.get(url, settings);
+			if (!response.data.user) {
+				Alert.alert(response.data.message);
+			} else {
+				setUser(response.data.user);
 			}
-			// use response to authenticate
-			//console.log(response);
 		} catch (error) {
 			console.error(error);
 		}
+	}
+
+	const login = async () => {
+		const url = "http://10.0.2.2:9090/login";
+
+		try {
+			let response = await axios.post(url, loginForm);
+
+			if (!response.data.session) {
+				Alert.alert(response.data.message);
+			} else {
+				setToken(response.data.session.token);
+				navigation.push("Main");
+				getUserData(response.data.session.token);
+			}
+
+		} catch (error) {
+			console.error("Login: " + error);
+		}
 	};
+
 
     const validateInput = () => {
         const format = /^([\w\.\-]+)@cpp.edu/;
-        if (!format.test(email)) {
+        if (!format.test(loginForm.email)) {
             Alert.alert("Please input your student email.");
         } else {
             console.log("valid.");
@@ -54,7 +80,7 @@ const Login = ({navigation}) => {
 				style={styles.textInput} 
 				placeholder="jdoe@cpp.edu"
 				onChangeText={ text => {
-					setEmail(text);
+					setLoginForm({...loginForm, email: text});
 				}}
 			/>
 			<TextLabel
@@ -63,7 +89,7 @@ const Login = ({navigation}) => {
 				secureTextEntry={true}
 				placeholder="Password"
 				onChangeText={ text => {
-					setPassword(text);
+					setLoginForm({...loginForm, password: text});
 				}}
 			/>
 			<MainButton 

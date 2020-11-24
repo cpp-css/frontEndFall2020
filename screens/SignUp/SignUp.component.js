@@ -1,33 +1,32 @@
-import React, {useState} from 'react';
-import { Image, View, Text, TextInput, Alert, Button, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, Alert } from 'react-native';
 
 const axios = require('axios');
 
 import styles from './SignUp.styles';
 
 // Components
-import MainButton from '../../components/MainButton/MainButton.component';
+import Button from '../../components/MainButton/MainButton.component';
 import TextLabel from '../../components/TextLabel/TextLabel.component';
 
 const SignUp = ({navigation}) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+    const [registerForm, setRegisterForm] = useState({
+        name: "",
+        email: "",
+        password: ""
+    });
 
     const register = async () => {
-        const url = 'https://jsonplaceholder.typicode.com/posts';
-
-        const settings = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        const body = JSON.stringify({email, password});
+        const url = 'http://10.0.2.2:9090/signup';
 
         try {
-            let response = await axios.post(url, settings, body);
-            console.log(response);
+            let response = await axios.post(url, registerForm);
+            if (!response.data.sucess) {
+                Alert.alert(response.data.message);
+            } else {
+                Alert.alert("You have sucessfully registered.")
+            }
         } catch (error) {
             console.error(error);
         }
@@ -35,47 +34,42 @@ const SignUp = ({navigation}) => {
 
     const validateInput = () => {
         const format = /^([\w\.\-]+)@cpp.edu/;
-        if (!format.test(email)) {
+        if (!format.test(registerForm.email)) {
             Alert.alert("Please input your student email.");
         } else {
+            register();
             console.log("valid.");
         }
     };
-    /*
-    const email = () => {
-        const doSignUp = () => {
-            if (email === "") {
-                Alert.alert("Email Required");
-                setError("Email required *");
-                setValid(false);
-                return;
-            } else {
-                Alert.alert("Email is correct");
-            }
-        }
-    }
-    */
 
     return (
         <View style={styles.container}>
             <TextLabel
+                label="Name"
+                placeholder="Jane Doe"
+                onChangeText={text => {
+                    setRegisterForm({...registerForm, name: text});
+                }}
+                value={registerForm.name}
+            />
+            <TextLabel
                 label="Email Address"
                 placeholder="jdoe@cpp.edu"
                 onChangeText={text => {
-                    setEmail(text);
+                    setRegisterForm({...registerForm, email: text});
                 }}
-                value={email}
+                value={registerForm.email}
             />
             <TextLabel
                 label="Password"
                 placeholder="Password"
                 secureTextEntry={true}
                 onChangeText={text => {
-                    setPassword(text);
+                    setRegisterForm({...registerForm, password: text});
                 }}
-                value={password}
+                value={registerForm.password}
             />
-            <MainButton
+            <Button
                 label="Register"
                 onPress={validateInput}
                 containerStyle={styles.containerButton}

@@ -1,23 +1,21 @@
 import React, {createContext, useReducer} from 'react';
 
-import dummyEvents from '../data/events';
-
 const EventContext = createContext();
 
 const initialState = {
-    allEvents: dummyEvents
+    publishedEvents: []
 }
 
 const actions = {
-    SET_EVENTS: 'SET_EVENTS',
-    REMOVE_EVENT: 'REMOVE_EVENT',
+    SET_PUBLISHED_EVENTS: 'SET_PUBLISHED_EVENTS',
+    REMOVE_PUBLISHED_EVENT: 'REMOVE_PUBLISHED_EVENT',
 }
 
 function reducer(state, action) {
     switch(action.type) {
-        case actions.SET_EVENTS:
+        case actions.SET_PUBLISHED_EVENTS:
             return { ...state, 
-                allEvents: action.value};
+                publishedEvents: action.value};
         default:
             return state;
     }
@@ -26,11 +24,10 @@ function reducer(state, action) {
 function EventProvider({children}) {
 
     const [state, dispatch] = useReducer(reducer, initialState);
-
     const data = {
-        allEvents: state.allEvents,
-        setEvents: value => {
-            dispatch({ type: actions.SET_EVENTS, value});
+        publishedEvents: state.publishedEvents,
+        setPublishedEvents: value => {
+            dispatch({ type: actions.SET_PUBLISHED_EVENTS, value});
         }
     }
 

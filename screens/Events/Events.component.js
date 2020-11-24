@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import Axios from 'axios';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 
 // Components
@@ -13,26 +14,50 @@ import { UserContext } from '../../context/UserContext';
 // Styles
 import styles from './Events.styles';
 
+const axios = require("axios");
 const { width } = Dimensions.get('window');
 
 const Events = ({navigation}) => {
 
     const [searchQuery, setSearchQuery] = React.useState('');
-    const onChangeSearch = query => setSearchQuery(query);
 
-    const { allEvents } = useContext(EventContext);
+    const { publishedEvents, setPublishedEvents } = useContext(EventContext);
     const { userEvents } = useContext(UserContext);
-    let filteredCards = allEvents.filter(
-        (event) => {
-            return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+
+    const getEvents = async () => {
+        const url = "http://10.0.2.2:9090/event/published_list";
+
+        const settings = {
+            headers: {
+                "Content-Type": "application/json"
+            },
+        };
+
+        try {
+            let response = await axios.get(url, settings);
+            setPublishedEvents(response.data.result);
+        } catch(error) {
+            console.error("Events: " + error);
+        }
+    }
+
+    useEffect(() => {
+        getEvents();
+    }, []);
+
+    let filteredCards = publishedEvents.filter((event) => {
+            return event.event_name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
         }
     );
+
     return (
         <View style={{alignItems: 'center'}}>
             <Searchbar
                 style={styles.searchBox}
                 placeholder="Search"
-                onChangeText={onChangeSearch}
+                onChangeText={(query) => {
+                    setSearchQuery(query);
+                }}
                 value={searchQuery}
             />
             <Button
@@ -58,15 +83,16 @@ const Events = ({navigation}) => {
                     ((b.startDate > a.startDate) ? -1 : 0)).map((card, id) =>
                     (userEvents.indexOf(card.title) === -1) ?
                     (<EventCard
-                       key={id}
-                       title={card.title}
+                       key={card.event_id}
+                       title={card.event_name}
                        theme={card.theme}
                        perks={card.perks}
-                       org={card.org}
-                       desc={card.desc}
-                       startDate={card.startDate}
+                       org={card.organization_id}
+                       desc={card.info}
+                       startDate={card.start_date}
+                       endDate={card.end_date}
                        link={card.link}
-                       source={card.image}
+                       source={require('../../assets/images/CareerCenterWorkshop.jpg')}
                         />) : console.log(card.id)
                )} 
             </ScrollView>

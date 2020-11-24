@@ -4,26 +4,31 @@ const UserContext = createContext();
 
 const initialState = {
     authenticated: false,
-    name: "Jane Doe",
-    major: "Computer Science",
-    classLevel: "Freshmen",
+    user: {},
+    token: "",
     userEvents: [],
     userClubs: []
 }
 
 const actions = {
+    SET_USER: 'SET_USER',
     SET_EVENTS: 'SET_EVENTS',
     SET_CLUBS: 'SET_CLUBS',
+    SET_TOKEN: 'SET_TOKEN',
     REMOVE_EVENTS: 'REMOVE_EVENTS',
     REMOVE_CLUBS: 'REMOVE_CLUBS'
 }
 
 function reducer(state, action) {
     switch(action.type) {
+        case actions.SET_USER:
+            return {...state, user: action.value};
         case actions.SET_EVENTS:
             return { ...state, userEvents: action.value };
         case actions.SET_CLUBS:
             return { ...state, userClubs: action.value };
+        case actions.SET_TOKEN:
+            return { ...state, token: action.value};
         case actions.REMOVE_EVENTS:
             let eventList = JSON.stringify(action.value).split('\"');
             let eventName = eventList[eventList.length - 2];
@@ -43,11 +48,18 @@ function UserProvider({children}) {
 
     const data = {
         authenticated: state.authenticated,
-        name: state.name,
-        major: state.major,
-        classLevel: state.classLevel,
+        name: state.user.name,
+        roles: state.user.roles,
+        token: state.token,
         userEvents: state.userEvents,
         userClubs: state.clubs,
+
+        setToken: value => {
+            dispatch({ type: actions.SET_TOKEN, value});
+        },
+        setUser: value => {
+            dispatch({ type: actions.SET_USER, value});
+        },
         setUserEvents: value => {
             dispatch({ type: actions.SET_EVENTS, value});
         },
