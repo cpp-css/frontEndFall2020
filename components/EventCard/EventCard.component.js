@@ -8,8 +8,6 @@ import { UserContext } from '../../context/UserContext';
 
 import Button from '../MainButton/MainButton.component';
 
-
-
 const EventCard = (props) => {
 
 

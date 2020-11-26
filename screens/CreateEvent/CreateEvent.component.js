@@ -26,7 +26,6 @@ const CreateEvent = () => {
         image: require('../../assets/images/space.jpg'),
     }
 
-
     const [eventData, setEventData] = useState(form);
     const { allEvents, setEvents } = useContext(EventContext);
 

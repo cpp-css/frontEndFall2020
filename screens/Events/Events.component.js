@@ -27,9 +27,6 @@ const Events = ({navigation}) => {
             return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
         }
     );
-
-
-
     return (
         <View style={{alignItems: 'center'}}>
             <Searchbar
