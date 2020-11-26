@@ -8,12 +8,11 @@ import { UserContext } from '../../context/UserContext';
 
 import Button from '../MainButton/MainButton.component';
 
-import { useNavigation } from '@react-navigation/native'
-import { EventContext } from '../../context/EventContext';
+
 
 const EventCard = (props) => {
 
-    const navigation = useNavigation();
+
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
     const UTCDate = new Date(props.startDate).toString();
@@ -64,18 +63,13 @@ const EventCard = (props) => {
                         label="Exit"
                     />
                     <Button
-                       onPress={() => 
-                            {
+                       onPress={() => {
                                 setModalVisible(!isModalVisible);
-                                navigation.navigate('CreateEvent')
-                              
+                                navigation.navigate('CreateEvent')      
                         }}
                         style={{backgroundColor: '#CEB888'}}
-                        label="Edit Event"
-                    
-                    
+                        label="Edit Event"            
                     />
-
                 </View>
             </Modal>
            

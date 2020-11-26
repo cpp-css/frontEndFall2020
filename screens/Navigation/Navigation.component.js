@@ -28,8 +28,7 @@ const EventStack = () => {
                 name="CreateEvent"
                 component={CreateEvent}
                 options={{ title: "Create Event"}}
-            />
-          
+            />  
         </Stack.Navigator>
     )
 }
