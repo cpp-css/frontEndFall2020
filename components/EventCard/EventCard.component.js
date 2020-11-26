@@ -16,25 +16,8 @@ const EventCard = (props) => {
     const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
-<<<<<<< HEAD
-
-    // const {
-    //     title,
-    //     org_id,
-    //     theme,
-    //     perks,
-    //     categories,
-    //     startDate, 
-    //     endDate,
-    //     desc,
-    //     image
-    // } = props.route.params
-  
-
-=======
     const UTCDate = new Date(props.startDate).toString();
->>>>>>> upstream/master
-    
+
     return(
         <View>
             <TouchableOpacity 
@@ -84,7 +67,7 @@ const EventCard = (props) => {
                        onPress={() => 
                             {
                                 setModalVisible(!isModalVisible);
-                                navigation.navigate('CreateEvent', {setUserEvents} )
+                                navigation.navigate('CreateEvent')
                               
                         }}
                         style={{backgroundColor: '#CEB888'}}
