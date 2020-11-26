@@ -10,7 +10,6 @@ import Button from '../MainButton/MainButton.component';
 
 const EventCard = (props) => {
 
-
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
     const UTCDate = new Date(props.startDate).toString();
