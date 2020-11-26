@@ -27,9 +27,6 @@ const CreateEvent = () => {
     }
 
 
-    if(route.params){
-        console.log(route.params)
-    }
     const [eventData, setEventData] = useState(form);
     const { allEvents, setEvents } = useContext(EventContext);
 
