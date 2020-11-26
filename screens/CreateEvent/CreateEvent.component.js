@@ -11,7 +11,7 @@ import DateModal from '../../components/DateModal/DateModal.component';
 // Context
 import { EventContext } from '../../context/EventContext'
 
-const CreateEvent = ({navigation, route}) => {
+const CreateEvent = () => {
 
     const form = {
         title: "",
