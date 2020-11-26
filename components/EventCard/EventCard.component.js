@@ -9,12 +9,27 @@ import { UserContext } from '../../context/UserContext';
 import Button from '../MainButton/MainButton.component';
 
 import { useNavigation } from '@react-navigation/native'
+import { EventContext } from '../../context/EventContext';
 
 const EventCard = (props) => {
 
     const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
+
+    // const {
+    //     title,
+    //     org_id,
+    //     theme,
+    //     perks,
+    //     categories,
+    //     startDate, 
+    //     endDate,
+    //     desc,
+    //     image
+    // } = props.route.params
+  
+
     
     return(
         <View>
@@ -65,10 +80,13 @@ const EventCard = (props) => {
                        onPress={() => 
                             {
                                 setModalVisible(!isModalVisible);
-                                navigation.navigate('EditEvent')
+                                navigation.navigate('CreateEvent', {setUserEvents} )
+                              
                         }}
                         style={{backgroundColor: '#CEB888'}}
                         label="Edit Event"
+                    
+                    
                     />
 
                 </View>

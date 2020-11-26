@@ -11,7 +11,7 @@ import DateModal from '../../components/DateModal/DateModal.component';
 // Context
 import { EventContext } from '../../context/EventContext'
 
-const CreateEvent = () => {
+const CreateEvent = ({navigation, route}) => {
 
     const form = {
         title: "",
@@ -26,6 +26,10 @@ const CreateEvent = () => {
         image: require('../../assets/images/space.jpg'),
     }
 
+
+    if(route.params){
+        console.log(route.params)
+    }
     const [eventData, setEventData] = useState(form);
     const { allEvents, setEvents } = useContext(EventContext);
 
