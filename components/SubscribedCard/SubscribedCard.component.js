@@ -12,6 +12,7 @@ const SubscribedCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, removeUserEvents } = useContext(UserContext);
+    const UTCDate = new Date(props.startDate).toString();
 
     return (
         <View>
@@ -35,7 +36,7 @@ const SubscribedCard = (props) => {
                     <Text style={styles.titlePopUp}> {props.title} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
                     <Text style={styles.descPopUp}> {props.desc} </Text>
-                    <Text style={styles.datePopUp}> {props.date} </Text>
+                    <Text style={styles.datePopUp}> {UTCDate} </Text>
                     <Button
                         onPress={() => {
                             removeUserEvents([...userEvents, props.title]);
