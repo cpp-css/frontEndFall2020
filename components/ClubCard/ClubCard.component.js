@@ -36,6 +36,26 @@ const ClubCard = (props,navigation) => {
         }
     };
 
+    const unsubscribeToOrg = async (org_id) => {
+        const url = "http://10.0.2.2:9090/organization/resign/"+ org_id;
+        const settings = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          };
+        const body ={
+
+        }
+        try {
+          let response = await axios.delete(url, body,settings);
+          if(response.data.success !== true)
+            Alert.alert(response.data.message)
+          console.log(response.data)
+        } catch (error) {
+          console.error(error);
+        }
+    };
     return (
         <View>
             <TouchableOpacity
