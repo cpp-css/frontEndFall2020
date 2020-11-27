@@ -1,21 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, Image, View, Alert, Modal} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-//import { Context } from '../../Context';
+
 import styles from './EventCard.styles';
 
+// Fetch
+import { getOrganizationInfo } from '../../actions/organization';
+
+// Context
 import { UserContext } from '../../context/UserContext';
 
+// Components
 import Button from '../MainButton/MainButton.component';
 
 const EventCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const { userEvents, setUserEvents } = useContext(UserContext);
+    const [organization, setOrganization] = useState('');
 
     const convertDateFormat = (date) => {
         return new Date(date).toString();
     }
+
+    useEffect(() => {
+        getOrganizationInfo(props.org).then(res => {
+            setOrganization(res);
+        })
+    }, []);
     
     return(
         <View>
@@ -24,7 +36,7 @@ const EventCard = (props) => {
                 onPress={() => {
                     setModalVisible(!isModalVisible)
                 }}>
-                <Text> {props.org} </Text>
+                <Text> {organization.org_name} </Text>
                 <Text style={styles.title}> {props.title} </Text>
                 <Image style={styles.image} resizeMode="contain" source={props.source}/>
                 <Text style={styles.date}> {convertDateFormat(props.startDate)} </Text>
@@ -36,12 +48,11 @@ const EventCard = (props) => {
             <Modal animationType="slide"
                 transparent={true}
                 visible={isModalVisible}
-                onBackdropPress = { () => this.setState({isVisible:false})}
-                >
+                onBackdropPress = { () => this.setState({isVisible:false})}>
                 
                 <View style={styles.containerPopUp}>
                     
-                    <Text> {props.org} </Text>
+                    <Text> {organization.org_name} </Text>
                     <Text style={styles.titlePopUp}> {props.title} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
                     <Text style={styles.descPopUp}> {props.desc} </Text>

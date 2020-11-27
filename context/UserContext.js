@@ -4,6 +4,7 @@ const UserContext = createContext();
 
 const initialState = {
     authenticated: false,
+    isAdmin: false,
     user: {},
     token: "",
     userEvents: [],
@@ -12,6 +13,7 @@ const initialState = {
 
 const actions = {
     SET_USER: 'SET_USER',
+    SET_ADMIN: 'SET_ADMIN',
     SET_EVENTS: 'SET_EVENTS',
     SET_CLUBS: 'SET_CLUBS',
     SET_TOKEN: 'SET_TOKEN',
@@ -29,6 +31,8 @@ function reducer(state, action) {
             return { ...state, userClubs: action.value };
         case actions.SET_TOKEN:
             return { ...state, token: action.value};
+        case actions.SET_ADMIN:
+            return { ...state, isAdmin: action.value};
         case actions.REMOVE_EVENTS:
             let eventList = JSON.stringify(action.value).split('\"');
             let eventName = eventList[eventList.length - 2];
@@ -51,6 +55,7 @@ function UserProvider({children}) {
         name: state.user.name,
         roles: state.user.roles,
         token: state.token,
+        isAdmin: state.isAdmin,
         userEvents: state.userEvents,
         userClubs: state.clubs,
 
@@ -65,6 +70,9 @@ function UserProvider({children}) {
         },
         setUserClubs: value => {
             dispatch({ type: actions.SET_CLUBS, value});
+        },
+        setIsAdmin: value => {
+            dispatch({ type: actions.SET_ADMIN, value});
         },
         removeUserEvents: value => {
             dispatch({ type: actions.REMOVE_EVENTS, value });

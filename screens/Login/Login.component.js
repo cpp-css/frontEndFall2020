@@ -13,12 +13,22 @@ const axios = require('axios');
 
 const Login = ({navigation}) => {
 
-	const { setToken, setUser } = useContext(UserContext);
+	const { setToken, setUser, setIsAdmin } = useContext(UserContext);
 
 	const [loginForm, setLoginForm] = useState({
 		email: "",
 		password: ""
 	});
+
+	const checkAdmin = (roles) => {
+		if (roles.length < 1) {
+			setIsAdmin(false);
+		} else {
+			roles.map(group => {
+				group.role == ("ADMIN" || "CHAIRMAN") ? setIsAdmin(true) : null;
+			})
+		}
+	}
 
 	const getUserData = async (userToken) => {
 	
@@ -37,6 +47,7 @@ const Login = ({navigation}) => {
 				Alert.alert(response.data.message);
 			} else {
 				setUser(response.data.user);
+				checkAdmin(response.data.user.roles);
 			}
 		} catch (error) {
 			console.error(error);
@@ -69,7 +80,7 @@ const Login = ({navigation}) => {
             Alert.alert("Please input your student email.");
         } else {
             console.log("valid.");
-            login();
+			login();
         }
     };
 

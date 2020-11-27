@@ -76,9 +76,6 @@ const styles = StyleSheet.create({
         paddingVertical: '2%'
     },
     datePopUp: {
-        fontSize: 20,
-        fontWeight: 'bold'
-        
     },
 });
 

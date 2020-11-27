@@ -22,7 +22,7 @@ const Events = ({navigation}) => {
     const [searchQuery, setSearchQuery] = React.useState('');
 
     const { publishedEvents, setPublishedEvents } = useContext(EventContext);
-    const { userEvents } = useContext(UserContext);
+    const { userEvents, isAdmin } = useContext(UserContext);
 
     const getEvents = async () => {
         const url = "http://10.0.2.2:9090/event/published_list";
@@ -42,6 +42,8 @@ const Events = ({navigation}) => {
     }
 
     useEffect(() => {
+        console.log("Fetch Events");
+        console.log(isAdmin);
         getEvents();
     }, []);
 
@@ -60,13 +62,13 @@ const Events = ({navigation}) => {
                 }}
                 value={searchQuery}
             />
-            <Button
+            {isAdmin && <Button
                 onPress={() => {
                     navigation.push('CreateEvent');
                 }}
                 label="Create Event"
                 containerStyle={{padding: '-2%'}}
-            />
+            />}
             <ScrollView
                showsHorizontalScrollIndicator={false}
                horizontal={true}

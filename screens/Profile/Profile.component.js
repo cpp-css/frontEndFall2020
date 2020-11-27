@@ -12,6 +12,10 @@ const Profile = ({navigation}) => {
 
     const { name } = useContext(UserContext);
 
+    const logout = () => {
+        navigation.push('Home');
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -21,7 +25,7 @@ const Profile = ({navigation}) => {
             <Button label="Add More Interests" onPress={() => navigation.navigate("contact")}/>
             <Button label="Notification Settings" onPress={() => navigation.navigate("contact")}/>
             <Button label="User Settings" onPress={() => navigation.navigate("User Settings")}/>
-            <Button label="Logout" onPress={() => navigation.push('Home')}/>
+            <Button label="Logout" onPress={logout}/>
         </View>
     );
 };

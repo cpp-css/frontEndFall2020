@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 import styles from './CreateEvent.styles';
+
+import { getOrganizationInfo } from '../../actions/organization';
 
 // Components
 import Button from '../../components/MainButton/MainButton.component';
@@ -10,24 +13,47 @@ import DateModal from '../../components/DateModal/DateModal.component';
 
 // Context
 import { EventContext } from '../../context/EventContext'
+import { UserContext } from '../../context/UserContext';
+import { useEffect } from 'react';
 
 const CreateEvent = () => {
 
     const form = {
-        title: "",
-        creator_id: 0,
-        org_id: 0,
-        theme: "",
-        perks: "",
-        categories: [],
+        event_name: "",
         startDate: new Date(),
         endDate: new Date(),
-        desc: "",
+        creator_id: 0,
+        organization_id: 0,
+        theme: "",
+        perks: "",
+        info: "",
         image: require('../../assets/images/space.jpg'),
     }
 
     const [eventData, setEventData] = useState(form);
+    const [organizationList, setOrganizationList] = useState([]);
+    const [organization, setOrganization] = useState("");
     const { allEvents, setEvents } = useContext(EventContext);
+    const { roles } = useContext(UserContext);
+
+    useEffect(() => {
+        roles.map(group => {
+            if (group.role == ("ADMIN" || "CHAIRMAN")) {
+                getOrganizationInfo(group.organization_id)
+                .then(info => {
+                    const currentObject = {
+                        name: info.org_name,
+                        id: group.organization_id
+                    };
+
+                    const alreadyExist = organizationList.some(object => object.name === currentObject.name);
+                    if (!alreadyExist) {
+                        setOrganizationList([...organizationList, currentObject]);
+                    }
+                })
+            }
+        });
+    }, []);
 
     const onSubmitData = () => {
         setEvents([...allEvents, eventData]);
@@ -48,16 +74,24 @@ const CreateEvent = () => {
                     }));
                 }}
             />
-            <TextLabel
-                label="Organization"
-                placeholder="Computer Science Society"
-                onChangeText={ text => {
-                    setEventData(oldState => ({
-                        ...oldState,
-                        org: text
-                    }));
-                }}
-            />
+            <View>
+                <Text style={styles.text}> Organization </Text>
+                <View style={styles.organizationPickerContainer}>
+                    <Picker
+                        selectedValue={organization}
+                        onValueChange={item => {
+                            setOrganization(item);
+                        }}>
+                        {organizationList.map(group =>
+                            <Picker.Item 
+                                key={group.id}
+                                label={group.name} 
+                                value={group.id}
+                            />
+                        )}
+                    </Picker>
+                </View>
+            </View>
             <TextLabel
                 label="Theme"
                 placeholder="Hackathon"
