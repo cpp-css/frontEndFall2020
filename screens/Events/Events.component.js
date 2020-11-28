@@ -29,7 +29,6 @@ const Events = ({navigation}) => {
         console.log("Fetch Events");
         getPublishedEvents().then(events => {
             setPublishedEvents(events);
-            
         })
     }, []);
 

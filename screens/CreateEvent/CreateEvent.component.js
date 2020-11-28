@@ -114,7 +114,7 @@ const CreateEvent = ({ navigation }) => {
 
     useEffect(() => {
         populateRole();
-    }, [organizationList]);
+    }, []);
 
     const onSubmitData = () => {
         SubmitEvent();
@@ -143,8 +143,12 @@ const CreateEvent = ({ navigation }) => {
                         onValueChange={groupId => {
                             setOrganizationId(groupId);
                         }}>
-                        {organizationList.map(group =>
-                            <Picker.Item key={group.id} label={group.name} value={group.id}/>
+                        {organizationList.map(group => 
+                            <Picker.Item 
+                                key={group.id}
+                                label={group.name} 
+                                value={group.id}
+                            />
                         )}
                     </Picker>
                 </View>

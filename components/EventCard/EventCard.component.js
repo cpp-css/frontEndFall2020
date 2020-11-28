@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createRef } from 'react';
 import { Text, Image, View, Alert, Modal} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './EventCard.styles';
+
+import convertDateFormat from '../../utility/convertDateFormat';
 
 // Fetch
 import { getOrganizationInfo } from '../../api/organization';
@@ -20,9 +22,12 @@ const EventCard = (props) => {
     const { registeredEvents, setRegisteredEvents, token } = useContext(UserContext);
     const [organization, setOrganization] = useState('');
 
-    const convertDateFormat = (date) => {
-        return new Date(date).toString();
-    }
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
 
     const registerEventHandler = () => {
         registerEvent(props.event_id, token).then(() => {
