@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Alert, ScrollView, Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 import styles from './CreateEvent.styles';
 
-import { getOrganizationInfo } from '../../actions/organization';
+import { getOrganizationInfo } from '../../api/organization';
 
 // Components
 import Button from '../../components/MainButton/MainButton.component';
@@ -12,31 +12,88 @@ import TextLabel from '../../components/TextLabel/TextLabel.component';
 import DateModal from '../../components/DateModal/DateModal.component';
 
 // Context
-import { EventContext } from '../../context/EventContext'
 import { UserContext } from '../../context/UserContext';
+import { EventContext } from '../../context/EventContext';
 import { useEffect } from 'react';
 
-const CreateEvent = () => {
+const axios = require('axios');
+
+const CreateEvent = ({ navigation }) => {
 
     const form = {
-        event_name: "",
+        eventName: "",
         startDate: new Date(),
         endDate: new Date(),
-        creator_id: 0,
-        organization_id: 0,
         theme: "",
         perks: "",
+        categories: "",
         info: "",
         image: require('../../assets/images/space.jpg'),
     }
 
-    const [eventData, setEventData] = useState(form);
+    const [eventForm, setEventForm] = useState(form);
     const [organizationList, setOrganizationList] = useState([]);
-    const [organization, setOrganization] = useState("");
-    const { allEvents, setEvents } = useContext(EventContext);
-    const { roles } = useContext(UserContext);
+    const [organizationId, setOrganizationId] = useState("");
+    const { token, roles } = useContext(UserContext);
+    const { publishedEvents, setPublishedEvents } = useContext(EventContext);
 
-    useEffect(() => {
+    const approveEvent = async(eventId) => {
+        const url = "http://10.0.2.2:9090/event/approve/" + eventId;
+
+        const settings = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token
+            }
+        }
+
+        try {
+            let response = await axios.put(url, {}, settings);
+            setPublishedEvents([...publishedEvents, response.data.message]);
+            console.log(response.data.message);
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
+    const SubmitEvent = async () => {
+        const url = "http://10.0.2.2:9090/event/add/" + organizationId;
+
+        const settings = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+        };
+
+        const body = {
+            event_name: eventForm.eventName,
+            start_date: eventForm.startDate.toISOString().slice(0, 19),
+            end_date: eventForm.endDate.toISOString().slice(0, 19),
+            theme: eventForm.theme,
+            perks: eventForm.perks,
+            categories: eventForm.categories,
+            info: eventForm.info
+        }
+
+        try {
+            let response = await axios.post(url, body, settings);
+            if (!response.data.success) {
+                Alert.alert(response.data.message);
+            } else {
+               /* 
+                   For now, we will just automatically approve the event the moment it gets created.
+                   In the future, we will add unpublish events when we have the UI for it.
+               */
+               approveEvent(response.data.message.event_id);
+               navigation.goBack();
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
+    const populateRole = async () => {
         roles.map(group => {
             if (group.role == ("ADMIN" || "CHAIRMAN")) {
                 getOrganizationInfo(group.organization_id)
@@ -53,10 +110,14 @@ const CreateEvent = () => {
                 })
             }
         });
-    }, []);
+    }
+
+    useEffect(() => {
+        populateRole();
+    }, [organizationList]);
 
     const onSubmitData = () => {
-        setEvents([...allEvents, eventData]);
+        SubmitEvent();
     }
 
     return(
@@ -68,9 +129,9 @@ const CreateEvent = () => {
                 label="Title"
                 placeholder="Hackpoly 2020"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
-                        title: text
+                        eventName: text
                     }));
                 }}
             />
@@ -78,16 +139,12 @@ const CreateEvent = () => {
                 <Text style={styles.text}> Organization </Text>
                 <View style={styles.organizationPickerContainer}>
                     <Picker
-                        selectedValue={organization}
-                        onValueChange={item => {
-                            setOrganization(item);
+                        selectedValue={organizationId}
+                        onValueChange={groupId => {
+                            setOrganizationId(groupId);
                         }}>
                         {organizationList.map(group =>
-                            <Picker.Item 
-                                key={group.id}
-                                label={group.name} 
-                                value={group.id}
-                            />
+                            <Picker.Item key={group.id} label={group.name} value={group.id}/>
                         )}
                     </Picker>
                 </View>
@@ -96,7 +153,7 @@ const CreateEvent = () => {
                 label="Theme"
                 placeholder="Hackathon"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         theme: text
                     }));
@@ -106,18 +163,28 @@ const CreateEvent = () => {
                 label="Perks"
                 placeholder="Team up and build connection while struggling!"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         perks: text
                     }));
                 }}
             />
+            <TextLabel
+                label="Categories"
+                placeholder="Programming"
+                onChangeText={ text => {
+                    setEventForm(oldState => ({
+                        ...oldState,
+                        categories: text
+                    }));
+                }}
+            />
             <DateModal
                 label="Start Date"
-                currentDate={eventData.startDate}
-                displayDate={eventData.startDate}
+                currentDate={eventForm.startDate}
+                displayDate={eventForm.startDate}
                 onDateChange={date => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         startDate: date
                     }));
@@ -125,10 +192,10 @@ const CreateEvent = () => {
             />
             <DateModal
                 label="End Date"
-                currentDate={eventData.endDate}
-                displayDate={eventData.endDate}
+                currentDate={eventForm.endDate}
+                displayDate={eventForm.endDate}
                 onDateChange={date => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         endDate: date
                     }));
@@ -138,9 +205,9 @@ const CreateEvent = () => {
                 label="Description"
                 placeholder="Hackpoly 2020"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
-                        desc: text
+                        info: text
                     }));
                 }}
                 multiline={true}

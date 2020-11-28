@@ -1,6 +1,8 @@
-import Axios from 'axios';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
+
+// api
+import { getPublishedEvents } from '../../api/event';
 
 // Components
 import { Searchbar } from 'react-native-paper';
@@ -14,37 +16,21 @@ import { UserContext } from '../../context/UserContext';
 // Styles
 import styles from './Events.styles';
 
-const axios = require("axios");
 const { width } = Dimensions.get('window');
 
 const Events = ({navigation}) => {
 
-    const [searchQuery, setSearchQuery] = React.useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const { publishedEvents, setPublishedEvents } = useContext(EventContext);
-    const { userEvents, isAdmin } = useContext(UserContext);
-
-    const getEvents = async () => {
-        const url = "http://10.0.2.2:9090/event/published_list";
-
-        const settings = {
-            headers: {
-                "Content-Type": "application/json"
-            },
-        };
-
-        try {
-            let response = await axios.get(url, settings);
-            setPublishedEvents(response.data.result);
-        } catch(error) {
-            console.error("Events: " + error);
-        }
-    }
+    const { registeredEvents, isAdmin } = useContext(UserContext);
 
     useEffect(() => {
         console.log("Fetch Events");
-        console.log(isAdmin);
-        getEvents();
+        getPublishedEvents().then(events => {
+            setPublishedEvents(events);
+            
+        })
     }, []);
 
     let filteredCards = publishedEvents.filter((event) => {
@@ -83,14 +69,16 @@ const Events = ({navigation}) => {
                }}>
                 {filteredCards.sort((a, b) => (a.startDate > b.startDate) ? 1 :
                     ((b.startDate > a.startDate) ? -1 : 0)).map((card, id) =>
-                    (userEvents.indexOf(card.title) === -1) ?
+                    (registeredEvents.indexOf(card.title) === -1) ?
                     (<EventCard
                        key={card.event_id}
                        title={card.event_name}
                        theme={card.theme}
                        perks={card.perks}
+                       createdAt={card.created_at}
                        org={card.organization_id}
                        desc={card.info}
+                       event_id={card.event_id}
                        startDate={card.start_date}
                        endDate={card.end_date}
                        link={card.link}

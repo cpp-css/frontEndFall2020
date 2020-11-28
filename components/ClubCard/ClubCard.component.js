@@ -7,7 +7,7 @@ import { UserContext } from '../../context/UserContext';
 
 import Button from '../MainButton/MainButton.component';
 
-import { getOrganizationInfo } from '../../actions/organization';
+import { getOrganizationInfo } from '../../api/organization';
 
 const ClubCard = (props) => {
 
@@ -40,7 +40,6 @@ const ClubCard = (props) => {
                 <View style={styles.containerPopUp}>
                     <Text style={styles.orgPopUp}> {props.name} </Text>
                     <Image style={styles.imagePopUp} source={props.source} />
-                    <Text style={styles.linkPopUp}> {props.link} </Text>
                     <Text style={styles.infoPopUp}> {props.info} </Text>
                     <Text style={styles.relatedToPopUp}> Related to: {props.relatedTo} </Text>
                     <Button

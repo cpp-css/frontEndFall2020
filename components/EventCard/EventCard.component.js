@@ -5,7 +5,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './EventCard.styles';
 
 // Fetch
-import { getOrganizationInfo } from '../../actions/organization';
+import { getOrganizationInfo } from '../../api/organization';
+import { registerEvent } from '../../api/event';
 
 // Context
 import { UserContext } from '../../context/UserContext';
@@ -16,11 +17,23 @@ import Button from '../MainButton/MainButton.component';
 const EventCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const { userEvents, setUserEvents } = useContext(UserContext);
+    const { registeredEvents, setRegisteredEvents, token } = useContext(UserContext);
     const [organization, setOrganization] = useState('');
 
     const convertDateFormat = (date) => {
         return new Date(date).toString();
+    }
+
+    const registerEventHandler = () => {
+        registerEvent(props.event_id, token).then(() => {
+            const registeredEventData = {
+                "created_at": props.created_at,
+                "event_id": props.event_id,
+                "event_name": props.title
+            }
+            setRegisteredEvents([...registeredEvents, registeredEventData]);
+            setModalVisible(!isModalVisible);
+        })
     }
 
     useEffect(() => {
@@ -59,11 +72,7 @@ const EventCard = (props) => {
                     <Text style={styles.datePopUp}> {convertDateFormat(props.startDate)} </Text>
                     <Text style={styles.datePopUp}> {convertDateFormat(props.endDate)} </Text>
                     <Button
-                        onPress={() => {
-                            Alert.alert("You successfully have registered for " + props.title + " on " + props.startDate + "!");
-                            setUserEvents([...userEvents, props.title]);
-                            setModalVisible(!isModalVisible);
-                        }}
+                        onPress={registerEventHandler}
                         style={{backgroundColor: '#92d050'}}
                         label="RSVP"
                     />

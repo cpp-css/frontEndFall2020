@@ -1,13 +1,11 @@
-const axios = require('axios');
+import API from './axios';
 
 export const getOrganizationInfo = async (organizationId) => {
-    const url = "http://10.0.2.2:9090/organization/details/" + organizationId;
-
+    const url = "/organization/details/" + organizationId;
     try {
-        let response = await axios.get(url);
+        let response = await API.get(url);
         return response.data;
     } catch (error) {
         console.error(error);
     }
-
 }

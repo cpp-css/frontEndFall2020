@@ -1,70 +1,28 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ScrollView, View, Text } from "react-native";
-//import { Context } from "../../Context";
+import { ScrollView, View, Text, EventEmitter } from "react-native";
 
+// Components
 import SubscribedCard from "../../components/SubscribedCard/SubscribedCard.component";
+
+// api
+import { getRegisteredEvents } from "../../api/event";
 
 import styles from "./Feed.styles";
 
+// Context
 import { UserContext } from '../../context/UserContext';
 import { EventContext } from '../../context/EventContext';
 
-const axios = require("axios");
-
 const Feed = () => {
-    //const [events, setEvents] = useState([]);
     const { publishedEvents } = useContext(EventContext);
-    const { userEvents } = useContext(UserContext);
+    const { token, setRegisteredEvents, registeredEvents } = useContext(UserContext);
     let currDate = null;
 
     useEffect(() => {
-        const getEvents = async () => {
-            const url = "https://jsonplaceholder.typicode.com/posts"; // temporary
-            
-            const settings = {
-                    headers: {
-                    "Content-Type": "application/json",
-                    },
-                };
-
-                try {
-                    let response = await axios.get(url, settings);
-                    //console.log(response);
-                    /*
-                    setEvents([
-                    {
-                        id: 1,
-                        title: "Career Center Workshop",
-                        org: "Computer Science Society",
-                        date: "Tuesday, May 10, 2020",
-                        link: "https://github.com",
-                        image: require("../../assets/images/CareerCenterWorkshop.jpg")
-                    },
-                    {
-                        id: 2,
-                        title: "Capture The Flag",
-                        org: "Software Engineering Association",
-                        date: "Saturday, November 17, 2019",
-                        link: "https://github.com",
-                        image: require("../../assets/images/CTF.png")
-                    },
-                    {
-                        id: 3,
-                        title: "Guest Speaker: Lance Kimberlin from Bilizzard",
-                        org: "Computer Science Society",
-                        date: "Tuesday, May 10, 2020",
-                        link: "https://github.com",
-                        image: require("../../assets/images/Blizzard.png")
-                    },
-                    ]); // hardcoded for now
-                    */
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-            getEvents();
-        }, 
-    []);
+        getRegisteredEvents(token).then(events => {
+            setRegisteredEvents(events);
+        })
+    },[]);
 
     // Checks the startDate if it is new.
     // If startDate is new, return element
@@ -93,9 +51,18 @@ const Feed = () => {
         }
     }
 
+    const eventList = registeredEvents.map(event => 
+        <SubscribedCard
+            key={event.event_id}
+            event_id={event.event_id}
+            title={event.event_name}
+            source={require('../../assets/images/CareerCenterWorkshop.jpg')}
+        />
+    )
+    /*
     const eventList = publishedEvents.sort((a, b) => (a.startDate > b.startDate) ? 1 :
         ((b.startDate > a.startDate) ? -1 : 0)).map((event, id) => 
-        (userEvents.indexOf(event.title) !== -1) ?
+        (registeredEvents.indexOf(event.title) !== -1) ?
         (<View>
             {getDate(event.startDate)}
             <SubscribedCard
@@ -111,6 +78,7 @@ const Feed = () => {
             />
         </View>) : null
     );
+    */
     return (
         <View style={styles.layout}>
         <ScrollView showsVerticalScrollIndicator={false}>
