@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import { Alert } from 'react-native';
 import API from './axios';
 
@@ -50,6 +49,28 @@ export const registerEvent = async (eventId, token) => {
         let response = await API.post(url, {}, settings);
         if (!response.data.success) {
             Alert.alert(response.data.message);
+        }
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+export const editEvent = async (eventId, body, token) => {
+    const url = "/event/" + eventId;
+
+    const settings = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+        }
+    }
+
+    try {
+        let response = await API.post(url, body, settings);
+        if (!response.data.success) {
+            Alert.alert(response.data.message);
+        } else {
+            return response.data.event;
         }
     } catch(error) {
         console.error(error);

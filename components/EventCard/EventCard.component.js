@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext, createRef } from 'react';
-import { Text, Image, View, Alert, Modal} from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { Text, Image, View, Modal} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 import styles from './EventCard.styles';
 
 import convertDateFormat from '../../utility/convertDateFormat';
 
-// Fetch
+// api
 import { getOrganizationInfo } from '../../api/organization';
 import { registerEvent } from '../../api/event';
 
@@ -16,18 +17,14 @@ import { UserContext } from '../../context/UserContext';
 // Components
 import Button from '../MainButton/MainButton.component';
 
+
 const EventCard = (props) => {
 
+    const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
-    const { registeredEvents, setRegisteredEvents, token } = useContext(UserContext);
+    const { registeredEvents, setRegisteredEvents, token, roles } = useContext(UserContext);
     const [organization, setOrganization] = useState('');
-
-    const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    };
+    const [isGroupAdmin, setIsGroupAdmin] = useState(false);
 
     const registerEventHandler = () => {
         registerEvent(props.event_id, token).then(() => {
@@ -41,11 +38,28 @@ const EventCard = (props) => {
         })
     }
 
+    const editEventHandler = () => {
+        navigation.push("CreateEvent", {
+            isEditing: true,
+            eventId: props.event_id
+        });
+        setModalVisible(!isModalVisible);
+    }
+
     useEffect(() => {
         getOrganizationInfo(props.org).then(res => {
             setOrganization(res);
+
+            roles.map(groupRole => {
+                if (res.organization_id == groupRole.organization_id) {
+                    if (groupRole.role == "ADMIN" || groupRole.role == "CHAIRMAN") {
+                        setIsGroupAdmin(true);
+                    }
+                }
+            });
         })
-    }, []);
+
+    }, [isGroupAdmin]);
     
     return(
         <View>
@@ -57,8 +71,8 @@ const EventCard = (props) => {
                 <Text> {organization.org_name} </Text>
                 <Text style={styles.title}> {props.title} </Text>
                 <Image style={styles.image} resizeMode="contain" source={props.source}/>
-                <Text style={styles.date}> {convertDateFormat(props.startDate)} </Text>
-                <Text style={styles.date}> {convertDateFormat(props.endDate)} </Text>
+                <Text style={styles.date}> Start Date: {"\n"} {convertDateFormat(props.startDate)} </Text>
+                <Text style={styles.date}> End Date: {"\n"} {convertDateFormat(props.endDate)} </Text>
 
                 <Text> {props.link} </Text>
             </TouchableOpacity>
@@ -67,20 +81,25 @@ const EventCard = (props) => {
                 transparent={true}
                 visible={isModalVisible}
                 onBackdropPress = { () => this.setState({isVisible:false})}>
-                
                 <View style={styles.containerPopUp}>
-                    
                     <Text> {organization.org_name} </Text>
                     <Text style={styles.titlePopUp}> {props.title} </Text>
                     <Image style={styles.imagePopUp} resizeMode="contain" source={props.source} />
                     <Text style={styles.descPopUp}> {props.desc} </Text>
-                    <Text style={styles.datePopUp}> {convertDateFormat(props.startDate)} </Text>
-                    <Text style={styles.datePopUp}> {convertDateFormat(props.endDate)} </Text>
+                    <Text style={styles.date}> Start Date: {"\n"} {convertDateFormat(props.startDate)} </Text>
+                    <Text style={styles.date}> End Date: {"\n"} {convertDateFormat(props.endDate)} </Text>
                     <Button
                         onPress={registerEventHandler}
                         style={{backgroundColor: '#92d050'}}
                         label="RSVP"
                     />
+                    {isGroupAdmin &&
+                        <Button
+                            onPress={editEventHandler}
+                            style={{backgroundColor: '#92d050'}}
+                            label="Edit"
+                        />
+                    }
                     <Button
                         onPress={() => {
                             setModalVisible(!isModalVisible);

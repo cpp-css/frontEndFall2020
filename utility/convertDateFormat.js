@@ -24,11 +24,11 @@ export default convertDateFormat = (date) => {
             Sep: "September", 
             Oct: "October", 
             Nov: "November", 
-            Dec: "Decemnber"
+            Dec: "December"
         };
 
         const removeZero = (value) => {
-            return value > 10 ? value.slice(1) : value;
+            return value >= 10 ? +value : value;
         }
 
         const time = parseDate[3].split(":");
@@ -43,7 +43,7 @@ export default convertDateFormat = (date) => {
             month: getMonth[parseDate[1]],
             day: parseDate[2],
             year: parseDate[4],
-            hour: convert24to12Hour(time[0]).toString(),
+            hour: convert24to12Hour(time[0]),
             minutes: time[1],
             period: time[0] >= 12 ? "PM" : "AM"
         }

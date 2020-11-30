@@ -5,6 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import styles from './CreateEvent.styles';
 
 import { getOrganizationInfo } from '../../api/organization';
+import { getPublishedEvent, editEvent } from '../../api/event';
 
 // Components
 import Button from '../../components/MainButton/MainButton.component';
@@ -18,7 +19,7 @@ import { useEffect } from 'react';
 
 const axios = require('axios');
 
-const CreateEvent = ({ navigation }) => {
+const CreateEvent = ({ route, navigation }) => {
 
     const form = {
         eventName: "",
@@ -35,7 +36,18 @@ const CreateEvent = ({ navigation }) => {
     const [organizationList, setOrganizationList] = useState([]);
     const [organizationId, setOrganizationId] = useState("");
     const { token, roles } = useContext(UserContext);
+    const { isEditing, eventId } = route.params;
     const { publishedEvents, setPublishedEvents } = useContext(EventContext);
+
+    const body = {
+        event_name: eventForm.eventName,
+        start_date: eventForm.startDate.toISOString().slice(0, 19),
+        end_date: eventForm.endDate.toISOString().slice(0, 19),
+        theme: eventForm.theme,
+        perks: eventForm.perks,
+        categories: eventForm.categories,
+        info: eventForm.info
+    }
 
     const approveEvent = async(eventId) => {
         const url = "http://10.0.2.2:9090/event/approve/" + eventId;
@@ -65,16 +77,6 @@ const CreateEvent = ({ navigation }) => {
               Authorization: "Bearer " + token,
             },
         };
-
-        const body = {
-            event_name: eventForm.eventName,
-            start_date: eventForm.startDate.toISOString().slice(0, 19),
-            end_date: eventForm.endDate.toISOString().slice(0, 19),
-            theme: eventForm.theme,
-            perks: eventForm.perks,
-            categories: eventForm.categories,
-            info: eventForm.info
-        }
 
         try {
             let response = await axios.post(url, body, settings);
@@ -112,12 +114,46 @@ const CreateEvent = ({ navigation }) => {
         });
     }
 
+    const SubmitEditEvent = () => {
+        editEvent(eventId, body, token).then(updatedEvent => {
+            let data = [...publishedEvents];
+            let getIndex = publishedEvents.findIndex( event => event.event_id === updatedEvent.event_id );
+            data[getIndex] = updatedEvent;
+            setPublishedEvents(data);
+            navigation.goBack();
+        })
+    }
+
     useEffect(() => {
         populateRole();
-    }, []);
+        if (isEditing) {
+            navigation.setOptions({
+                title: "Edit Event"
+            });
+
+            getPublishedEvent(eventId).then(data => {
+                let newForm = {
+                    eventName: data.event_name,
+                    startDate: new Date(data.start_date),
+                    endDate: new Date(data.end_date),
+                    theme: data.theme,
+                    perks: data.perks,
+                    categories: data.categories,
+                    info: data.info,
+                    image: require('../../assets/images/space.jpg'),
+                }
+                setEventForm(newForm);
+                setOrganizationId(data.organization_id);
+            })
+        }
+    }, [organizationId]);
 
     const onSubmitData = () => {
-        SubmitEvent();
+        if (!isEditing) {
+            SubmitEvent();
+        } else {
+            SubmitEditEvent();
+        }
     }
 
     return(
@@ -134,6 +170,7 @@ const CreateEvent = ({ navigation }) => {
                         eventName: text
                     }));
                 }}
+                value={eventForm.eventName}
             />
             <View>
                 <Text style={styles.text}> Organization </Text>
@@ -162,6 +199,7 @@ const CreateEvent = ({ navigation }) => {
                         theme: text
                     }));
                 }}
+                value={eventForm.theme}
             />
             <TextLabel
                 label="Perks"
@@ -172,6 +210,7 @@ const CreateEvent = ({ navigation }) => {
                         perks: text
                     }));
                 }}
+                value={eventForm.perks}
             />
             <TextLabel
                 label="Categories"
@@ -182,6 +221,7 @@ const CreateEvent = ({ navigation }) => {
                         categories: text
                     }));
                 }}
+                value={eventForm.categories}
             />
             <DateModal
                 label="Start Date"
@@ -214,6 +254,7 @@ const CreateEvent = ({ navigation }) => {
                         info: text
                     }));
                 }}
+                value={eventForm.info}
                 multiline={true}
             />
 			<Button 

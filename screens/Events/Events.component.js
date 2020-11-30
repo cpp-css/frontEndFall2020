@@ -49,7 +49,9 @@ const Events = ({navigation}) => {
             />
             {isAdmin && <Button
                 onPress={() => {
-                    navigation.push('CreateEvent');
+                    navigation.push("CreateEvent", {
+                        isEditing: false
+                    });
                 }}
                 label="Create Event"
                 containerStyle={{padding: '-2%'}}

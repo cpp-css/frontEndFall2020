@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, Image, View, Alert, Modal } from 'react-native';
+import { Text, Image, View, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './SubscribedCard.styles';
