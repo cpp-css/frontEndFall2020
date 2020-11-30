@@ -47,7 +47,8 @@ const Events = ({navigation}) => {
                 }}
                 value={searchQuery}
             />
-            {isAdmin && <Button
+            {isAdmin && 
+            <Button
                 onPress={() => {
                     navigation.push("CreateEvent", {
                         isEditing: false
@@ -55,7 +56,8 @@ const Events = ({navigation}) => {
                 }}
                 label="Create Event"
                 containerStyle={{padding: '-2%'}}
-            />}
+            />
+            }
             <ScrollView
                showsHorizontalScrollIndicator={false}
                horizontal={true}

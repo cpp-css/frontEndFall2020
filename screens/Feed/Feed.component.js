@@ -21,6 +21,8 @@ const Feed = () => {
     useEffect(() => {
         getRegisteredEvents(token).then(events => {
             setRegisteredEvents(events);
+        }).catch(error => {
+            console.error(error);
         })
     },[]);
 
@@ -51,34 +53,24 @@ const Feed = () => {
         }
     }
 
-    const eventList = registeredEvents.map(event => 
-        <SubscribedCard
-            key={event.event_id}
-            event_id={event.event_id}
-            title={event.event_name}
-            source={require('../../assets/images/CareerCenterWorkshop.jpg')}
-        />
-    )
-    /*
-    const eventList = publishedEvents.sort((a, b) => (a.startDate > b.startDate) ? 1 :
-        ((b.startDate > a.startDate) ? -1 : 0)).map((event, id) => 
-        (registeredEvents.indexOf(event.title) !== -1) ?
-        (<View>
-            {getDate(event.startDate)}
-            <SubscribedCard
-            key={id}
-            title={event.title}
-            theme={event.theme}
-            perks={event.perks}
-            org={event.org}
-            desc={event.desc}
-            startDate={event.startDate}
-            link={event.link}
-            source={event.image}
-            />
-        </View>) : null
+    const eventList = publishedEvents.sort((a, b) => a.start_date > b.start_date)
+        .map((event) => {
+            let isRegistered = registeredEvents.some(regEvent => regEvent.event_id === event.event_id);
+            if (isRegistered) {
+            return (
+                <View>
+                    {getDate(event.start_date)}
+                    <SubscribedCard
+                        key={event.event_id}
+                        event_id={event.event_id}
+                        title={event.event_name}
+                        source={require('../../assets/images/CareerCenterWorkshop.jpg')}
+                    />
+                </View>)
+            }
+        }
     );
-    */
+
     return (
         <View style={styles.layout}>
         <ScrollView showsVerticalScrollIndicator={false}>

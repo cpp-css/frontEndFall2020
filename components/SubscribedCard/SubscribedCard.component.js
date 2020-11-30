@@ -38,6 +38,8 @@ const SubscribedCard = (props) => {
             getOrganizationInfo(eventInfo.organization_id).then(group => {
                 setOrganization(group);
             })
+        }).catch(error => {
+            console.error(error);
         })
     }, []);
 

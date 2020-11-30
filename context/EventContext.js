@@ -16,6 +16,10 @@ function reducer(state, action) {
         case actions.SET_PUBLISHED_EVENTS:
             return { ...state, 
                 publishedEvents: action.value};
+        case actions.REMOVE_PUBLISHED_EVENT:
+            let filteredEvents = state.publishedEvents.filter(event => event.event_id != action.value);
+            return { ...state,
+                publishedEvents: filteredEvents};
         default:
             return state;
     }
@@ -28,6 +32,9 @@ function EventProvider({children}) {
         publishedEvents: state.publishedEvents,
         setPublishedEvents: value => {
             dispatch({ type: actions.SET_PUBLISHED_EVENTS, value});
+        },
+        removePublishedEvent: value => {
+            dispatch({ type: actions.REMOVE_PUBLISHED_EVENT, value});
         }
     }
 

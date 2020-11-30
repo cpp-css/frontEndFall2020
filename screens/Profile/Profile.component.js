@@ -22,8 +22,6 @@ const Profile = ({navigation}) => {
                 <Image style={styles.image} resizeMode="contain" source={require('../../assets/images/Gears.png')}/>
             </View>
             <Text> name: {name} </Text>
-            <Button label="Add More Interests" onPress={() => navigation.navigate("contact")}/>
-            <Button label="Notification Settings" onPress={() => navigation.navigate("contact")}/>
             <Button label="User Settings" onPress={() => navigation.navigate("User Settings")}/>
             <Button label="Logout" onPress={logout}/>
         </View>

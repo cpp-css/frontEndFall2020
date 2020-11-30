@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import styles from './CreateEvent.styles';
 
 import { getOrganizationInfo } from '../../api/organization';
-import { getPublishedEvent, editEvent } from '../../api/event';
+import { getPublishedEvent, editEvent, submitEvent, publishEvent } from '../../api/event';
 
 // Components
 import Button from '../../components/MainButton/MainButton.component';
@@ -16,8 +16,6 @@ import DateModal from '../../components/DateModal/DateModal.component';
 import { UserContext } from '../../context/UserContext';
 import { EventContext } from '../../context/EventContext';
 import { useEffect } from 'react';
-
-const axios = require('axios');
 
 const CreateEvent = ({ route, navigation }) => {
 
@@ -47,52 +45,6 @@ const CreateEvent = ({ route, navigation }) => {
         perks: eventForm.perks,
         categories: eventForm.categories,
         info: eventForm.info
-    }
-
-    const approveEvent = async(eventId) => {
-        const url = "http://10.0.2.2:9090/event/approve/" + eventId;
-
-        const settings = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token
-            }
-        }
-
-        try {
-            let response = await axios.put(url, {}, settings);
-            setPublishedEvents([...publishedEvents, response.data.message]);
-            console.log(response.data.message);
-        } catch(error) {
-            console.error(error);
-        }
-    }
-
-    const SubmitEvent = async () => {
-        const url = "http://10.0.2.2:9090/event/add/" + organizationId;
-
-        const settings = {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-        };
-
-        try {
-            let response = await axios.post(url, body, settings);
-            if (!response.data.success) {
-                Alert.alert(response.data.message);
-            } else {
-               /* 
-                   For now, we will just automatically approve the event the moment it gets created.
-                   In the future, we will add unpublish events when we have the UI for it.
-               */
-               approveEvent(response.data.message.event_id);
-               navigation.goBack();
-            }
-        } catch(error) {
-            console.error(error);
-        }
     }
 
     const populateRole = async () => {
@@ -132,6 +84,7 @@ const CreateEvent = ({ route, navigation }) => {
             });
 
             getPublishedEvent(eventId).then(data => {
+                console.log(data);
                 let newForm = {
                     eventName: data.event_name,
                     startDate: new Date(data.start_date),
@@ -150,7 +103,12 @@ const CreateEvent = ({ route, navigation }) => {
 
     const onSubmitData = () => {
         if (!isEditing) {
-            SubmitEvent();
+            submitEvent(organizationId, body, token).then(submitedEventId => {
+                publishEvent(submitedEventId, token).then(eventData => {
+                    setPublishedEvents([...publishedEvents, eventData]);
+                    navigation.goBack();
+                })
+            })
         } else {
             SubmitEditEvent();
         }

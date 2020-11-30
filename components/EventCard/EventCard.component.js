@@ -9,10 +9,11 @@ import convertDateFormat from '../../utility/convertDateFormat';
 
 // api
 import { getOrganizationInfo } from '../../api/organization';
-import { registerEvent } from '../../api/event';
+import { registerEvent, unpublishedEvent } from '../../api/event';
 
 // Context
 import { UserContext } from '../../context/UserContext';
+import { EventContext } from '../../context/EventContext';
 
 // Components
 import Button from '../MainButton/MainButton.component';
@@ -23,6 +24,7 @@ const EventCard = (props) => {
     const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
     const { registeredEvents, setRegisteredEvents, token, roles } = useContext(UserContext);
+    const { removePublishedEvent } = useContext(EventContext);
     const [organization, setOrganization] = useState('');
     const [isGroupAdmin, setIsGroupAdmin] = useState(false);
 
@@ -44,6 +46,12 @@ const EventCard = (props) => {
             eventId: props.event_id
         });
         setModalVisible(!isModalVisible);
+    }
+
+    const unpublishedEventHandler = () => {
+        unpublishedEvent(props.event_id, token).then(res => {
+            console.log(res);
+        })
     }
 
     useEffect(() => {
@@ -98,6 +106,13 @@ const EventCard = (props) => {
                             onPress={editEventHandler}
                             style={{backgroundColor: '#92d050'}}
                             label="Edit"
+                        />
+                    }
+                    {isGroupAdmin &&
+                        <Button
+                            onPress={unpublishedEventHandler}
+                            style={{backgroundColor: '#92d050'}}
+                            label="unpublished Event"
                         />
                     }
                     <Button

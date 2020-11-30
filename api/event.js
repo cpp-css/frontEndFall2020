@@ -29,7 +29,74 @@ export const getPublishedEvent = async (eventId) => {
 
     try {
         let response = await API.get(url, settings);
-        return response.data.result.find(event => event.event_id == eventId);
+        return response.data.result.find(event => event != undefined && event.event_id == eventId);
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+export const submitEvent = async (organizationId, body, token) => {
+    const url = "/event/add/" + organizationId;
+
+    const settings = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+        },
+    };
+
+    try {
+        let response = await API.post(url, body, settings);
+        if (!response.data.success) {
+            Alert.alert(response.data.message);
+        } else {
+            /* 
+                For now, we will just automatically approve the event the moment it gets created.
+                In the future, we will add unpublish events when we have the UI for it.
+            */
+            return response.data.message.event_id;
+        }
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+export const publishEvent = async (eventId, token) => {
+    const url = "/event/approve/" + eventId;
+
+    const settings = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+        }
+    }
+
+    try {
+        let response = await API.put(url, {}, settings);
+        return response.data.message;
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+export const unpublishedEvent = async (eventId, token) => {
+    const url = "/event/cancel/" + eventId;
+
+    const settings = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+        }
+    }
+
+    try {
+        let response = await API.put(url, {}, settings);
+        if (!response.data.success) {
+            Alert.alert(response.data.message);
+        } else {
+            console.log("RESSOJSEE", response.data);
+            return response.data.message;
+        }
     } catch(error) {
         console.error(error);
     }

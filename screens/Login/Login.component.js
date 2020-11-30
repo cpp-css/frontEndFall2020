@@ -25,7 +25,7 @@ const Login = ({navigation}) => {
 			setIsAdmin(false);
 		} else {
 			roles.map(group => {
-				group.role == ("ADMIN" || "CHAIRMAN") ? setIsAdmin(true) : null;
+				(group.role == "ADMIN" || group.role == "CHAIRMAN") ? setIsAdmin(true) : null;
 			})
 		}
 	}
