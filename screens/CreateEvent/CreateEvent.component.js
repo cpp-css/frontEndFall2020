@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Alert, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 import styles from './CreateEvent.styles';

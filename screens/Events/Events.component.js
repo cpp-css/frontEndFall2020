@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 
-// api
-import { getPublishedEvents } from '../../api/event';
-
 // Components
 import { Searchbar } from 'react-native-paper';
 import EventCard from '../../components/EventCard/EventCard.component';
@@ -22,15 +19,8 @@ const Events = ({navigation}) => {
 
     const [searchQuery, setSearchQuery] = useState('');
 
-    const { publishedEvents, setPublishedEvents } = useContext(EventContext);
+    const { publishedEvents } = useContext(EventContext);
     const { registeredEvents, isAdmin } = useContext(UserContext);
-
-    useEffect(() => {
-        console.log("Fetch Events");
-        getPublishedEvents().then(events => {
-            setPublishedEvents(events);
-        })
-    }, []);
 
     let filteredCards = publishedEvents.filter((event) => {
             return event.event_name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;

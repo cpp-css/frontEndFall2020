@@ -25,7 +25,8 @@ const SignUp = ({navigation}) => {
             if (!response.data.sucess) {
                 Alert.alert(response.data.message);
             } else {
-                Alert.alert("You have sucessfully registered.")
+                Alert.alert("You have sucessfully registered.");
+                navigation.push("Login");
             }
         } catch (error) {
             console.error(error);

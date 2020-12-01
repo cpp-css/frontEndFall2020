@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, Image, View, Alert, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './ClubCard.styles';
@@ -7,18 +7,52 @@ import { UserContext } from '../../context/UserContext';
 
 import Button from '../MainButton/MainButton.component';
 
-import { getOrganizationInfo } from '../../api/organization';
+import { getOrganizationInfo, joinOrganization, leaveOrganization } from '../../api/organization';
 
 const ClubCard = (props) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [organization, setOrganization] = useState('');
-    //const { token } = useContext(UserContext);
+    const { token, roles, setRoles, removeRole } = useContext(UserContext);
+    const [isMember, setIsMember] = useState(false);
+
+    const joinOrganizationHandler = () => {
+        joinOrganization(organization.organization_id, token).then(() => {
+            const newRole = {
+                "organization_id": organization.organization_id,
+                "role": "MEMBER"
+            }
+            setRoles([...roles, newRole]);
+            setModalVisible(!isModalVisible);
+            setIsMember(true);
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
+    const leaveOrganizationHandler = () => {
+        leaveOrganization(organization.organization_id, token).then(() => {
+            removeRole(organization.organization_id);
+            setIsMember(false);
+        }).catch(error => {
+            console.error(error);
+        })
+    }
 
     useEffect(() => {
         getOrganizationInfo(props.organization_id).then(res => {
             setOrganization(res);
+
+            roles.map(group => {
+                console.log("MAP: ", group, organization.organization_name);
+                if (group.organization_id === organization.organization_id) {
+                    setIsMember(true);
+                }
+            })
+        }).catch(error => {
+            console.error(error);
         })
+        console.log("MEMEBR? :", isMember);
     }, []);
 
     return (
@@ -42,17 +76,17 @@ const ClubCard = (props) => {
                     <Image style={styles.imagePopUp} source={props.source} />
                     <Text style={styles.infoPopUp}> {props.info} </Text>
                     <Text style={styles.relatedToPopUp}> Related to: {props.relatedTo} </Text>
+                    {!isMember ? 
                     <Button
-                        onPress={() => {
-                            Alert.alert("You successfully have subscribed to "
-                                + props.org + "!");
-                            //setUserEvents([...userEvents, props.title]);
-                            setModalVisible(!isModalVisible);
-                            //console.log([...userEvents, props.title]);
-                        }}
+                        onPress={joinOrganizationHandler}
                         style={{ backgroundColor: '#92d050' }}
                         label="Subscribe"
-                    />
+                    /> :
+                    <Button
+                        onPress={leaveOrganizationHandler}
+                        style={{ backgroundColor: '#92d050' }}
+                        label="Unsubscribe"
+                    />}
                     <Button
                         onPress={() => {
                             setModalVisible(!isModalVisible);

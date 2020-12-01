@@ -5,7 +5,7 @@ import { ScrollView, View, Text, EventEmitter } from "react-native";
 import SubscribedCard from "../../components/SubscribedCard/SubscribedCard.component";
 
 // api
-import { getRegisteredEvents } from "../../api/event";
+import { getRegisteredEvents, getPublishedEvents } from "../../api/event";
 
 import styles from "./Feed.styles";
 
@@ -14,11 +14,17 @@ import { UserContext } from '../../context/UserContext';
 import { EventContext } from '../../context/EventContext';
 
 const Feed = () => {
-    const { publishedEvents } = useContext(EventContext);
+    const { publishedEvents, setPublishedEvents } = useContext(EventContext);
     const { token, setRegisteredEvents, registeredEvents } = useContext(UserContext);
     let currDate = null;
 
     useEffect(() => {
+        getPublishedEvents().then(events => {
+            setPublishedEvents(events);
+        }).catch(error => {
+            console.error(error);
+        })
+
         getRegisteredEvents(token).then(events => {
             setRegisteredEvents(events);
         }).catch(error => {
@@ -58,10 +64,9 @@ const Feed = () => {
             let isRegistered = registeredEvents.some(regEvent => regEvent.event_id === event.event_id);
             if (isRegistered) {
             return (
-                <View>
+                <View key={event.event_id}>
                     {getDate(event.start_date)}
                     <SubscribedCard
-                        key={event.event_id}
                         event_id={event.event_id}
                         title={event.event_name}
                         source={require('../../assets/images/CareerCenterWorkshop.jpg')}

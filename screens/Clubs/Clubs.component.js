@@ -1,40 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 // Components
 import { Searchbar } from 'react-native-paper';
 import ClubCard from '../../components/ClubCard/ClubCard.component';
 
+import { OrganizationContext } from '../../context/OrganizationContext';
+import { UserContext } from '../../context/UserContext';
+
+import { getOrganizationList } from '../../api/organization';
 
 // Styles
 import styles from './Clubs.styles';
-
-const axios = require('axios');
 
 const { width } = Dimensions.get('window');
 
 const Clubs = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const onChangeSearch = query => setSearchQuery(query);
-    const [orgs, setOrgs] = useState([]);
-
-    const getOrgs = async () => {
-        const url = "http://10.0.2.2:9090/organization/list";
-        const settings = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-    
-        try {
-          let response = await axios.get(url, settings);
-          setOrgs(response.data.result);
-        } catch (error) {
-          console.error(error);
-        }
-    };
+    const { roles, setUserRoles } = useContext(UserContext);
+    const { orgs, setOrgs }  = useContext(OrganizationContext);
 
     useEffect(() => {
-        getOrgs();
+        getOrganizationList().then(res => {
+            setOrgs(res);
+        })
     }, []);
 
     let filteredCards = orgs.filter(
