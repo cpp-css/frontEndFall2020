@@ -36,8 +36,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     date: {
+        textAlign: 'left',
+        alignSelf: 'flex-start',
     },
-
     containerPopUp: {
         marginTop: 10,
         //flex: 1,
@@ -74,11 +75,6 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         width: '100%',
         paddingVertical: '2%'
-    },
-    datePopUp: {
-        fontSize: 20,
-        fontWeight: 'bold'
-        
     },
 });
 

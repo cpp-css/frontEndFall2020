@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 
 // Components
@@ -17,31 +17,37 @@ const { width } = Dimensions.get('window');
 
 const Events = ({navigation}) => {
 
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const onChangeSearch = query => setSearchQuery(query);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const { allEvents } = useContext(EventContext);
-    const { userEvents } = useContext(UserContext);
-    let filteredCards = allEvents.filter(
-        (event) => {
-            return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+    const { publishedEvents } = useContext(EventContext);
+    const { registeredEvents, isAdmin } = useContext(UserContext);
+
+    let filteredCards = publishedEvents.filter((event) => {
+            return event.event_name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
         }
     );
+
     return (
         <View style={{alignItems: 'center'}}>
             <Searchbar
                 style={styles.searchBox}
                 placeholder="Search"
-                onChangeText={onChangeSearch}
+                onChangeText={(query) => {
+                    setSearchQuery(query);
+                }}
                 value={searchQuery}
             />
+            {isAdmin && 
             <Button
                 onPress={() => {
-                    navigation.push('CreateEvent');
+                    navigation.push("CreateEvent", {
+                        isEditing: false
+                    });
                 }}
                 label="Create Event"
                 containerStyle={{padding: '-2%'}}
             />
+            }
             <ScrollView
                showsHorizontalScrollIndicator={false}
                horizontal={true}
@@ -56,17 +62,20 @@ const Events = ({navigation}) => {
                }}>
                 {filteredCards.sort((a, b) => (a.startDate > b.startDate) ? 1 :
                     ((b.startDate > a.startDate) ? -1 : 0)).map((card, id) =>
-                    (userEvents.indexOf(card.title) === -1) ?
+                    (registeredEvents.indexOf(card.title) === -1) ?
                     (<EventCard
-                       key={id}
-                       title={card.title}
+                       key={card.event_id}
+                       title={card.event_name}
                        theme={card.theme}
                        perks={card.perks}
-                       org={card.org}
-                       desc={card.desc}
-                       startDate={card.startDate}
+                       createdAt={card.created_at}
+                       org={card.organization_id}
+                       desc={card.info}
+                       event_id={card.event_id}
+                       startDate={card.start_date}
+                       endDate={card.end_date}
                        link={card.link}
-                       source={card.image}
+                       source={require('../../assets/images/CareerCenterWorkshop.jpg')}
                         />) : console.log(card.id)
                )} 
             </ScrollView>

@@ -1,7 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 import styles from './CreateEvent.styles';
+
+import { getOrganizationInfo } from '../../api/organization';
+import { getPublishedEvent, editEvent, submitEvent, publishEvent } from '../../api/event';
 
 // Components
 import Button from '../../components/MainButton/MainButton.component';
@@ -9,29 +13,105 @@ import TextLabel from '../../components/TextLabel/TextLabel.component';
 import DateModal from '../../components/DateModal/DateModal.component';
 
 // Context
-import { EventContext } from '../../context/EventContext'
+import { UserContext } from '../../context/UserContext';
+import { EventContext } from '../../context/EventContext';
+import { useEffect } from 'react';
 
-const CreateEvent = () => {
+const CreateEvent = ({ route, navigation }) => {
 
     const form = {
-        title: "",
-        creator_id: 0,
-        org_id: 0,
-        theme: "",
-        perks: "",
-        categories: [],
+        eventName: "",
         startDate: new Date(),
         endDate: new Date(),
-        desc: "",
+        theme: "",
+        perks: "",
+        categories: "",
+        info: "",
         image: require('../../assets/images/space.jpg'),
     }
 
-    const [eventData, setEventData] = useState(form);
-    const { allEvents, setEvents } = useContext(EventContext);
+    const [eventForm, setEventForm] = useState(form);
+    const [organizationList, setOrganizationList] = useState([]);
+    const [organizationId, setOrganizationId] = useState("");
+    const { token, roles } = useContext(UserContext);
+    const { isEditing, eventId } = route.params;
+    const { publishedEvents, setPublishedEvents } = useContext(EventContext);
+
+    const body = {
+        event_name: eventForm.eventName,
+        start_date: eventForm.startDate.toISOString().slice(0, 19),
+        end_date: eventForm.endDate.toISOString().slice(0, 19),
+        theme: eventForm.theme,
+        perks: eventForm.perks,
+        categories: eventForm.categories,
+        info: eventForm.info
+    }
+
+    const populateRole = async () => {
+        roles.map(group => {
+            if (group.role == ("ADMIN" || "CHAIRMAN")) {
+                getOrganizationInfo(group.organization_id)
+                .then(info => {
+                    const currentObject = {
+                        name: info.org_name,
+                        id: group.organization_id
+                    };
+
+                    const alreadyExist = organizationList.some(object => object.name === currentObject.name);
+                    if (!alreadyExist) {
+                        setOrganizationList([...organizationList, currentObject]);
+                    }
+                })
+            }
+        });
+    }
+
+    const SubmitEditEvent = () => {
+        editEvent(eventId, body, token).then(updatedEvent => {
+            let data = [...publishedEvents];
+            let getIndex = publishedEvents.findIndex( event => event.event_id === updatedEvent.event_id );
+            data[getIndex] = updatedEvent;
+            setPublishedEvents(data);
+            navigation.goBack();
+        })
+    }
+
+    useEffect(() => {
+        populateRole();
+        if (isEditing) {
+            navigation.setOptions({
+                title: "Edit Event"
+            });
+
+            getPublishedEvent(eventId).then(data => {
+                console.log(data);
+                let newForm = {
+                    eventName: data.event_name,
+                    startDate: new Date(data.start_date),
+                    endDate: new Date(data.end_date),
+                    theme: data.theme,
+                    perks: data.perks,
+                    categories: data.categories,
+                    info: data.info,
+                    image: require('../../assets/images/space.jpg'),
+                }
+                setEventForm(newForm);
+                setOrganizationId(data.organization_id);
+            })
+        }
+    }, [organizationId]);
 
     const onSubmitData = () => {
-        console.log("yeee")
-        setEvents([...allEvents, eventData]);
+        if (!isEditing) {
+            submitEvent(organizationId, body, token).then(submitedEventId => {
+                publishEvent(submitedEventId, token).then(eventData => {
+                    setPublishedEvents([...publishedEvents, eventData]);
+                    navigation.goBack();
+                })
+            })
+        } else {
+            SubmitEditEvent();
+        }
     }
 
     return(
@@ -43,48 +123,70 @@ const CreateEvent = () => {
                 label="Title"
                 placeholder="Hackpoly 2020"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
-                        title: text
+                        eventName: text
                     }));
                 }}
+                value={eventForm.eventName}
             />
-            <TextLabel
-                label="Organization"
-                placeholder="Computer Science Society"
-                onChangeText={ text => {
-                    setEventData(oldState => ({
-                        ...oldState,
-                        org: text
-                    }));
-                }}
-            />
+            <View>
+                <Text style={styles.text}> Organization </Text>
+                <View style={styles.organizationPickerContainer}>
+                    <Picker
+                        selectedValue={organizationId}
+                        onValueChange={groupId => {
+                            setOrganizationId(groupId);
+                        }}>
+                        {organizationList.map(group => 
+                            <Picker.Item 
+                                key={group.id}
+                                label={group.name} 
+                                value={group.id}
+                            />
+                        )}
+                    </Picker>
+                </View>
+            </View>
             <TextLabel
                 label="Theme"
                 placeholder="Hackathon"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         theme: text
                     }));
                 }}
+                value={eventForm.theme}
             />
             <TextLabel
                 label="Perks"
                 placeholder="Team up and build connection while struggling!"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         perks: text
                     }));
                 }}
+                value={eventForm.perks}
+            />
+            <TextLabel
+                label="Categories"
+                placeholder="Programming"
+                onChangeText={ text => {
+                    setEventForm(oldState => ({
+                        ...oldState,
+                        categories: text
+                    }));
+                }}
+                value={eventForm.categories}
             />
             <DateModal
                 label="Start Date"
-                currentDate={eventData.startDate}
-                displayDate={eventData.startDate}
+                currentDate={eventForm.startDate}
+                displayDate={eventForm.startDate}
                 onDateChange={date => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         startDate: date
                     }));
@@ -92,10 +194,10 @@ const CreateEvent = () => {
             />
             <DateModal
                 label="End Date"
-                currentDate={eventData.endDate}
-                displayDate={eventData.endDate}
+                currentDate={eventForm.endDate}
+                displayDate={eventForm.endDate}
                 onDateChange={date => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
                         endDate: date
                     }));
@@ -105,11 +207,12 @@ const CreateEvent = () => {
                 label="Description"
                 placeholder="Hackpoly 2020"
                 onChangeText={ text => {
-                    setEventData(oldState => ({
+                    setEventForm(oldState => ({
                         ...oldState,
-                        desc: text
+                        info: text
                     }));
                 }}
+                value={eventForm.info}
                 multiline={true}
             />
 			<Button 
@@ -117,7 +220,6 @@ const CreateEvent = () => {
                 containerStyle={{marginTop: '10%', marginBottom: '15%'}}
                 onPress={onSubmitData}
 			/>
-            {console.log(eventData)}
         </ScrollView>
     );
 }

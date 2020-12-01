@@ -1,70 +1,36 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ScrollView, View, Text } from "react-native";
-//import { Context } from "../../Context";
+import { ScrollView, View, Text, EventEmitter } from "react-native";
 
+// Components
 import SubscribedCard from "../../components/SubscribedCard/SubscribedCard.component";
+
+// api
+import { getRegisteredEvents, getPublishedEvents } from "../../api/event";
 
 import styles from "./Feed.styles";
 
+// Context
 import { UserContext } from '../../context/UserContext';
 import { EventContext } from '../../context/EventContext';
 
-const axios = require("axios");
-
 const Feed = () => {
-    //const [events, setEvents] = useState([]);
-    const { allEvents } = useContext(EventContext);
-    const { userEvents } = useContext(UserContext);
+    const { publishedEvents, setPublishedEvents } = useContext(EventContext);
+    const { token, setRegisteredEvents, registeredEvents } = useContext(UserContext);
     let currDate = null;
 
     useEffect(() => {
-        const getEvents = async () => {
-            const url = "https://jsonplaceholder.typicode.com/posts"; // temporary
-            
-            const settings = {
-                    headers: {
-                    "Content-Type": "application/json",
-                    },
-                };
+        getPublishedEvents().then(events => {
+            setPublishedEvents(events);
+        }).catch(error => {
+            console.error(error);
+        })
 
-                try {
-                    let response = await axios.get(url, settings);
-                    //console.log(response);
-                    /*
-                    setEvents([
-                    {
-                        id: 1,
-                        title: "Career Center Workshop",
-                        org: "Computer Science Society",
-                        date: "Tuesday, May 10, 2020",
-                        link: "https://github.com",
-                        image: require("../../assets/images/CareerCenterWorkshop.jpg")
-                    },
-                    {
-                        id: 2,
-                        title: "Capture The Flag",
-                        org: "Software Engineering Association",
-                        date: "Saturday, November 17, 2019",
-                        link: "https://github.com",
-                        image: require("../../assets/images/CTF.png")
-                    },
-                    {
-                        id: 3,
-                        title: "Guest Speaker: Lance Kimberlin from Bilizzard",
-                        org: "Computer Science Society",
-                        date: "Tuesday, May 10, 2020",
-                        link: "https://github.com",
-                        image: require("../../assets/images/Blizzard.png")
-                    },
-                    ]); // hardcoded for now
-                    */
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-            getEvents();
-        }, 
-    []);
+        getRegisteredEvents(token).then(events => {
+            setRegisteredEvents(events);
+        }).catch(error => {
+            console.error(error);
+        })
+    },[]);
 
     // Checks the startDate if it is new.
     // If startDate is new, return element
@@ -93,24 +59,23 @@ const Feed = () => {
         }
     }
 
-    const eventList = allEvents.sort((a, b) => (a.startDate > b.startDate) ? 1 :
-        ((b.startDate > a.startDate) ? -1 : 0)).map((event, id) => 
-        (userEvents.indexOf(event.title) !== -1) ?
-        (<View>
-            {getDate(event.startDate)}
-            <SubscribedCard
-            key={id}
-            title={event.title}
-            theme={event.theme}
-            perks={event.perks}
-            org={event.org}
-            desc={event.desc}
-            startDate={event.startDate}
-            link={event.link}
-            source={event.image}
-            />
-        </View>) : console.log(event.id)
+    const eventList = publishedEvents.sort((a, b) => a.start_date > b.start_date)
+        .map((event) => {
+            let isRegistered = registeredEvents.some(regEvent => regEvent.event_id === event.event_id);
+            if (isRegistered) {
+            return (
+                <View key={event.event_id}>
+                    {getDate(event.start_date)}
+                    <SubscribedCard
+                        event_id={event.event_id}
+                        title={event.event_name}
+                        source={require('../../assets/images/CareerCenterWorkshop.jpg')}
+                    />
+                </View>)
+            }
+        }
     );
+
     return (
         <View style={styles.layout}>
         <ScrollView showsVerticalScrollIndicator={false}>

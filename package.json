@@ -13,6 +13,7 @@
     "@eva-design/eva": "^2.0.0",
     "@mdi/font": "^5.7.55",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-picker/picker": "^1.9.3",
     "@react-navigation/material-bottom-tabs": "^5.2.19",
     "@react-navigation/native": "^5.7.5",
     "@react-navigation/stack": "^5.9.2",

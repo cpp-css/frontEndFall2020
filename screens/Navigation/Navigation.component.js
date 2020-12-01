@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // Context
 import { EventProvider } from '../../context/EventContext';
+import { OrganizationProvider } from '../../context/OrganizationContext';
 
 // Components
 import Feed from '../Feed/Feed.component';
@@ -74,13 +75,15 @@ const Main = ({route, navigation}) => {
 
     return (
             <EventProvider>
-                <Tab.Navigator
-                    initialRouteName="Feed"
-                    activeColor="#92d050"
-                    inactiveColor="#FFFFFF"
-                    barStyle={{ backgroundColor: '#111111' }}>
-                    { iconItems }
-                </Tab.Navigator>
+                <OrganizationProvider>
+                    <Tab.Navigator
+                        initialRouteName="Feed"
+                        activeColor="#92d050"
+                        inactiveColor="#FFFFFF"
+                        barStyle={{ backgroundColor: '#111111' }}>
+                        { iconItems }
+                    </Tab.Navigator>
+                </OrganizationProvider>
             </EventProvider>
     );
 }

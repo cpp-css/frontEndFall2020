@@ -1,68 +1,37 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 // Components
 import { Searchbar } from 'react-native-paper';
 import ClubCard from '../../components/ClubCard/ClubCard.component';
+
+import { OrganizationContext } from '../../context/OrganizationContext';
+import { UserContext } from '../../context/UserContext';
+
+import { getOrganizationList } from '../../api/organization';
 
 // Styles
 import styles from './Clubs.styles';
 
 const { width } = Dimensions.get('window');
 
-const cardItems = [
-    {
-        org: "Computer Science Society",
-        link: "https://github.com",
-        image: require("../../assets/images/CareerCenterWorkshop.jpg"),
-        info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        relatedTo: "engineering, science, computer science"
-    },
-    {
-        org: "Software Engineering Association",
-        link: "https://github.com",
-        image: require("../../assets/images/CTF.png"),
-        info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        relatedTo: "archery, math, engineering"
-    },
-    {
-        org: "IEEE",
-        link: "https://github.com",
-        image: require("../../assets/images/CareerCenterWorkshop.jpg"),
-        info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        relatedTo: "science, hip-hop"
-    },
-    {
-        org: "Computer Science Society",
-        link: "https://github.com",
-        image: require("../../assets/images/CareerCenterWorkshop.jpg"),
-        info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        relatedTo: "engineering, science, computer science"
-    },
-    {
-        org: "Software Engineering Association",
-        link: "https://github.com",
-        image: require("../../assets/images/CTF.png"),
-        info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        relatedTo: "archery, math, engineering"
-    },
-    {
-        org: "IEEE",
-        link: "https://github.com",
-        image: require("../../assets/images/CareerCenterWorkshop.jpg"),
-        info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        relatedTo: "science, hip-hop"
-    },
-]
-
 const Clubs = () => {
-    const [searchQuery, setSearchQuery] = React.useState('');
+    const [searchQuery, setSearchQuery] = useState('');
     const onChangeSearch = query => setSearchQuery(query);
+    const { roles, setUserRoles } = useContext(UserContext);
+    const { orgs, setOrgs }  = useContext(OrganizationContext);
 
-    let filteredCards = cardItems.filter(
+    useEffect(() => {
+        getOrganizationList().then(res => {
+            setOrgs(res);
+        })
+    }, []);
+
+    let filteredCards = orgs.filter(
         (event) => {
-            return event.org.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+            return event.org_name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
         }
     );
+
     return (
         <View style={{flex: 1}}>
             <Searchbar
@@ -83,15 +52,13 @@ const Clubs = () => {
                     bottom: 0,
                     right: 30
                 }}>
-                {filteredCards.map((card, id) =>
+                {filteredCards.map((card) =>
                     <ClubCard
-                        key={id}
-                        title={card.title}
-                        org={card.org}
-                        link={card.link}
-                        source={card.image}
-                        info={card.info}
-                        relatedTo={card.relatedTo}
+                        key={card.organization_id}
+                        name={card.org_name}
+                        source={require('./../../assets/images/CareerCenterWorkshop.jpg')}
+                        relatedTo={card.categories}
+                        organization_id={card.organization_id}
                     />
                 )}
             </ScrollView>
